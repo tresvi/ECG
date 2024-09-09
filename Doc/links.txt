@@ -1,2 +1,4 @@
 https://www.mathworks.com/help/signal/ug/label-ecg-signals-and-track-progress.html
+https://www.researchgate.net/publication/274453270_ECG_Signal_Analysis_Different_Approaches
 https://www.youtube.com/watch?v=k91Hm2D7VXo    -->  https://archive.physionet.org/cgi-bin/atm/ATM
+
