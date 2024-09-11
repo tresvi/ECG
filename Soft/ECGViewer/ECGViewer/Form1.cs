@@ -34,100 +34,35 @@ namespace ECGViewer
         private void Form1_Load(object sender, EventArgs e)
         {
             // Configura el gráfico
-            chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
-            chartEspectro.ChartAreas[0].AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
+            chartSenal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
+            chartSenal.ChartAreas[0].AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
 
             // Define el tamaño de la vista y habilita el desplazamiento
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.Size = 50;                   // Cantidad de puntos visibles inicialmente
+            chartSenal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
+            chartSenal.ChartAreas[0].AxisX.ScaleView.Size = 50;                   // Cantidad de puntos visibles inicialmente
 
             // Habilitar el desplazamiento
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.MinSize = 1;                 // Mínima vista permitida (1 punto)
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
+            chartSenal.ChartAreas[0].AxisX.ScaleView.MinSize = 1;                 // Mínima vista permitida (1 punto)
+            chartSenal.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
 
             // Configura el comportamiento del scroll
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
-            chartEspectro.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
+            chartSenal.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
+            chartSenal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
 
             // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
-            chartEspectro.ChartAreas[0].AxisX.Interval = 1;
+            chartSenal.ChartAreas[0].AxisX.Interval = 1;
 
-            ActivarZoom(chartEspectro, true);
+            ActivarZoom(chartSenal, true);
 
 
 
 
         }
 
-        private void Graficar()
+
+        static List<(double, double)> LoadCsvData(string filePath)
         {
-
-
-            //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.Green;
-            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-            ChartArea chartArea = chartEspectro.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            string filePath = @"..\..\CSV\ECG_20Seg_Filtrado.txt"; // Ruta al archivo CSV
-           // List<(double, double)> muestras = LoadCsvData(filePath);
-
-
-            List<DataPoint> listaMaximos = null;
-            List<DataPoint> curva;
-            List<(float, float)> dataList = LoadCsvData(filePath);
-            Series series = chartEspectro.Series["Muestras"];
-
-            foreach (var (x, y) in dataList)
-            {
-                series.Points.AddXY(x, -1*y);
-            }
-            _graphSerie = series;
-
-            //int counter = 0;
-            //foreach ((double, double) muestra in muestras)
-            //{
-            //    counter++;
-            //    DataPoint point = new DataPoint((double)counter, 1000 * muestra.Item2);
-            //    _graphSerie.Points.Add(point);
-            //}
-
-
-            //Visuaizacion del eje X
-            // Configurar el intervalo del eje X
-            chartEspectro.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de 1 unidad
-
-            // Configurar el formato de las etiquetas del eje X
-            chartEspectro.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-
-            //Autoescala
-            // Habilitar autoescala en el eje X
-            chartEspectro.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartEspectro.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            // Habilitar autoescala en el eje Y
-            chartEspectro.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartEspectro.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-        }
-
-
-        static List<(float, float)> LoadCsvData(string filePath)
-        {
-            var dataList = new List<(float, float)>();
+            var dataList = new List<(double, double)>();
 
             // Verifica si el archivo existe
             if (!File.Exists(filePath))
@@ -144,8 +79,8 @@ namespace ECGViewer
                 if (parts.Length >= 2)
                 {
                     // Convierte las partes a float y añade a la lista
-                    if (float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out float value1) &&
-                        float.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out float value2))
+                    if (double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double value1) &&
+                        double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double value2))
                     {
                         dataList.Add((value1, value2));
                     }
@@ -163,10 +98,6 @@ namespace ECGViewer
             return dataList;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Graficar();
-        }
 
 
         public static void ActivarZoom(Chart chart, bool enable)
@@ -199,8 +130,8 @@ namespace ECGViewer
             //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
             //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
             //ChartUtils.InicializarChart(chartEspectro);
-            this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
-            this.chartEspectro.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
+            this.chartSenal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
+            this.chartSenal.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
 
         }
 
@@ -237,10 +168,10 @@ namespace ECGViewer
             // Colocar la anotación en la ubicación correcta
             textAnnotation.AnchorX = 3;
             textAnnotation.AnchorY = 0.33;
-            textAnnotation.AnchorDataPoint = chartEspectro.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
+            textAnnotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
 
             // Agregar la anotación al gráfico
-            chartEspectro.Annotations.Add(textAnnotation);
+            chartSenal.Annotations.Add(textAnnotation);
 
             // Agregar un marcador en el punto específico (X=3, Y=30)
             DataPoint markerPoint = new DataPoint(3, 0.24);
@@ -249,7 +180,7 @@ namespace ECGViewer
             markerPoint.MarkerColor = Color.Red;         // Color del marcador
 
             // Agregar el marcador a la serie
-            chartEspectro.Series[0].Points.Add(markerPoint);
+            chartSenal.Series[0].Points.Add(markerPoint);
         }
 
         private void BtnLineaReferencia_Click(object sender, EventArgs e)
@@ -262,8 +193,8 @@ namespace ECGViewer
             stripLine.BorderDashStyle = ChartDashStyle.Dash;
 
             // Agregar la línea de referencia al eje Y
-            chartEspectro.ChartAreas[0].AxisY.StripLines.Add(stripLine);
-            chartEspectro.ChartAreas[0].AxisX.StripLines.Add(stripLine);
+            chartSenal.ChartAreas[0].AxisY.StripLines.Add(stripLine);
+            chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -281,7 +212,7 @@ namespace ECGViewer
             isolatedPointsSeries.Points.AddXY(7, 5);   // Punto aislado en (X=7, Y=5)
 
             // Agregar la serie al gráfico
-            chartEspectro.Series.Add(isolatedPointsSeries);
+            chartSenal.Series.Add(isolatedPointsSeries);
 
         }
 
@@ -289,15 +220,15 @@ namespace ECGViewer
         {
             // Crear una línea vertical en el punto X=3
             VerticalLineAnnotation verticalLine = new VerticalLineAnnotation();
-            verticalLine.AxisX = chartEspectro.ChartAreas[0].AxisX;
-            verticalLine.AxisY = chartEspectro.ChartAreas[0].AxisY;
+            verticalLine.AxisX = chartSenal.ChartAreas[0].AxisX;
+            verticalLine.AxisY = chartSenal.ChartAreas[0].AxisY;
             verticalLine.X = 3;  // Posición en el eje X
             verticalLine.LineColor = Color.Green;
             verticalLine.LineWidth = 2;
             verticalLine.LineDashStyle = ChartDashStyle.Dash;
 
             // Agregar la línea vertical al gráfico
-            chartEspectro.Annotations.Add(verticalLine);
+            chartSenal.Annotations.Add(verticalLine);
 
             // Agregar un marcador en la intersección de la línea vertical y el eje Y
             Series markerSeries = new Series("Marcador");
@@ -310,7 +241,7 @@ namespace ECGViewer
             markerSeries.Points.AddXY(2.5, 0.3);
 
             // Agregar la serie con el marcador al gráfico
-            chartEspectro.Series.Add(markerSeries);
+            chartSenal.Series.Add(markerSeries);
 
         }
 
@@ -318,8 +249,8 @@ namespace ECGViewer
         {
             // Crear una línea vertical que sea interactiva
             VerticalLineAnnotation interactiveLine = new VerticalLineAnnotation();
-            interactiveLine.AxisX = chartEspectro.ChartAreas[0].AxisX;
-            interactiveLine.AxisY = chartEspectro.ChartAreas[0].AxisY;
+            interactiveLine.AxisX = chartSenal.ChartAreas[0].AxisX;
+            interactiveLine.AxisY = chartSenal.ChartAreas[0].AxisY;
             interactiveLine.X = 3;  // Posición en el eje X
             interactiveLine.LineColor = Color.Blue;
             interactiveLine.LineWidth = 2;
@@ -332,7 +263,7 @@ namespace ECGViewer
             //};
 
             // Agregar la anotación al gráfico
-            chartEspectro.Annotations.Add(interactiveLine);
+            chartSenal.Annotations.Add(interactiveLine);
 
         }
 
@@ -344,7 +275,7 @@ namespace ECGViewer
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
             // Convertir las coordenadas del clic del mouse a elementos del gráfico
-            HitTestResult result = chartEspectro.HitTest(e.X, e.Y);
+            HitTestResult result = chartSenal.HitTest(e.X, e.Y);
 
             // Verificar si el clic fue en un punto de la serie
             if (result.ChartElementType == ChartElementType.DataPoint)
@@ -355,6 +286,205 @@ namespace ECGViewer
                 // Mostrar un mensaje con la información del punto
                 MessageBox.Show($"¡Hiciste clic en el punto (X={clickedPoint.XValue}, Y={clickedPoint.YValues[0]})!");
             }
+        }
+
+
+        List<(double, double)> _senalECG;
+        private void BtnCargarSenal_Click(object sender, EventArgs e)
+        {
+            string filePath = @"..\..\CSV\ECG_20Seg_NOFiltrado.txt"; // Ruta al archivo CSV
+            _senalECG = LoadCsvData(filePath);
+
+            //Creo la nueva serie de datos.
+            _graphSerie = new Series("Muestras");
+            _graphSerie.Color = System.Drawing.Color.Green;
+            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
+            _graphSerie.BorderWidth = 1; //2;
+            _graphSerie.XValueType = ChartValueType.Single;
+            _graphSerie.YValueType = ChartValueType.Single;
+            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+
+            ChartArea chartArea = chartSenal.ChartAreas[0];
+
+            // Configura los valores mínimo y máximo del eje Y
+            chartArea.AxisY.Minimum = -0.12;
+            chartArea.AxisY.Maximum = 0.5;
+
+            Series series = chartSenal.Series["Muestras"];
+
+            foreach (var (x, y) in _senalECG)
+            {
+                series.Points.AddXY(x, -1 * y);
+            }
+            _graphSerie = series;
+
+            chartSenal.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de labels en X
+            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+
+            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
+            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
+
+            // Habilitar autoescala en el eje X
+            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+            // Habilitar autoescala en el eje Y
+            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+        }
+
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Graficar2();
+        }
+
+
+        private void Graficar2()
+        {
+            //Creo la nueva serie de datos.
+            _graphSerie = new Series("Muestras");
+            _graphSerie.Color = System.Drawing.Color.Green;
+            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
+            _graphSerie.BorderWidth = 1; //2;
+            _graphSerie.XValueType = ChartValueType.Single;
+            _graphSerie.YValueType = ChartValueType.Single;
+            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+
+            ChartArea chartArea = chartSenal.ChartAreas[0];
+
+            // Configura los valores mínimo y máximo del eje Y
+            chartArea.AxisY.Minimum = -0.12;
+            chartArea.AxisY.Maximum = 0.5;
+
+            string filePath = @"..\..\CSV\ECG_20Seg_NoFiltrado.txt"; // Ruta al archivo CSV
+                                                                     // List<(double, double)> muestras = LoadCsvData(filePath);
+
+            List<(double, double)> dataList = LoadCsvData(filePath);
+            Series series = chartSenal.Series["Muestras"];
+
+            //foreach (var (x, y) in dataList)
+            //{
+            //    series.Points.AddXY(x, -1 * y);
+            //}
+            //_graphSerie = series;
+
+
+            // sample audio with tones at 2, 10, and 20 kHz plus white noise
+            //double[] signal = FftSharp.SampleData.SampleAudio1();
+            double[] signal = new double[16_384];
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                signal[i] = (double)-1 * dataList[i].Item2;
+            }
+
+
+            int sampleRate = 48_000;
+
+            // calculate the power spectral density using FFT
+            System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
+            double[] psd = FftSharp.FFT.Magnitude(spectrum);
+            double[] freq = FftSharp.FFT.FrequencyScale(psd.Length, sampleRate);
+
+
+            int counter = 0;
+            foreach (double muestra in psd)
+            {
+                counter++;
+                series.Points.AddXY(counter * 0.0303, muestra); //Calculado 15.2 ms
+            }
+
+
+            //Visuaizacion del eje X
+            // Configurar el intervalo del eje X
+            chartSenal.ChartAreas[0].AxisX.Interval = 5;  // Intervalo de 1 unidad
+
+            // Configurar el formato de las etiquetas del eje X
+            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
+
+            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
+            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
+
+
+            //Autoescala
+            // Habilitar autoescala en el eje X
+            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+
+            // Habilitar autoescala en el eje Y
+            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+        }
+
+        private void BtnFiltrarSenal_Click(object sender, EventArgs e)
+        {
+            //Creo la nueva serie de datos.
+            //_graphSerie = new Series("Muestras");
+            //_graphSerie.Color = System.Drawing.Color.Green;
+            //_graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
+            //_graphSerie.BorderWidth = 1; //2;
+            //_graphSerie.XValueType = ChartValueType.Single;
+            //_graphSerie.YValueType = ChartValueType.Single;
+            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+
+            ChartArea chartArea = chartSenalFiltrada.ChartAreas[0];
+
+            // Configura los valores mínimo y máximo del eje Y
+            chartArea.AxisY.Minimum = -0.12;
+            chartArea.AxisY.Maximum = 0.5;
+
+            Series series = chartSenalFiltrada.Series["Muestras"];
+
+            //foreach (var (x, y) in dataList)
+            //{
+            //    series.Points.AddXY(x, -1 * y);
+            //}
+            //_graphSerie = series;
+
+
+            // sample audio with tones at 2, 10, and 20 kHz plus white noise
+            //double[] signal = FftSharp.SampleData.SampleAudio1();
+            double[] signal = new double[16_384];
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+                signal[i] = -1 * _senalECG[i].Item2;
+            }
+
+            int sampleRate = 500;
+            double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 50);
+
+
+            int counter = 0;
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+                counter++;
+                series.Points.AddXY(_senalECG[i].Item1, filtered[i]); //Calculado 15.2 ms
+            }
+
+            _graphSerie = series;
+
+            //Visuaizacion del eje X
+            // Configurar el intervalo del eje X
+            chartSenalFiltrada.ChartAreas[0].AxisX.Interval = 10;  // Intervalo de 1 unidad
+
+            // Configurar el formato de las etiquetas del eje X
+            chartSenalFiltrada.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
+
+            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
+            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
+
+
+            //Autoescala
+            // Habilitar autoescala en el eje X
+            chartSenalFiltrada.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenalFiltrada.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+
+            // Habilitar autoescala en el eje Y
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
         }
     }
 }
