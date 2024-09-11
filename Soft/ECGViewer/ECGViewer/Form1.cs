@@ -377,29 +377,26 @@ namespace ECGViewer
             double[] signal = new double[16_384];
             for (int i = 0; i < dataList.Count; i++)
             {
-                signal[i] = (double)-1 * dataList[i].Item2;
+                signal[i] = -1 * dataList[i].Item2;
             }
 
 
-            int sampleRate = 48_000;
+            int sampleRate = 500;
 
             // calculate the power spectral density using FFT
             System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
             double[] psd = FftSharp.FFT.Magnitude(spectrum);
             double[] freq = FftSharp.FFT.FrequencyScale(psd.Length, sampleRate);
 
-
-            int counter = 0;
-            foreach (double muestra in psd)
+            for (int i = 0; i < psd.Count(); i++)
             {
-                counter++;
-                series.Points.AddXY(counter * 0.0303, muestra); //Calculado 15.2 ms
+                series.Points.AddXY(freq[i], psd[i]); //Calculado 15.2 ms
             }
 
 
             //Visuaizacion del eje X
             // Configurar el intervalo del eje X
-            chartSenal.ChartAreas[0].AxisX.Interval = 5;  // Intervalo de 1 unidad
+            chartSenal.ChartAreas[0].AxisX.Interval = 10;  // Intervalo de 1 unidad
 
             // Configurar el formato de las etiquetas del eje X
             chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
@@ -410,7 +407,7 @@ namespace ECGViewer
 
             //Autoescala
             // Habilitar autoescala en el eje X
-            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisX.Minimum = 0;  // Autoajustar el mínimo
             chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
 
             // Habilitar autoescala en el eje Y
