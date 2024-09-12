@@ -451,7 +451,8 @@ namespace ECGViewer
             }
 
             int sampleRate = 500;
-            double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 50);
+            double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 49);
+            //double[] filtered = FftSharp.Filter.BandPass(signal, sampleRate, minFrequency: 49, maxFrequency: 51);
 
 
             int counter = 0;
