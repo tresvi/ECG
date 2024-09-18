@@ -26,6 +26,8 @@ namespace ECGViewer
     {
         Series _graphSerie;
         private Panel chartPanel;
+        private const int FRECUENCIA_MUESTREO = 500;
+
         public Form1()
         {
             InitializeComponent();
@@ -53,10 +55,6 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].AxisX.Interval = 1;
 
             ActivarZoom(chartSenal, true);
-
-
-
-
         }
 
 
@@ -297,7 +295,7 @@ namespace ECGViewer
 
             //Creo la nueva serie de datos.
             _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.Green;
+            _graphSerie.Color = System.Drawing.Color.AliceBlue;
             _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
             _graphSerie.BorderWidth = 1; //2;
             _graphSerie.XValueType = ChartValueType.Single;
@@ -451,7 +449,8 @@ namespace ECGViewer
             }
 
             int sampleRate = 500;
-            double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 49);
+            //double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 49);
+            double[] filtered = FftSharp.Filter.HighPass(signal, sampleRate, minFrequency: 2);
             //double[] filtered = FftSharp.Filter.BandPass(signal, sampleRate, minFrequency: 49, maxFrequency: 51);
 
 
@@ -483,6 +482,43 @@ namespace ECGViewer
             // Habilitar autoescala en el eje Y
             chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
             chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+        }
+
+
+        private void btnEspectro_Click(object sender, EventArgs e)
+        {
+            if (_senalECG == null)
+            {
+                MessageBox.Show("No hay señal cargada", "Ver Espectro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            long tamanoVector = 0; int exponente = 0;
+            
+            while (_senalECG.Count > tamanoVector)
+            { 
+                tamanoVector = 2 << exponente++;
+            }
+
+            double[] signal = new double[tamanoVector];
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+                signal[i] = -1 * _senalECG[i].Item2;
+            }
+
+            Form form = new FrmEspectro(signal, FRECUENCIA_MUESTREO);
+            form.Show();
+        }
+
+        private void BtnFiltro_Click(object sender, EventArgs e)
+        {
+            FrmAplicarFiltro frmAplicarFiltro = new FrmAplicarFiltro(_senalECG);
+            frmAplicarFiltro.ShowDialog();
+        }
+
+        private void chartSenal_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

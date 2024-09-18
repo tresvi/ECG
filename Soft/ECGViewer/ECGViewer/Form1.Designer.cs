@@ -43,6 +43,8 @@
             this.button5 = new System.Windows.Forms.Button();
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BtnFiltrarSenal = new System.Windows.Forms.Button();
+            this.btnEspectro = new System.Windows.Forms.Button();
+            this.BtnFiltro = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).BeginInit();
             this.SuspendLayout();
@@ -76,6 +78,7 @@
             this.chartSenal.Size = new System.Drawing.Size(1246, 281);
             this.chartSenal.TabIndex = 1;
             this.chartSenal.Text = "chart1";
+            this.chartSenal.Click += new System.EventHandler(this.chartSenal_Click);
             this.chartSenal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartEspectro_MouseClick);
             this.chartSenal.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chartEspectro_MouseDown);
             // 
@@ -93,7 +96,7 @@
             // BtnResetZoom
             // 
             this.BtnResetZoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnResetZoom.Location = new System.Drawing.Point(359, 12);
+            this.BtnResetZoom.Location = new System.Drawing.Point(248, 11);
             this.BtnResetZoom.Name = "BtnResetZoom";
             this.BtnResetZoom.Size = new System.Drawing.Size(121, 38);
             this.BtnResetZoom.TabIndex = 3;
@@ -158,7 +161,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(226, 12);
+            this.button5.Location = new System.Drawing.Point(192, 3);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(50, 75);
             this.button5.TabIndex = 9;
@@ -191,7 +194,7 @@
             series2.MarkerStep = 10;
             series2.Name = "Muestras";
             this.chartSenalFiltrada.Series.Add(series2);
-            this.chartSenalFiltrada.Size = new System.Drawing.Size(1246, 326);
+            this.chartSenalFiltrada.Size = new System.Drawing.Size(1246, 323);
             this.chartSenalFiltrada.TabIndex = 10;
             this.chartSenalFiltrada.Text = "chart1";
             // 
@@ -205,11 +208,33 @@
             this.BtnFiltrarSenal.UseVisualStyleBackColor = true;
             this.BtnFiltrarSenal.Click += new System.EventHandler(this.BtnFiltrarSenal_Click);
             // 
+            // btnEspectro
+            // 
+            this.btnEspectro.Location = new System.Drawing.Point(387, 9);
+            this.btnEspectro.Name = "btnEspectro";
+            this.btnEspectro.Size = new System.Drawing.Size(81, 45);
+            this.btnEspectro.TabIndex = 12;
+            this.btnEspectro.Text = "Ver Espectro";
+            this.btnEspectro.UseVisualStyleBackColor = true;
+            this.btnEspectro.Click += new System.EventHandler(this.btnEspectro_Click);
+            // 
+            // BtnFiltro
+            // 
+            this.BtnFiltro.Location = new System.Drawing.Point(12, 296);
+            this.BtnFiltro.Name = "BtnFiltro";
+            this.BtnFiltro.Size = new System.Drawing.Size(54, 64);
+            this.BtnFiltro.TabIndex = 13;
+            this.BtnFiltro.Text = "Preview Filtro";
+            this.BtnFiltro.UseVisualStyleBackColor = true;
+            this.BtnFiltro.Click += new System.EventHandler(this.BtnFiltro_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 717);
+            this.Controls.Add(this.BtnFiltro);
+            this.Controls.Add(this.btnEspectro);
             this.Controls.Add(this.BtnFiltrarSenal);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.chartSenalFiltrada);
@@ -244,6 +269,8 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartSenalFiltrada;
         private System.Windows.Forms.Button BtnFiltrarSenal;
+        private System.Windows.Forms.Button btnEspectro;
+        private System.Windows.Forms.Button BtnFiltro;
     }
 }
 
