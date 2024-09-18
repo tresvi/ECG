@@ -9,15 +9,17 @@ namespace ECGViewer
     public partial class FrmAplicarFiltro : Form
     {
         public readonly List<(double, double)> _senal;
+        public readonly List<(double, double)> _senalFiltrada;
 
         public FrmAplicarFiltro(List<(double, double)> senal)
         {
             InitializeComponent();
             _senal = senal;
+            _senalFiltrada = _senal;
         }
 
 
-        private void Graficar(Chart chart)
+        private void Graficar(Chart chart, List<(double, double)> senal)
         {
             ChartArea chartArea = chart.ChartAreas[0];
 
@@ -27,10 +29,10 @@ namespace ECGViewer
             chartArea.AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
             chartArea.AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
             chartArea.AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-            chartArea.AxisY.Title = "";//"Amplitud Vs Tiempo[seg]";
+            chartArea.AxisY.Title = "Amplitud Vs Tiempo[seg]";
             chartArea.AxisX.Title = "";
 
-            foreach (var (x, y) in _senal)
+            foreach (var (x, y) in senal)
             {
                 chart.Series["Muestras"].Points.AddXY(x, -1 * y);
             }
@@ -49,8 +51,8 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Load(object sender, EventArgs e)
         {
-            Graficar(chartSenalOriginal);
-            Graficar(chartSenalFiltrada);
+            Graficar(chartSenalOriginal, _senal);
+            Graficar(chartSenalFiltrada, _senalFiltrada);
 
             // Configura el gráfico
             chartSenalOriginal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento

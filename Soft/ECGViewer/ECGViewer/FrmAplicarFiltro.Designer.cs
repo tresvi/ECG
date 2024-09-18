@@ -36,9 +36,19 @@
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chartSenalOriginal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.BtnCargar = new System.Windows.Forms.Button();
+            this.BtnGuardar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.BtnFiltroNotch = new System.Windows.Forms.Button();
+            this.BtnFiltroPasaBanda = new System.Windows.Forms.Button();
+            this.BtnFiltroPasaAlto = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.BtnResetZoom = new System.Windows.Forms.Button();
+            this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartSenalOriginal
@@ -55,7 +65,7 @@
             chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             chartArea1.Name = "ChartArea1";
             this.chartSenalOriginal.ChartAreas.Add(chartArea1);
-            this.chartSenalOriginal.Location = new System.Drawing.Point(13, 14);
+            this.chartSenalOriginal.Location = new System.Drawing.Point(11, 95);
             this.chartSenalOriginal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenalOriginal.Name = "chartSenalOriginal";
             series1.BorderWidth = 2;
@@ -66,7 +76,7 @@
             series1.MarkerStep = 10;
             series1.Name = "Muestras";
             this.chartSenalOriginal.Series.Add(series1);
-            this.chartSenalOriginal.Size = new System.Drawing.Size(1159, 280);
+            this.chartSenalOriginal.Size = new System.Drawing.Size(1238, 270);
             this.chartSenalOriginal.TabIndex = 2;
             this.chartSenalOriginal.Text = "chart1";
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -91,7 +101,7 @@
             chartArea2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             chartArea2.Name = "ChartArea1";
             this.chartSenalFiltrada.ChartAreas.Add(chartArea2);
-            this.chartSenalFiltrada.Location = new System.Drawing.Point(13, 310);
+            this.chartSenalFiltrada.Location = new System.Drawing.Point(9, 377);
             this.chartSenalFiltrada.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenalFiltrada.Name = "chartSenalFiltrada";
             series2.BorderWidth = 2;
@@ -102,7 +112,7 @@
             series2.MarkerStep = 10;
             series2.Name = "Muestras";
             this.chartSenalFiltrada.Series.Add(series2);
-            this.chartSenalFiltrada.Size = new System.Drawing.Size(1159, 280);
+            this.chartSenalFiltrada.Size = new System.Drawing.Size(1240, 270);
             this.chartSenalFiltrada.TabIndex = 3;
             this.chartSenalFiltrada.Text = "chart1";
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -110,30 +120,131 @@
             title2.Text = "Señal Filtrada";
             this.chartSenalFiltrada.Titles.Add(title2);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.BtnCargar);
+            this.groupBox1.Controls.Add(this.BtnGuardar);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.BtnFiltroNotch);
+            this.groupBox1.Controls.Add(this.BtnFiltroPasaBanda);
+            this.groupBox1.Controls.Add(this.BtnFiltroPasaAlto);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.BtnResetZoom);
+            this.groupBox1.Controls.Add(this.toggleButton1);
+            this.groupBox1.Location = new System.Drawing.Point(12, 7);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1238, 78);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            // 
+            // BtnCargar
+            // 
+            this.BtnCargar.Location = new System.Drawing.Point(912, 15);
+            this.BtnCargar.Name = "BtnCargar";
+            this.BtnCargar.Size = new System.Drawing.Size(73, 52);
+            this.BtnCargar.TabIndex = 12;
+            this.BtnCargar.Text = "Cargar";
+            this.BtnCargar.UseVisualStyleBackColor = true;
+            // 
+            // BtnGuardar
+            // 
+            this.BtnGuardar.Location = new System.Drawing.Point(833, 15);
+            this.BtnGuardar.Name = "BtnGuardar";
+            this.BtnGuardar.Size = new System.Drawing.Size(73, 52);
+            this.BtnGuardar.TabIndex = 11;
+            this.BtnGuardar.Text = "Guardar";
+            this.BtnGuardar.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(16, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(150, 16);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Tiempo / Frecuencia";
+            // 
+            // BtnFiltroNotch
+            // 
+            this.BtnFiltroNotch.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFiltroNotch.Location = new System.Drawing.Point(649, 19);
+            this.BtnFiltroNotch.Name = "BtnFiltroNotch";
+            this.BtnFiltroNotch.Size = new System.Drawing.Size(110, 47);
+            this.BtnFiltroNotch.TabIndex = 9;
+            this.BtnFiltroNotch.Text = "Filtro Notch";
+            this.BtnFiltroNotch.UseVisualStyleBackColor = true;
+            // 
+            // BtnFiltroPasaBanda
+            // 
+            this.BtnFiltroPasaBanda.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFiltroPasaBanda.Location = new System.Drawing.Point(533, 19);
+            this.BtnFiltroPasaBanda.Name = "BtnFiltroPasaBanda";
+            this.BtnFiltroPasaBanda.Size = new System.Drawing.Size(110, 47);
+            this.BtnFiltroPasaBanda.TabIndex = 8;
+            this.BtnFiltroPasaBanda.Text = "Filtro Pasa Banda";
+            this.BtnFiltroPasaBanda.UseVisualStyleBackColor = true;
+            // 
+            // BtnFiltroPasaAlto
+            // 
+            this.BtnFiltroPasaAlto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFiltroPasaAlto.Location = new System.Drawing.Point(417, 19);
+            this.BtnFiltroPasaAlto.Name = "BtnFiltroPasaAlto";
+            this.BtnFiltroPasaAlto.Size = new System.Drawing.Size(110, 47);
+            this.BtnFiltroPasaAlto.TabIndex = 7;
+            this.BtnFiltroPasaAlto.Text = "Filtro Pasa Alto";
+            this.BtnFiltroPasaAlto.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(301, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 47);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Filtro Pasa Bajo";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // BtnResetZoom
             // 
-            this.BtnResetZoom.Location = new System.Drawing.Point(1179, 45);
+            this.BtnResetZoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnResetZoom.Location = new System.Drawing.Point(196, 19);
             this.BtnResetZoom.Name = "BtnResetZoom";
             this.BtnResetZoom.Size = new System.Drawing.Size(71, 48);
-            this.BtnResetZoom.TabIndex = 4;
+            this.BtnResetZoom.TabIndex = 5;
             this.BtnResetZoom.Text = "Reset Zoom";
             this.BtnResetZoom.UseVisualStyleBackColor = true;
             this.BtnResetZoom.Click += new System.EventHandler(this.BtnResetZoom_Click);
+            // 
+            // toggleButton1
+            // 
+            this.toggleButton1.Location = new System.Drawing.Point(42, 37);
+            this.toggleButton1.MinimumSize = new System.Drawing.Size(45, 22);
+            this.toggleButton1.Name = "toggleButton1";
+            this.toggleButton1.OffBackColor = System.Drawing.Color.Gray;
+            this.toggleButton1.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.toggleButton1.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.toggleButton1.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.toggleButton1.Size = new System.Drawing.Size(81, 32);
+            this.toggleButton1.TabIndex = 0;
+            this.toggleButton1.UseVisualStyleBackColor = true;
             // 
             // FrmAplicarFiltro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 605);
-            this.Controls.Add(this.BtnResetZoom);
+            this.ClientSize = new System.Drawing.Size(1262, 656);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.chartSenalFiltrada);
             this.Controls.Add(this.chartSenalOriginal);
             this.Name = "FrmAplicarFiltro";
-            this.Text = "FrmAplicarFiltro";
+            this.Text = "Banco de Filtros";
             this.Load += new System.EventHandler(this.FrmAplicarFiltro_Load);
             this.Resize += new System.EventHandler(this.FrmAplicarFiltro_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -142,6 +253,15 @@
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartSenalOriginal;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartSenalFiltrada;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private Controles.ToggleButton toggleButton1;
         private System.Windows.Forms.Button BtnResetZoom;
+        private System.Windows.Forms.Button BtnFiltroNotch;
+        private System.Windows.Forms.Button BtnFiltroPasaBanda;
+        private System.Windows.Forms.Button BtnFiltroPasaAlto;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button BtnCargar;
+        private System.Windows.Forms.Button BtnGuardar;
     }
 }
