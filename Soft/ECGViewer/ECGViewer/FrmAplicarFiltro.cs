@@ -13,10 +13,7 @@ namespace ECGViewer
         public FrmAplicarFiltro(List<(double, double)> senal)
         {
             InitializeComponent();
-            
             _senal = senal;
-            Graficar(chartSenalOriginal);
-            Graficar(chartSenalFiltrada);
         }
 
 
@@ -30,6 +27,8 @@ namespace ECGViewer
             chartArea.AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
             chartArea.AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
             chartArea.AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+            chartArea.AxisY.Title = "";//"Amplitud Vs Tiempo[seg]";
+            chartArea.AxisX.Title = "";
 
             foreach (var (x, y) in _senal)
             {
@@ -50,21 +49,24 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Load(object sender, EventArgs e)
         {
+            Graficar(chartSenalOriginal);
+            Graficar(chartSenalFiltrada);
+
             // Configura el gráfico
             chartSenalOriginal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
             chartSenalOriginal.ChartAreas[0].AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
 
             // Define el tamaño de la vista y habilita el desplazamiento
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
-           // chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Size = 50;                   // Cantidad de puntos visibles inicialmente
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;       // Habilitar zoom
+           // chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Size = 50;           // Cantidad de puntos visibles inicialmente
 
             // Habilitar el desplazamiento
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.MinSize = 0.5;                 // Mínima vista permitida (1 punto)
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.MinSize = 0.5;         // Mínima vista permitida (1 punto)
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.Position = 0;          // Posición inicial de la vista
 
             // Configura el comportamiento del scroll
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;       // Tamaño del desplazamiento pequeño (5 puntos)
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;    // Tamaño mínimo de desplazamiento
 
             // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
             chartSenalOriginal.ChartAreas[0].AxisX.Interval = 1;
