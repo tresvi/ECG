@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace ECGViewer
 {
-    public partial class FrmAplicarFiltro : Form
+    public partial class FrmConsolaFiltros : Form
     {
         public readonly List<(double, double)> _senal;
         public readonly List<(double, double)> _senalFiltrada;
 
-        public FrmAplicarFiltro(List<(double, double)> senal)
+        public FrmConsolaFiltros(List<(double, double)> senal)
         {
             InitializeComponent();
             _senal = senal;
@@ -113,5 +114,14 @@ namespace ECGViewer
             }
         }
 
+        private void BtnFiltroPasaBajo_Click(object sender, EventArgs e)
+        {
+            FrmPasaAltosBajos frmPasaAltosBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
+
+            if (frmPasaAltosBajos.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show($"Frecuencia elegida: {frmPasaAltosBajos.FrecuenciaCorte}");
+            }
+        }
     }
 }

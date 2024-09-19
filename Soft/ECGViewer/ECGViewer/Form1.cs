@@ -512,7 +512,7 @@ namespace ECGViewer
 
         private void BtnFiltro_Click(object sender, EventArgs e)
         {
-            FrmAplicarFiltro frmAplicarFiltro = new FrmAplicarFiltro(_senalECG);
+            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG);
             frmAplicarFiltro.ShowDialog();
         }
 

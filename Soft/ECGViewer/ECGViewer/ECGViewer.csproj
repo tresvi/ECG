@@ -75,28 +75,46 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmAplicarFiltro.cs">
+    <Compile Include="Formularios\FrmConsolaFiltros.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAplicarFiltro.Designer.cs">
-      <DependentUpon>FrmAplicarFiltro.cs</DependentUpon>
+    <Compile Include="Formularios\FrmConsolaFiltros.Designer.cs">
+      <DependentUpon>FrmConsolaFiltros.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmEspectro.cs">
+    <Compile Include="Formularios\FrmEspectro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmEspectro.Designer.cs">
+    <Compile Include="Formularios\FrmEspectro.Designer.cs">
       <DependentUpon>FrmEspectro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmPasaAltosBajos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmPasaAltosBajos.Designer.cs">
+      <DependentUpon>FrmPasaAltosBajos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\FrmPasaEliminaBanda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmPasaEliminaBanda.Designer.cs">
+      <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmAplicarFiltro.resx">
-      <DependentUpon>FrmAplicarFiltro.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmConsolaFiltros.resx">
+      <DependentUpon>FrmConsolaFiltros.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmEspectro.resx">
+    <EmbeddedResource Include="Formularios\FrmEspectro.resx">
       <DependentUpon>FrmEspectro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmPasaAltosBajos.resx">
+      <DependentUpon>FrmPasaAltosBajos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmPasaEliminaBanda.resx">
+      <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

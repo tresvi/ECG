@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer
 {
-    partial class FrmAplicarFiltro
+    partial class FrmConsolaFiltros
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chartSenalOriginal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -43,7 +43,7 @@
             this.BtnFiltroNotch = new System.Windows.Forms.Button();
             this.BtnFiltroPasaBanda = new System.Windows.Forms.Button();
             this.BtnFiltroPasaAlto = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BtnFiltroPasaBajo = new System.Windows.Forms.Button();
             this.BtnResetZoom = new System.Windows.Forms.Button();
             this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).BeginInit();
@@ -56,33 +56,33 @@
             this.chartSenalOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartSenalOriginal.BorderlineColor = System.Drawing.Color.Black;
-            chartArea1.AxisX.LabelAutoFitMaxFontSize = 15;
-            chartArea1.AxisX.LabelAutoFitMinFontSize = 8;
-            chartArea1.AxisX.Title = "Tiempo[Seg]";
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea1.AxisY.Maximum = 250D;
-            chartArea1.AxisY.Title = "Amplitud";
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea1.Name = "ChartArea1";
-            this.chartSenalOriginal.ChartAreas.Add(chartArea1);
+            chartArea3.AxisX.LabelAutoFitMaxFontSize = 15;
+            chartArea3.AxisX.LabelAutoFitMinFontSize = 8;
+            chartArea3.AxisX.Title = "Tiempo[Seg]";
+            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea3.AxisY.Maximum = 250D;
+            chartArea3.AxisY.Title = "Amplitud";
+            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea3.Name = "ChartArea1";
+            this.chartSenalOriginal.ChartAreas.Add(chartArea3);
             this.chartSenalOriginal.Location = new System.Drawing.Point(11, 95);
             this.chartSenalOriginal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenalOriginal.Name = "chartSenalOriginal";
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.MarkerStep = 10;
-            series1.Name = "Muestras";
-            this.chartSenalOriginal.Series.Add(series1);
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series3.MarkerStep = 10;
+            series3.Name = "Muestras";
+            this.chartSenalOriginal.Series.Add(series3);
             this.chartSenalOriginal.Size = new System.Drawing.Size(1238, 270);
             this.chartSenalOriginal.TabIndex = 2;
             this.chartSenalOriginal.Text = "chart1";
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "Title1";
-            title1.Text = "Señal Original";
-            this.chartSenalOriginal.Titles.Add(title1);
+            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title3.Name = "Title1";
+            title3.Text = "Señal Original";
+            this.chartSenalOriginal.Titles.Add(title3);
             this.chartSenalOriginal.AxisViewChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this.chartSenalOriginal_AxisViewChanged);
             // 
             // chartSenalFiltrada
@@ -91,34 +91,34 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartSenalFiltrada.BackColor = System.Drawing.Color.LightGray;
             this.chartSenalFiltrada.BorderlineColor = System.Drawing.Color.Black;
-            chartArea2.AxisX.LabelAutoFitMaxFontSize = 15;
-            chartArea2.AxisX.LabelAutoFitMinFontSize = 8;
-            chartArea2.AxisX.Title = "Tiempo[Seg]";
-            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea2.AxisY.Maximum = 250D;
-            chartArea2.AxisY.Title = "Amplitud";
-            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            chartArea2.Name = "ChartArea1";
-            this.chartSenalFiltrada.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.LabelAutoFitMaxFontSize = 15;
+            chartArea4.AxisX.LabelAutoFitMinFontSize = 8;
+            chartArea4.AxisX.Title = "Tiempo[Seg]";
+            chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea4.AxisY.Maximum = 250D;
+            chartArea4.AxisY.Title = "Amplitud";
+            chartArea4.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            chartArea4.Name = "ChartArea1";
+            this.chartSenalFiltrada.ChartAreas.Add(chartArea4);
             this.chartSenalFiltrada.Location = new System.Drawing.Point(9, 377);
             this.chartSenalFiltrada.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenalFiltrada.Name = "chartSenalFiltrada";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series2.MarkerStep = 10;
-            series2.Name = "Muestras";
-            this.chartSenalFiltrada.Series.Add(series2);
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series4.MarkerStep = 10;
+            series4.Name = "Muestras";
+            this.chartSenalFiltrada.Series.Add(series4);
             this.chartSenalFiltrada.Size = new System.Drawing.Size(1240, 270);
             this.chartSenalFiltrada.TabIndex = 3;
             this.chartSenalFiltrada.Text = "chart1";
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "Title1";
-            title2.Text = "Señal Filtrada";
-            this.chartSenalFiltrada.Titles.Add(title2);
+            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title4.Name = "Title1";
+            title4.Text = "Señal Filtrada";
+            this.chartSenalFiltrada.Titles.Add(title4);
             // 
             // groupBox1
             // 
@@ -128,7 +128,7 @@
             this.groupBox1.Controls.Add(this.BtnFiltroNotch);
             this.groupBox1.Controls.Add(this.BtnFiltroPasaBanda);
             this.groupBox1.Controls.Add(this.BtnFiltroPasaAlto);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.BtnFiltroPasaBajo);
             this.groupBox1.Controls.Add(this.BtnResetZoom);
             this.groupBox1.Controls.Add(this.toggleButton1);
             this.groupBox1.Location = new System.Drawing.Point(12, 7);
@@ -195,15 +195,16 @@
             this.BtnFiltroPasaAlto.Text = "Filtro Pasa Alto";
             this.BtnFiltroPasaAlto.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // BtnFiltroPasaBajo
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(301, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 47);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Filtro Pasa Bajo";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BtnFiltroPasaBajo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFiltroPasaBajo.Location = new System.Drawing.Point(301, 19);
+            this.BtnFiltroPasaBajo.Name = "BtnFiltroPasaBajo";
+            this.BtnFiltroPasaBajo.Size = new System.Drawing.Size(110, 47);
+            this.BtnFiltroPasaBajo.TabIndex = 6;
+            this.BtnFiltroPasaBajo.Text = "Filtro Pasa Bajo";
+            this.BtnFiltroPasaBajo.UseVisualStyleBackColor = true;
+            this.BtnFiltroPasaBajo.Click += new System.EventHandler(this.BtnFiltroPasaBajo_Click);
             // 
             // BtnResetZoom
             // 
@@ -259,7 +260,7 @@
         private System.Windows.Forms.Button BtnFiltroNotch;
         private System.Windows.Forms.Button BtnFiltroPasaBanda;
         private System.Windows.Forms.Button BtnFiltroPasaAlto;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BtnFiltroPasaBajo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnCargar;
         private System.Windows.Forms.Button BtnGuardar;
