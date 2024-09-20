@@ -71,25 +71,25 @@
             this.groupBox1.Size = new System.Drawing.Size(299, 82);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Frecuencia Min: 1Hz, Frecuencia Max: 200 Hz";
+            this.groupBox1.Text = "F Min: 1Hz, F Max: 200 Hz";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(225, 41);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 16);
+            this.label2.Size = new System.Drawing.Size(39, 18);
             this.label2.TabIndex = 7;
             this.label2.Text = "[Hz]";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(37, 40);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(32, 40);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 16);
+            this.label1.Size = new System.Drawing.Size(117, 18);
             this.label1.TabIndex = 6;
             this.label1.Text = "Frec. de Corte";
             // 

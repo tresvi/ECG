@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ECGViewer.Modelos;
+using FftSharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,6 +29,9 @@ namespace ECGViewer
         Series _graphSerie;
         private Panel chartPanel;
         private const int FRECUENCIA_MUESTREO = 500;
+        private const int FRECUENCIA_CORTE_DFLT = 49;
+
+
 
         public Form1()
         {
@@ -58,43 +63,7 @@ namespace ECGViewer
         }
 
 
-        static List<(double, double)> LoadCsvData(string filePath)
-        {
-            var dataList = new List<(double, double)>();
 
-            // Verifica si el archivo existe
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException("El archivo CSV no se encontró.", filePath);
-            }
-
-            // Lee el archivo línea por línea
-            foreach (var line in File.ReadLines(filePath))
-            {
-                // Divide la línea en partes usando la coma como delimitador
-                var parts = line.Split('\t');
-
-                if (parts.Length >= 2)
-                {
-                    // Convierte las partes a float y añade a la lista
-                    if (double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double value1) &&
-                        double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double value2))
-                    {
-                        dataList.Add((value1, value2));
-                    }
-                    else
-                    {
-                        Console.WriteLine($"No se pudieron convertir los valores: {line}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Línea con formato incorrecto: {line}");
-                }
-            }
-
-            return dataList;
-        }
 
 
 
@@ -108,13 +77,6 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 0;
 
-            //chart.ChartAreas[0].CursorY.IsUserEnabled = enable;
-            //chart.ChartAreas[0].CursorY.IsUserSelectionEnabled = enable;
-            //chart.ChartAreas[0].CursorY.Interval = 0;
-            //chart.ChartAreas[0].AxisY.ScaleView.Zoomable = enable;
-            //chart.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
-            //chart.ChartAreas[0].AxisY.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
-            //chart.ChartAreas[0].AxisY.ScaleView.SmallScrollMinSize = 0;
             if (enable == false)
             {
                 //Quita la linea de los cursores
@@ -287,11 +249,11 @@ namespace ECGViewer
         }
 
 
-        List<(double, double)> _senalECG;
+        List<Muestra> _senalECG;
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
-            string filePath = @"..\..\CSV\ECG_20Seg_NOFiltrado.txt"; // Ruta al archivo CSV
-            _senalECG = LoadCsvData(filePath);
+            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.txt"; // Ruta al archivo CSV
+            _senalECG = Utiles.LoadCsvData(filePath);
 
             //Creo la nueva serie de datos.
             _graphSerie = new Series("Muestras");
@@ -311,9 +273,9 @@ namespace ECGViewer
 
             Series series = chartSenal.Series["Muestras"];
 
-            foreach (var (x, y) in _senalECG)
+            foreach (var muestra in _senalECG)
             {
-                series.Points.AddXY(x, -1 * y);
+                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
             _graphSerie = series;
 
@@ -335,10 +297,10 @@ namespace ECGViewer
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Graficar2();
+           // Graficar2();
         }
 
-
+        /*
         private void Graficar2()
         {
             //Creo la nueva serie de datos.
@@ -357,7 +319,7 @@ namespace ECGViewer
             chartArea.AxisY.Minimum = -0.12;
             chartArea.AxisY.Maximum = 0.5;
 
-            string filePath = @"..\..\CSV\ECG_20Seg_NoFiltrado.txt"; // Ruta al archivo CSV
+            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NoFiltrado.txt"; // Ruta al archivo CSV
                                                                      // List<(double, double)> muestras = LoadCsvData(filePath);
 
             List<(double, double)> dataList = LoadCsvData(filePath);
@@ -365,7 +327,7 @@ namespace ECGViewer
 
             //foreach (var (x, y) in dataList)
             //{
-            //    series.Points.AddXY(x, -1 * y);
+            //    series.Points.AddXY(x, y);
             //}
             //_graphSerie = series;
 
@@ -375,9 +337,9 @@ namespace ECGViewer
             double[] signal = new double[16_384];
             for (int i = 0; i < dataList.Count; i++)
             {
-                signal[i] = -1 * dataList[i].Item2;
+                signal[i] = dataList[i].Item2;
             }
-
+        
 
             int sampleRate = 500;
 
@@ -412,77 +374,7 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
             chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
         }
-
-        private void BtnFiltrarSenal_Click(object sender, EventArgs e)
-        {
-            //Creo la nueva serie de datos.
-            //_graphSerie = new Series("Muestras");
-            //_graphSerie.Color = System.Drawing.Color.Green;
-            //_graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            //_graphSerie.BorderWidth = 1; //2;
-            //_graphSerie.XValueType = ChartValueType.Single;
-            //_graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-            ChartArea chartArea = chartSenalFiltrada.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            Series series = chartSenalFiltrada.Series["Muestras"];
-
-            //foreach (var (x, y) in dataList)
-            //{
-            //    series.Points.AddXY(x, -1 * y);
-            //}
-            //_graphSerie = series;
-
-
-            // sample audio with tones at 2, 10, and 20 kHz plus white noise
-            //double[] signal = FftSharp.SampleData.SampleAudio1();
-            double[] signal = new double[16_384];
-            for (int i = 0; i < _senalECG.Count; i++)
-            {
-                signal[i] = -1 * _senalECG[i].Item2;
-            }
-
-            int sampleRate = 500;
-            //double[] filtered = FftSharp.Filter.LowPass(signal, sampleRate, maxFrequency: 49);
-            double[] filtered = FftSharp.Filter.HighPass(signal, sampleRate, minFrequency: 2);
-            //double[] filtered = FftSharp.Filter.BandPass(signal, sampleRate, minFrequency: 49, maxFrequency: 51);
-
-
-            int counter = 0;
-            for (int i = 0; i < _senalECG.Count; i++)
-            {
-                counter++;
-                series.Points.AddXY(_senalECG[i].Item1, filtered[i]); //Calculado 15.2 ms
-            }
-
-            _graphSerie = series;
-
-            //Visuaizacion del eje X
-            // Configurar el intervalo del eje X
-            chartSenalFiltrada.ChartAreas[0].AxisX.Interval = 10;  // Intervalo de 1 unidad
-
-            // Configurar el formato de las etiquetas del eje X
-            chartSenalFiltrada.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-
-            //Autoescala
-            // Habilitar autoescala en el eje X
-            chartSenalFiltrada.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenalFiltrada.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            // Habilitar autoescala en el eje Y
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-        }
+        */
 
 
         private void btnEspectro_Click(object sender, EventArgs e)
@@ -493,32 +385,42 @@ namespace ECGViewer
                 return;
             }
 
-            long tamanoVector = 0; int exponente = 0;
-            
-            while (_senalECG.Count > tamanoVector)
-            { 
-                tamanoVector = 2 << exponente++;
-            }
-
-            double[] signal = new double[tamanoVector];
-            for (int i = 0; i < _senalECG.Count; i++)
-            {
-                signal[i] = -1 * _senalECG[i].Item2;
-            }
-
+            double[] signal = Utiles.ClonarVectorParaFFT(_senalECG);
             Form form = new FrmEspectro(signal, FRECUENCIA_MUESTREO);
             form.Show();
         }
 
+
         private void BtnFiltro_Click(object sender, EventArgs e)
         {
-            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG);
+            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, FRECUENCIA_MUESTREO);
             frmAplicarFiltro.ShowDialog();
         }
 
-        private void chartSenal_Click(object sender, EventArgs e)
-        {
 
+        private void BtnFiltrarSenal_Click(object sender, EventArgs e)
+        {
+            //Por alguna razon, el valor automatico de los ejes se altera
+            double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
+            double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
+            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
+
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalECG);
+            double[] filtered = Filter.LowPass(senal, FRECUENCIA_MUESTREO, FRECUENCIA_CORTE_DFLT);
+
+            Series series = chartSenal.Series["Muestras"];
+            series.Points.Clear();
+            
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+                _senalECG[i].Canal[0] = filtered[i];
+                series.Points.AddXY(_senalECG[i].Tiempo, _senalECG[i].Canal[0]);
+            }
+
+            //Por alguna razon, el valor automatico de los ejes se altera
+            chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
+            chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
+            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;
         }
     }
 }

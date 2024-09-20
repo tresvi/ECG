@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ECGViewer.Modelos;
+using FftSharp;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -9,18 +10,20 @@ namespace ECGViewer
 {
     public partial class FrmConsolaFiltros : Form
     {
-        public readonly List<(double, double)> _senal;
-        public readonly List<(double, double)> _senalFiltrada;
+        public readonly List<Muestra> _senalOriginal;
+        public readonly List<Muestra> _senalFiltrada;
+        public readonly int _frecuenciaMuestreo;
 
-        public FrmConsolaFiltros(List<(double, double)> senal)
+        public FrmConsolaFiltros(List<Muestra> senal, int frecuenciaMuestreo)
         {
             InitializeComponent();
-            _senal = senal;
-            _senalFiltrada = _senal;
+            _senalOriginal = senal;
+            _senalFiltrada = _senalOriginal;
+            _frecuenciaMuestreo = frecuenciaMuestreo;
         }
 
 
-        private void Graficar(Chart chart, List<(double, double)> senal)
+        private void Graficar(Chart chart, List<Muestra> senal)
         {
             ChartArea chartArea = chart.ChartAreas[0];
 
@@ -33,9 +36,9 @@ namespace ECGViewer
             chartArea.AxisY.Title = "Amplitud Vs Tiempo[seg]";
             chartArea.AxisX.Title = "";
 
-            foreach (var (x, y) in senal)
+            foreach (var muestra in senal)
             {
-                chart.Series["Muestras"].Points.AddXY(x, -1 * y);
+                chart.Series["Muestras"].Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
             chartArea.AxisX.LabelStyle.Format = "0.00";
         }
@@ -52,7 +55,7 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Load(object sender, EventArgs e)
         {
-            Graficar(chartSenalOriginal, _senal);
+            Graficar(chartSenalOriginal, _senalOriginal);
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
             // Configura el gráfico
@@ -114,14 +117,40 @@ namespace ECGViewer
             }
         }
 
+
         private void BtnFiltroPasaBajo_Click(object sender, EventArgs e)
         {
             FrmPasaAltosBajos frmPasaAltosBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
 
-            if (frmPasaAltosBajos.ShowDialog() == DialogResult.OK)
+            if (frmPasaAltosBajos.ShowDialog() == DialogResult.Cancel) return;
+
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalOriginal);
+            double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double) frmPasaAltosBajos.FrecuenciaCorte);
+
+            Series series = chartSenalFiltrada.Series["Muestras"];
+            series.Points.Clear();
+
+            for (int i = 0; i < _senalOriginal.Count; i++)
             {
-                MessageBox.Show($"Frecuencia elegida: {frmPasaAltosBajos.FrecuenciaCorte}");
+                series.Points.AddXY(_senalOriginal[i].Tiempo, filtered[i]);
             }
+
+            //Por alguna razon, el valor automatico de los ejes se altera
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+        }
+
+
+        private void BtnFiltroPasaBanda_Click(object sender, EventArgs e)
+        {
+            FrmPasaEliminaBanda frmPasaELiminaBanda = new FrmPasaEliminaBanda("Configuracion Filtro Pasa Banda", 1, 49);
+        }
+
+
+        private void BtnFiltroPasaAlto_Click(object sender, EventArgs e)
+        {
+            FrmPasaEliminaBanda frmPasaELiminaBanda = new FrmPasaEliminaBanda("Configuracion Filtro Elimina Banda", 49, 61);
         }
     }
 }

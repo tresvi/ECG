@@ -99,8 +99,10 @@
     <Compile Include="Formularios\FrmPasaEliminaBanda.Designer.cs">
       <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Muestra.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utiles.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,8 +142,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CSV\ECG_20Seg_Filtrado.txt" />
-    <Content Include="CSV\ECG_20Seg_NoFiltrado.txt" />
+    <Content Include="Archivos_CSV\ECG_20Seg_Filtrado.txt" />
+    <Content Include="Archivos_CSV\ECG_20Seg_NoFiltrado.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
