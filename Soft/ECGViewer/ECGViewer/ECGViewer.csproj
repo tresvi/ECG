@@ -161,6 +161,8 @@
     <None Include="Recursos\export_Proteus.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
+    <Content Include="Recursos\new-document.png" />
+    <Content Include="Recursos\new_file.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />

@@ -21,8 +21,9 @@ namespace ECGViewer
         Series _graphSerie;
         private Panel chartPanel;
         private bool _lecturaEnCurso = false;
-        private SerialPort _serialPort;
-        
+        private SerialPort _serialPort = new SerialPort();
+        private List<Muestra> _senalECG;
+
         private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
@@ -248,7 +249,6 @@ namespace ECGViewer
         }
 
 
-        List<Muestra> _senalECG;
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
             string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
@@ -508,16 +508,6 @@ namespace ECGViewer
 
         private void btnIniciarLectura_Click(object sender, EventArgs e)
         {
-            btnIniciarLectura.Enabled = false;
-            btnFinalizarLectura.Enabled = true;
-
-            if (_lecturaEnCurso)
-            {
-                MessageBox.Show(this, "Hay una lectura de graficos en curso. Finalizela para poder enviar comandos",
-                    "Lectura en curso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             if (cmbPuertos.Text == "")
             {
                 MessageBox.Show(this, "Debe seleccionar un puerto de comunicacion",
@@ -525,21 +515,68 @@ namespace ECGViewer
                 return;
             }
 
+            btnIniciarLectura.Enabled = false;
+            btnFinalizarLectura.Enabled = true;
+
             try
             {
+                cmbPuertos.Enabled = false;
+                cmbBaudRate.Enabled = false;
                 _serialPort = new SerialPort(cmbPuertos.Text, int.Parse(cmbBaudRate.Text), Parity.None, 8, StopBits.One);
+                _serialPort.NewLine = "\n";
+                _serialPort.DataReceived += SerialPort_DataReceived;
             }
             catch (Exception ex)
-            { 
-            
+            {
+                MessageBox.Show($"Error al obtener los datos del puerto serie. Detalles: {ex.Message}"
+                    , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
+
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                // Leer la línea completa (espera hasta recibir el salto de línea)
+                string data = _serialPort.ReadLine();
+                Invoke(new MethodInvoker(() =>
+                {
+                    txtLog.Text += '\n' + data;
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al leer datos: {ex.Message}");
+            }
+        }
+
 
         private void btnFinalizarLectura_Click(object sender, EventArgs e)
         {
+            if (_serialPort.IsOpen) _serialPort.Close();
             btnIniciarLectura.Enabled = true;
             btnFinalizarLectura.Enabled = false;
+            cmbPuertos.Enabled = true;
+            cmbBaudRate.Enabled = true;
+        }
+
+
+        private void tsbNuevoArchivo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void tsbGuardarTrx_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_serialPort.IsOpen) _serialPort.Close();
         }
     }
 }

@@ -44,22 +44,24 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnFiltrarSenal = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAbrirTrx = new System.Windows.Forms.ToolStripButton();
-            this.tsbGuardarTrx = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
-            this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
-            this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnFinalizarLectura = new System.Windows.Forms.Button();
+            this.btnIniciarLectura = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbBaudRate = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbPuertos = new System.Windows.Forms.ComboBox();
-            this.btnIniciarLectura = new System.Windows.Forms.Button();
-            this.btnFinalizarLectura = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tsbNuevoArchivo = new System.Windows.Forms.ToolStripButton();
+            this.tsbAbrirTrx = new System.Windows.Forms.ToolStripButton();
+            this.tsbGuardarTrx = new System.Windows.Forms.ToolStripButton();
+            this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
+            this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
+            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
+            this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
+            this.txtLog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -101,7 +103,7 @@
             // BtnCargarSenal
             // 
             this.BtnCargarSenal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCargarSenal.Location = new System.Drawing.Point(354, 7);
+            this.BtnCargarSenal.Location = new System.Drawing.Point(412, 9);
             this.BtnCargarSenal.Name = "BtnCargarSenal";
             this.BtnCargarSenal.Size = new System.Drawing.Size(151, 39);
             this.BtnCargarSenal.TabIndex = 2;
@@ -112,7 +114,7 @@
             // BtnMarcadores
             // 
             this.BtnMarcadores.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnMarcadores.Location = new System.Drawing.Point(692, 7);
+            this.BtnMarcadores.Location = new System.Drawing.Point(805, 12);
             this.BtnMarcadores.Name = "BtnMarcadores";
             this.BtnMarcadores.Size = new System.Drawing.Size(128, 38);
             this.BtnMarcadores.TabIndex = 4;
@@ -124,7 +126,7 @@
             // BtnLineaReferencia
             // 
             this.BtnLineaReferencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnLineaReferencia.Location = new System.Drawing.Point(511, 8);
+            this.BtnLineaReferencia.Location = new System.Drawing.Point(569, 9);
             this.BtnLineaReferencia.Name = "BtnLineaReferencia";
             this.BtnLineaReferencia.Size = new System.Drawing.Size(174, 38);
             this.BtnLineaReferencia.TabIndex = 5;
@@ -135,9 +137,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(826, 12);
+            this.button2.Location = new System.Drawing.Point(921, 12);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(174, 55);
+            this.button2.Size = new System.Drawing.Size(131, 55);
             this.button2.TabIndex = 6;
             this.button2.Text = "2da Serie con DataPoints";
             this.button2.UseVisualStyleBackColor = true;
@@ -147,7 +149,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(1006, 14);
+            this.button3.Location = new System.Drawing.Point(1047, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(105, 55);
             this.button3.TabIndex = 7;
@@ -159,9 +161,9 @@
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(1127, 12);
+            this.button4.Location = new System.Drawing.Point(1158, 12);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(149, 55);
+            this.button4.Size = new System.Drawing.Size(118, 55);
             this.button4.TabIndex = 8;
             this.button4.Text = "V.Anott con lineas 2";
             this.button4.UseVisualStyleBackColor = true;
@@ -170,7 +172,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(654, 15);
+            this.button5.Location = new System.Drawing.Point(749, 9);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(50, 38);
             this.button5.TabIndex = 9;
@@ -208,7 +210,7 @@
             this.groupBox1.Controls.Add(this.btnEspectro);
             this.groupBox1.Controls.Add(this.btnFiltrosAvanzados);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 591);
+            this.groupBox1.Location = new System.Drawing.Point(642, 591);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(393, 114);
             this.groupBox1.TabIndex = 14;
@@ -231,6 +233,7 @@
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbNuevoArchivo,
             this.tsbAbrirTrx,
             this.tsbGuardarTrx,
             this.toolStripSeparator2,
@@ -245,75 +248,20 @@
             this.toolStrip1.TabIndex = 43;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tsbAbrirTrx
-            // 
-            this.tsbAbrirTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAbrirTrx.Image = global::ECGViewer.Properties.Resources.carpeta_abierta;
-            this.tsbAbrirTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAbrirTrx.Name = "tsbAbrirTrx";
-            this.tsbAbrirTrx.Size = new System.Drawing.Size(52, 52);
-            this.tsbAbrirTrx.Text = "Abrir Transaccion";
-            this.tsbAbrirTrx.Click += new System.EventHandler(this.tsbAbrirTrx_Click);
-            // 
-            // tsbGuardarTrx
-            // 
-            this.tsbGuardarTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbGuardarTrx.Image = global::ECGViewer.Properties.Resources.disco_flexible__1_;
-            this.tsbGuardarTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbGuardarTrx.Name = "tsbGuardarTrx";
-            this.tsbGuardarTrx.Size = new System.Drawing.Size(52, 52);
-            this.tsbGuardarTrx.Text = "Guardar Transaccion";
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
-            // 
-            // tsbExportarATablaC
-            // 
-            this.tsbExportarATablaC.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarATablaC.Image = global::ECGViewer.Properties.Resources.export_C;
-            this.tsbExportarATablaC.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarATablaC.Name = "tsbExportarATablaC";
-            this.tsbExportarATablaC.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
-            // 
-            // tsbExportarProteus
-            // 
-            this.tsbExportarProteus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarProteus.Image = global::ECGViewer.Properties.Resources.export_Proteus;
-            this.tsbExportarProteus.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarProteus.Name = "tsbExportarProteus";
-            this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
             // 
-            // tsbResetZoom
-            // 
-            this.tsbResetZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01;
-            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbResetZoom.Name = "tsbResetZoom";
-            this.tsbResetZoom.Size = new System.Drawing.Size(52, 52);
-            this.tsbResetZoom.Text = "Reset Zoom";
-            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
-            // 
-            // tsbMetricas
-            // 
-            this.tsbMetricas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbMetricas.Image = global::ECGViewer.Properties.Resources.kpi;
-            this.tsbMetricas.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbMetricas.Name = "tsbMetricas";
-            this.tsbMetricas.Size = new System.Drawing.Size(52, 52);
-            this.tsbMetricas.Text = "Continuity test";
-            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox3.Controls.Add(this.txtLog);
             this.groupBox3.Controls.Add(this.btnFinalizarLectura);
             this.groupBox3.Controls.Add(this.btnIniciarLectura);
             this.groupBox3.Controls.Add(this.label2);
@@ -321,12 +269,33 @@
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.cmbPuertos);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(411, 591);
+            this.groupBox3.Location = new System.Drawing.Point(19, 591);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(428, 114);
+            this.groupBox3.Size = new System.Drawing.Size(604, 114);
             this.groupBox3.TabIndex = 44;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Conexión Serie";
+            // 
+            // btnFinalizarLectura
+            // 
+            this.btnFinalizarLectura.Enabled = false;
+            this.btnFinalizarLectura.Location = new System.Drawing.Point(256, 66);
+            this.btnFinalizarLectura.Name = "btnFinalizarLectura";
+            this.btnFinalizarLectura.Size = new System.Drawing.Size(139, 39);
+            this.btnFinalizarLectura.TabIndex = 16;
+            this.btnFinalizarLectura.Text = "Finalizar Lectura";
+            this.btnFinalizarLectura.UseVisualStyleBackColor = true;
+            this.btnFinalizarLectura.Click += new System.EventHandler(this.btnFinalizarLectura_Click);
+            // 
+            // btnIniciarLectura
+            // 
+            this.btnIniciarLectura.Location = new System.Drawing.Point(256, 21);
+            this.btnIniciarLectura.Name = "btnIniciarLectura";
+            this.btnIniciarLectura.Size = new System.Drawing.Size(139, 39);
+            this.btnIniciarLectura.TabIndex = 15;
+            this.btnIniciarLectura.Text = "Iniciar Lectura";
+            this.btnIniciarLectura.UseVisualStyleBackColor = true;
+            this.btnIniciarLectura.Click += new System.EventHandler(this.btnIniciarLectura_Click);
             // 
             // label2
             // 
@@ -383,25 +352,82 @@
             this.cmbPuertos.Size = new System.Drawing.Size(105, 25);
             this.cmbPuertos.TabIndex = 11;
             // 
-            // btnIniciarLectura
+            // tsbNuevoArchivo
             // 
-            this.btnIniciarLectura.Location = new System.Drawing.Point(256, 21);
-            this.btnIniciarLectura.Name = "btnIniciarLectura";
-            this.btnIniciarLectura.Size = new System.Drawing.Size(139, 39);
-            this.btnIniciarLectura.TabIndex = 15;
-            this.btnIniciarLectura.Text = "Iniciar Lectura";
-            this.btnIniciarLectura.UseVisualStyleBackColor = true;
-            this.btnIniciarLectura.Click += new System.EventHandler(this.btnIniciarLectura_Click);
+            this.tsbNuevoArchivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbNuevoArchivo.Image = global::ECGViewer.Properties.Resources.new_file;
+            this.tsbNuevoArchivo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNuevoArchivo.Name = "tsbNuevoArchivo";
+            this.tsbNuevoArchivo.Size = new System.Drawing.Size(52, 52);
+            this.tsbNuevoArchivo.Text = "Nuevo Archivo";
+            this.tsbNuevoArchivo.Click += new System.EventHandler(this.tsbNuevoArchivo_Click);
             // 
-            // btnFinalizarLectura
+            // tsbAbrirTrx
             // 
-            this.btnFinalizarLectura.Location = new System.Drawing.Point(256, 66);
-            this.btnFinalizarLectura.Name = "btnFinalizarLectura";
-            this.btnFinalizarLectura.Size = new System.Drawing.Size(139, 39);
-            this.btnFinalizarLectura.TabIndex = 16;
-            this.btnFinalizarLectura.Text = "Finalizar Lectura";
-            this.btnFinalizarLectura.UseVisualStyleBackColor = true;
-            this.btnFinalizarLectura.Click += new System.EventHandler(this.btnFinalizarLectura_Click);
+            this.tsbAbrirTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAbrirTrx.Image = global::ECGViewer.Properties.Resources.carpeta_abierta;
+            this.tsbAbrirTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAbrirTrx.Name = "tsbAbrirTrx";
+            this.tsbAbrirTrx.Size = new System.Drawing.Size(52, 52);
+            this.tsbAbrirTrx.Text = "Abrir Transaccion";
+            this.tsbAbrirTrx.Click += new System.EventHandler(this.tsbAbrirTrx_Click);
+            // 
+            // tsbGuardarTrx
+            // 
+            this.tsbGuardarTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbGuardarTrx.Image = global::ECGViewer.Properties.Resources.disco_flexible__1_;
+            this.tsbGuardarTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbGuardarTrx.Name = "tsbGuardarTrx";
+            this.tsbGuardarTrx.Size = new System.Drawing.Size(52, 52);
+            this.tsbGuardarTrx.Text = "Guardar Transaccion";
+            this.tsbGuardarTrx.Click += new System.EventHandler(this.tsbGuardarTrx_Click);
+            // 
+            // tsbExportarATablaC
+            // 
+            this.tsbExportarATablaC.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarATablaC.Image = global::ECGViewer.Properties.Resources.export_C;
+            this.tsbExportarATablaC.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarATablaC.Name = "tsbExportarATablaC";
+            this.tsbExportarATablaC.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
+            // 
+            // tsbExportarProteus
+            // 
+            this.tsbExportarProteus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarProteus.Image = global::ECGViewer.Properties.Resources.export_Proteus;
+            this.tsbExportarProteus.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarProteus.Name = "tsbExportarProteus";
+            this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
+            // 
+            // tsbResetZoom
+            // 
+            this.tsbResetZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01;
+            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbResetZoom.Name = "tsbResetZoom";
+            this.tsbResetZoom.Size = new System.Drawing.Size(52, 52);
+            this.tsbResetZoom.Text = "Reset Zoom";
+            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
+            // 
+            // tsbMetricas
+            // 
+            this.tsbMetricas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbMetricas.Image = global::ECGViewer.Properties.Resources.kpi;
+            this.tsbMetricas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbMetricas.Name = "tsbMetricas";
+            this.tsbMetricas.Size = new System.Drawing.Size(52, 52);
+            this.tsbMetricas.Text = "Continuity test";
+            // 
+            // txtLog
+            // 
+            this.txtLog.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLog.Location = new System.Drawing.Point(413, 21);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.Size = new System.Drawing.Size(178, 84);
+            this.txtLog.TabIndex = 17;
             // 
             // Form1
             // 
@@ -422,6 +448,7 @@
             this.Name = "Form1";
             this.Text = "Visor ECG 1 Canal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -465,6 +492,8 @@
         private System.Windows.Forms.Button btnFinalizarLectura;
         private System.Windows.Forms.Button btnIniciarLectura;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripButton tsbNuevoArchivo;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 
