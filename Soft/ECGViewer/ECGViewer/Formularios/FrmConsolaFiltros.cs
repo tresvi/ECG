@@ -2,6 +2,7 @@
 using FftSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -25,7 +26,7 @@ namespace ECGViewer
         private void Graficar(Chart chart, List<Muestra> senal)
         {
             ChartArea chartArea = chart.ChartAreas[0];
-
+            
             //Autoescala en ejes
             chartArea.AxisX.Interval = 1;
             chartArea.AxisX.Minimum = 0;  // Autoajustar el mínimo
@@ -198,6 +199,81 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
             chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+        }
+
+        private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
+        {
+            /********** TODO: Sacar esto. Poner que el filtro pueda ser aplicado con cualquier vista ********/
+            BtnResetZoom.Enabled = !tgbTipoVista.Checked;
+            BtnFiltroPasaBajo.Enabled = !tgbTipoVista.Checked;
+            BtnFiltroPasaAlto.Enabled = !tgbTipoVista.Checked;
+            BtnFiltroPasaBanda.Enabled = !tgbTipoVista.Checked;
+            BtnFiltroNotch.Enabled = !tgbTipoVista.Checked;
+            /*****************************************************************************************/
+
+            Series serieEspectro = chartSenalOriginal.Series["Espectro"];
+            ChartArea chartArea = chartSenalOriginal.ChartAreas[0];
+            ChartArea chartAreaEspectro = chartSenalOriginal.ChartAreas[1];
+
+            Series serieEspectroFiltrada = chartSenalFiltrada.Series["Espectro"];
+            ChartArea chartAreaFiltrada = chartSenalFiltrada.ChartAreas[0];
+            ChartArea chartAreaEspectroFiltrada = chartSenalFiltrada.ChartAreas[1];
+
+            //serieMuestras.ChartArea = chartArea.Name;
+            serieEspectro.ChartArea = chartAreaEspectro.Name;
+            chartArea.Visible = !tgbTipoVista.Checked;
+            chartAreaEspectro.Visible = tgbTipoVista.Checked;
+
+            serieEspectroFiltrada.ChartArea = chartAreaEspectroFiltrada.Name;
+            chartAreaFiltrada.Visible = !tgbTipoVista.Checked;
+            chartAreaEspectroFiltrada.Visible = tgbTipoVista.Checked;
+
+            if (tgbTipoVista.Checked)
+            {
+                /************* senalOriginal****************/
+
+                double[] signal = Utiles.ClonarVectorParaFFT(_senalOriginal);
+
+                System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
+                double[] psd = FftSharp.FFT.Magnitude(spectrum);
+                double[] freq = FftSharp.FFT.FrequencyScale(psd.Length, _frecuenciaMuestreo);
+
+                serieEspectro.Points.Clear();
+                for (int i = 0; i < psd.Count(); i++)
+                {
+                    serieEspectro.Points.AddXY(freq[i], psd[i]);
+                }
+
+                chartAreaEspectro.AxisX.Interval = 2;
+                chartAreaEspectro.AxisX.LabelStyle.Format = "0.0";
+                chartAreaEspectro.AxisX.Minimum = 0;
+                chartAreaEspectro.AxisX.Maximum = 100;
+                chartAreaEspectro.AxisY.Minimum = Double.NaN;
+                chartAreaEspectro.AxisY.Maximum = Double.NaN;
+
+
+                /************* senalFiltrada****************/
+
+                signal = Utiles.ClonarVectorParaFFT(_senalFiltrada);
+
+                System.Numerics.Complex[] spectrumFiltrado = FftSharp.FFT.Forward(signal);
+                psd = FftSharp.FFT.Magnitude(spectrumFiltrado);
+                freq = FftSharp.FFT.FrequencyScale(psd.Length, _frecuenciaMuestreo);
+
+                serieEspectroFiltrada.Points.Clear();
+                for (int i = 0; i < psd.Count(); i++)
+                {
+                    serieEspectroFiltrada.Points.AddXY(freq[i], psd[i]);
+                }
+
+                chartAreaEspectroFiltrada.AxisX.Interval = 2;
+                chartAreaEspectroFiltrada.AxisX.LabelStyle.Format = "0.0";
+                chartAreaEspectroFiltrada.AxisX.Minimum = chartAreaEspectro.AxisX.Minimum;
+                chartAreaEspectroFiltrada.AxisX.Maximum = chartAreaEspectro.AxisX.Maximum;
+                chartAreaEspectroFiltrada.AxisY.Minimum = chartAreaEspectro.AxisY.Minimum;
+                chartAreaEspectroFiltrada.AxisY.Maximum = chartAreaEspectro.AxisY.Maximum;
+            }
+
         }
     }
 }

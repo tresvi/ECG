@@ -118,14 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="salvar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\salvar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="kpi" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\kpi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="carpeta-abierta" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\carpeta-abierta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="salvar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\salvar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="disquete (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disquete (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,11 +133,17 @@
   <data name="indicador" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\indicador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="abrir-documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\abrir-documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="disco-flexible (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disco-flexible (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="saveall_sav_10186" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\saveall_sav_10186.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="correo-electronico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\correo-electronico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="evaluacion-comparativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\evaluacion-comparativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,22 +154,25 @@
   <data name="disco-flexible" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disco-flexible.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Save_as-80_icon-icons.com_57275" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\Save_as-80_icon-icons.com_57275.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="export" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boton-de-play" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\boton-de-play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="abrir-documento" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\abrir-documento.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Save_as-80_icon-icons.com_57275" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\Save_as-80_icon-icons.com_57275.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="correo-electronico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\correo-electronico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="carpeta-abierta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\carpeta-abierta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="escala-corporal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\escala-corporal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="export" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="export_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\export_C.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_Proteus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\export_Proteus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -144,8 +144,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Archivos_CSV\ECG_20Seg_Filtrado.txt" />
-    <Content Include="Archivos_CSV\ECG_20Seg_NoFiltrado.txt" />
+    <None Include="Archivos_CSV\ECG_20Seg_Filtrado.csv" />
+    <None Include="Archivos_CSV\ECG_20Seg_NoFiltrado.csv" />
     <Content Include="Recursos\abrir-documento.png" />
     <Content Include="Recursos\boton-de-play.png" />
     <Content Include="Recursos\carpeta-abierta.png" />
@@ -157,6 +157,8 @@
     <Content Include="Recursos\escala-corporal.png" />
     <Content Include="Recursos\evaluacion-comparativa.png" />
     <Content Include="Recursos\export.png" />
+    <None Include="Recursos\export_C.png" />
+    <None Include="Recursos\export_Proteus.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
     <Content Include="Recursos\salvar.png" />

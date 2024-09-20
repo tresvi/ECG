@@ -2,18 +2,10 @@
 using FftSharp;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Windows.Forms.VisualStyles;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 //TODO: Agregar captura en vivo desde puerto serie
 //TODO: Agregar sistema de marcas
@@ -28,8 +20,14 @@ namespace ECGViewer
     {
         Series _graphSerie;
         private Panel chartPanel;
+        private bool _lecturaEnCurso = false;
+        private SerialPort _serialPort;
+        
         private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
+        const string BAUDRATE_DEFAULT = "9600"; //"19200";
+
+
 
         public Form1()
         {
@@ -58,6 +56,17 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].AxisX.Interval = 1;
 
             ActivarZoom(chartSenal, true);
+
+
+            try
+            {
+                foreach (String puerto in SerialPort.GetPortNames())
+                    cmbPuertos.Items.Add(puerto);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No hay señal cargada", "Ver Espectro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -83,15 +92,7 @@ namespace ECGViewer
             }
         }
 
-        private void BtnResetZoom_Click(object sender, EventArgs e)
-        {
-            //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-            //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
-            //ChartUtils.InicializarChart(chartEspectro);
-            this.chartSenal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
-            this.chartSenal.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
 
-        }
 
         private void BtnMarcadores_Click(object sender, EventArgs e)
         {
@@ -250,7 +251,7 @@ namespace ECGViewer
         List<Muestra> _senalECG;
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
-            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.txt"; // Ruta al archivo CSV
+            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
             _senalECG = Utiles.LoadCsvData(filePath);
 
             //Creo la nueva serie de datos.
@@ -271,6 +272,7 @@ namespace ECGViewer
 
             Series series = chartSenal.Series["Muestras"];
 
+            series.Points.Clear();
             foreach (var muestra in _senalECG)
             {
                 series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
@@ -293,6 +295,8 @@ namespace ECGViewer
             btnFiltrarSenal.Enabled = true;
             btnEspectro.Enabled = true;
             btnFiltrosAvanzados.Enabled = true;
+
+            tsbResetZoom_Click(sender, e);
         }
 
 
@@ -321,7 +325,7 @@ namespace ECGViewer
             chartArea.AxisY.Minimum = -0.12;
             chartArea.AxisY.Maximum = 0.5;
 
-            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NoFiltrado.txt"; // Ruta al archivo CSV
+            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NoFiltrado.csv"; // Ruta al archivo CSV
                                                                      // List<(double, double)> muestras = LoadCsvData(filePath);
 
             List<(double, double)> dataList = LoadCsvData(filePath);
@@ -423,6 +427,119 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
             chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
             chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;
+        }
+
+        private void tsbAbrirTrx_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv"; // Solo archivos CSV
+            openFileDialog.Title = "Seleccionar archivo CSV";
+            openFileDialog.Multiselect = false; // Deshabilitar selección múltiple
+            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
+
+            try
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                string rutaArchivo = openFileDialog.FileName;
+                _senalECG = Utiles.LoadCsvData(rutaArchivo);
+
+                //Creo la nueva serie de datos.
+                _graphSerie = new Series("Muestras");
+                _graphSerie.Color = System.Drawing.Color.AliceBlue;
+                _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
+                _graphSerie.BorderWidth = 1; //2;
+                _graphSerie.XValueType = ChartValueType.Single;
+                _graphSerie.YValueType = ChartValueType.Single;
+                //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+                //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+
+                ChartArea chartArea = chartSenal.ChartAreas[0];
+
+                // Configura los valores mínimo y máximo del eje Y
+                chartArea.AxisY.Minimum = -0.12;
+                chartArea.AxisY.Maximum = 0.5;
+
+                Series series = chartSenal.Series["Muestras"];
+
+                series.Points.Clear();
+                foreach (var muestra in _senalECG)
+                {
+                    series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
+                }
+                _graphSerie = series;
+
+                chartSenal.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de labels en X
+                chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+
+                // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
+                // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
+
+                // Habilitar autoescala en el eje X
+                chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+                chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+                                                                      // Habilitar autoescala en el eje Y
+                chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+                chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+
+                btnFiltrarSenal.Enabled = true;
+                btnEspectro.Enabled = true;
+                btnFiltrosAvanzados.Enabled = true;
+
+                tsbResetZoom_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir el archivo seleccionado. Detalles: {ex.Message}"
+                    , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+        }
+
+        private void tsbResetZoom_Click(object sender, EventArgs e)
+        {
+            //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
+            //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
+            //ChartUtils.InicializarChart(chartEspectro);
+            this.chartSenal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
+            this.chartSenal.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
+        }
+
+        private void btnIniciarLectura_Click(object sender, EventArgs e)
+        {
+            btnIniciarLectura.Enabled = false;
+            btnFinalizarLectura.Enabled = true;
+
+            if (_lecturaEnCurso)
+            {
+                MessageBox.Show(this, "Hay una lectura de graficos en curso. Finalizela para poder enviar comandos",
+                    "Lectura en curso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (cmbPuertos.Text == "")
+            {
+                MessageBox.Show(this, "Debe seleccionar un puerto de comunicacion",
+                    "Lectura en curso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                _serialPort = new SerialPort(cmbPuertos.Text, int.Parse(cmbBaudRate.Text), Parity.None, 8, StopBits.One);
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+
+        }
+
+        private void btnFinalizarLectura_Click(object sender, EventArgs e)
+        {
+            btnIniciarLectura.Enabled = true;
+            btnFinalizarLectura.Enabled = false;
         }
     }
 }
