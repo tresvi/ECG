@@ -31,8 +31,6 @@ namespace ECGViewer
         private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
 
-
-
         public Form1()
         {
             InitializeComponent();
@@ -291,6 +289,10 @@ namespace ECGViewer
             // Habilitar autoescala en el eje Y
             chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
             chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+
+            btnFiltrarSenal.Enabled = true;
+            btnEspectro.Enabled = true;
+            btnFiltrosAvanzados.Enabled = true;
         }
 
 

@@ -69,5 +69,21 @@ namespace ECGViewer
             return dataList;
         }
 
+
+        public static List<Muestra> ClonarSenal(in List<Muestra> senalOriginal)
+        {
+            List <Muestra> senalCopia = new List<Muestra>();
+
+            for (int i = 0; i < senalOriginal.Count; i++)
+            {
+                Muestra muestra = new Muestra();
+                muestra.Tiempo = senalOriginal[i].Tiempo;
+                Array.Copy(senalOriginal[i].Canal, muestra.Canal, Muestra.NRO_CANALES);
+                senalCopia.Add(muestra);
+            }
+
+            return senalCopia;
+        }
+
     }
 }

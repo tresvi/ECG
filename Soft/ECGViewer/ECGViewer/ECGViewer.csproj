@@ -126,6 +126,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -137,6 +138,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Recursos\desktop.ini" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -144,6 +146,24 @@
   <ItemGroup>
     <Content Include="Archivos_CSV\ECG_20Seg_Filtrado.txt" />
     <Content Include="Archivos_CSV\ECG_20Seg_NoFiltrado.txt" />
+    <Content Include="Recursos\abrir-documento.png" />
+    <Content Include="Recursos\boton-de-play.png" />
+    <Content Include="Recursos\carpeta-abierta.png" />
+    <Content Include="Recursos\correo-electronico.png" />
+    <Content Include="Recursos\disco-flexible %281%29.png" />
+    <Content Include="Recursos\disco-flexible.png" />
+    <Content Include="Recursos\disquete %281%29.png" />
+    <Content Include="Recursos\disquete.png" />
+    <Content Include="Recursos\escala-corporal.png" />
+    <Content Include="Recursos\evaluacion-comparativa.png" />
+    <Content Include="Recursos\export.png" />
+    <Content Include="Recursos\indicador.png" />
+    <Content Include="Recursos\kpi.png" />
+    <Content Include="Recursos\salvar.png" />
+    <Content Include="Recursos\saveall_sav_10186.png" />
+    <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />
+    <Content Include="Recursos\Zoom-reset-01.png" />
+    <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -104,7 +104,7 @@
             0,
             0});
             this.nudFrecuenciaCorte.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -126,6 +126,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmPasaAltosBajos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Configuracion Filtro Pasa Bajos";

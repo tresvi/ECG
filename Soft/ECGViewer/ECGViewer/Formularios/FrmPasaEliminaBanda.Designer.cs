@@ -85,7 +85,7 @@
             this.nudFrecuenciaCorteMin.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nudFrecuenciaCorteMin.Location = new System.Drawing.Point(175, 33);
             this.nudFrecuenciaCorteMin.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -123,6 +123,11 @@
             this.nudFrecuenciaCorteMax.DecimalPlaces = 1;
             this.nudFrecuenciaCorteMax.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nudFrecuenciaCorteMax.Location = new System.Drawing.Point(175, 72);
+            this.nudFrecuenciaCorteMax.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
             this.nudFrecuenciaCorteMax.Minimum = new decimal(new int[] {
             10,
             0,
@@ -168,7 +173,9 @@
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmPasaEliminaBanda";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmPasaEliminaBanda";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

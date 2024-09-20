@@ -16,11 +16,6 @@ namespace ECGViewer
         }
 
 
-        internal decimal GetFrecuenciaCorte()
-        {
-            return nudFrecuenciaCorte.Value;
-        }
-
         private void BtnAplicar_Click(object sender, EventArgs e)
         {
             FrecuenciaCorte = nudFrecuenciaCorte.Value;

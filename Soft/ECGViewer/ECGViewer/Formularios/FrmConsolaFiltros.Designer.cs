@@ -36,7 +36,7 @@
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chartSenalOriginal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbButtons = new System.Windows.Forms.GroupBox();
             this.BtnCargar = new System.Windows.Forms.Button();
             this.BtnGuardar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartSenalOriginal
@@ -120,22 +120,22 @@
             title2.Text = "Señal Filtrada";
             this.chartSenalFiltrada.Titles.Add(title2);
             // 
-            // groupBox1
+            // gbButtons
             // 
-            this.groupBox1.Controls.Add(this.BtnCargar);
-            this.groupBox1.Controls.Add(this.BtnGuardar);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.BtnFiltroNotch);
-            this.groupBox1.Controls.Add(this.BtnFiltroPasaBanda);
-            this.groupBox1.Controls.Add(this.BtnFiltroPasaAlto);
-            this.groupBox1.Controls.Add(this.BtnFiltroPasaBajo);
-            this.groupBox1.Controls.Add(this.BtnResetZoom);
-            this.groupBox1.Controls.Add(this.toggleButton1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 7);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1238, 78);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
+            this.gbButtons.Controls.Add(this.BtnCargar);
+            this.gbButtons.Controls.Add(this.BtnGuardar);
+            this.gbButtons.Controls.Add(this.label1);
+            this.gbButtons.Controls.Add(this.BtnFiltroNotch);
+            this.gbButtons.Controls.Add(this.BtnFiltroPasaBanda);
+            this.gbButtons.Controls.Add(this.BtnFiltroPasaAlto);
+            this.gbButtons.Controls.Add(this.BtnFiltroPasaBajo);
+            this.gbButtons.Controls.Add(this.BtnResetZoom);
+            this.gbButtons.Controls.Add(this.toggleButton1);
+            this.gbButtons.Location = new System.Drawing.Point(12, 7);
+            this.gbButtons.Name = "gbButtons";
+            this.gbButtons.Size = new System.Drawing.Size(1238, 78);
+            this.gbButtons.TabIndex = 5;
+            this.gbButtons.TabStop = false;
             // 
             // BtnCargar
             // 
@@ -143,7 +143,7 @@
             this.BtnCargar.Name = "BtnCargar";
             this.BtnCargar.Size = new System.Drawing.Size(73, 52);
             this.BtnCargar.TabIndex = 12;
-            this.BtnCargar.Text = "Cargar";
+            this.BtnCargar.Text = "Cargar Perfil Filtros";
             this.BtnCargar.UseVisualStyleBackColor = true;
             // 
             // BtnGuardar
@@ -152,7 +152,7 @@
             this.BtnGuardar.Name = "BtnGuardar";
             this.BtnGuardar.Size = new System.Drawing.Size(73, 52);
             this.BtnGuardar.TabIndex = 11;
-            this.BtnGuardar.Text = "Guardar";
+            this.BtnGuardar.Text = "Guardar Pefil Filtros";
             this.BtnGuardar.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -174,6 +174,7 @@
             this.BtnFiltroNotch.TabIndex = 9;
             this.BtnFiltroNotch.Text = "Filtro Notch";
             this.BtnFiltroNotch.UseVisualStyleBackColor = true;
+            this.BtnFiltroNotch.Click += new System.EventHandler(this.BtnFiltroNotch_Click);
             // 
             // BtnFiltroPasaBanda
             // 
@@ -237,7 +238,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 656);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbButtons);
             this.Controls.Add(this.chartSenalFiltrada);
             this.Controls.Add(this.chartSenalOriginal);
             this.Name = "FrmConsolaFiltros";
@@ -246,8 +247,8 @@
             this.Resize += new System.EventHandler(this.FrmAplicarFiltro_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbButtons.ResumeLayout(false);
+            this.gbButtons.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -256,7 +257,7 @@
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartSenalOriginal;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartSenalFiltrada;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbButtons;
         private Controles.ToggleButton toggleButton1;
         private System.Windows.Forms.Button BtnResetZoom;
         private System.Windows.Forms.Button BtnFiltroNotch;

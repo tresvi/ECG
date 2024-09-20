@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-
 namespace ECGViewer
 {
     public partial class FrmConsolaFiltros : Form
@@ -18,7 +17,7 @@ namespace ECGViewer
         {
             InitializeComponent();
             _senalOriginal = senal;
-            _senalFiltrada = _senalOriginal;
+            _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
             _frecuenciaMuestreo = frecuenciaMuestreo;
         }
 
@@ -36,6 +35,8 @@ namespace ECGViewer
             chartArea.AxisY.Title = "Amplitud Vs Tiempo[seg]";
             chartArea.AxisX.Title = "";
 
+            chart.Series["Muestras"].Points.Clear();
+
             foreach (var muestra in senal)
             {
                 chart.Series["Muestras"].Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
@@ -46,10 +47,12 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Resize(object sender, EventArgs e)
         {
+            const int MARGEN = 1;
             int mitadFormulario = this.Height / 2;
-            chartSenalOriginal.Height = mitadFormulario - 50;
-            chartSenalFiltrada.Top = mitadFormulario ;
-            chartSenalFiltrada.Height = mitadFormulario - 50;
+            //chartSenalOriginal.Top = gbButtons.Top  + gbButtons.Height + MARGEN;
+            chartSenalOriginal.Height =  this.Height/2 - (gbButtons.Top + gbButtons.Height) + 10;
+            chartSenalFiltrada.Top = chartSenalOriginal.Height + chartSenalOriginal.Top;
+            chartSenalFiltrada.Height = chartSenalOriginal.Height;
         }
 
 
@@ -120,20 +123,36 @@ namespace ECGViewer
 
         private void BtnFiltroPasaBajo_Click(object sender, EventArgs e)
         {
-            FrmPasaAltosBajos frmPasaAltosBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
+            FrmPasaAltosBajos frmPasaBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
+            if (frmPasaBajos.ShowDialog() != DialogResult.OK) return;
 
-            if (frmPasaAltosBajos.ShowDialog() == DialogResult.Cancel) return;
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double) frmPasaBajos.FrecuenciaCorte);
 
-            double[] senal = Utiles.ClonarVectorParaFFT(in _senalOriginal);
-            double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double) frmPasaAltosBajos.FrecuenciaCorte);
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
 
-            Series series = chartSenalFiltrada.Series["Muestras"];
-            series.Points.Clear();
+            Graficar(chartSenalFiltrada, _senalFiltrada);
 
-            for (int i = 0; i < _senalOriginal.Count; i++)
-            {
-                series.Points.AddXY(_senalOriginal[i].Tiempo, filtered[i]);
-            }
+            //Por alguna razon, el valor automatico de los ejes se altera
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+        }
+
+
+        private void BtnFiltroPasaAlto_Click(object sender, EventArgs e)
+        {
+            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 1);
+            if (frmPAltos.ShowDialog() != DialogResult.OK) return;
+
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] filtered = Filter.HighPass(senal, _frecuenciaMuestreo, minFrequency: (double)frmPAltos.FrecuenciaCorte);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
 
             //Por alguna razon, el valor automatico de los ejes se altera
             chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
@@ -144,13 +163,41 @@ namespace ECGViewer
 
         private void BtnFiltroPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPasaELiminaBanda = new FrmPasaEliminaBanda("Configuracion Filtro Pasa Banda", 1, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1 ,  49);
+            if (frmPBanda.ShowDialog() != DialogResult.OK) return;
+
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double) frmPBanda.FrecuenciaCorteMax);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            //Por alguna razon, el valor automatico de los ejes se altera
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
         }
 
 
-        private void BtnFiltroPasaAlto_Click(object sender, EventArgs e)
+        private void BtnFiltroNotch_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPasaELiminaBanda = new FrmPasaEliminaBanda("Configuracion Filtro Elimina Banda", 49, 61);
+            FrmPasaEliminaBanda frmEBanda = new FrmPasaEliminaBanda("Configuracion filtro Elimina Banda", 49.5M, 50.5M);
+            if (frmEBanda.ShowDialog() != DialogResult.OK) return;
+
+            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] filtered = Filter.BandStop(senal, _frecuenciaMuestreo, (double)frmEBanda.FrecuenciaCorteMin, (double)frmEBanda.FrecuenciaCorteMax);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            //Por alguna razon, el valor automatico de los ejes se altera
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
         }
     }
 }
