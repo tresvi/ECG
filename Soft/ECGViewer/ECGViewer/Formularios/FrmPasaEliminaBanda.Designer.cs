@@ -45,6 +45,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.nudFrecuenciaCorteMin);
@@ -52,9 +54,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.nudFrecuenciaCorteMax);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(10, 10);
+            this.groupBox1.Location = new System.Drawing.Point(15, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(316, 113);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(480, 174);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Frecuencias de Corte";
@@ -63,9 +67,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(256, 36);
+            this.label3.Location = new System.Drawing.Point(384, 55);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 16);
+            this.label3.Size = new System.Drawing.Size(52, 25);
             this.label3.TabIndex = 15;
             this.label3.Text = "[Hz]";
             // 
@@ -73,9 +78,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(23, 36);
+            this.label4.Location = new System.Drawing.Point(34, 55);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(135, 16);
+            this.label4.Size = new System.Drawing.Size(193, 25);
             this.label4.TabIndex = 14;
             this.label4.Text = "F. de Corte Inferior";
             // 
@@ -83,14 +89,15 @@
             // 
             this.nudFrecuenciaCorteMin.DecimalPlaces = 1;
             this.nudFrecuenciaCorteMin.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudFrecuenciaCorteMin.Location = new System.Drawing.Point(175, 33);
+            this.nudFrecuenciaCorteMin.Location = new System.Drawing.Point(262, 51);
+            this.nudFrecuenciaCorteMin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nudFrecuenciaCorteMin.Minimum = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
-            0});
+            65536});
             this.nudFrecuenciaCorteMin.Name = "nudFrecuenciaCorteMin";
-            this.nudFrecuenciaCorteMin.Size = new System.Drawing.Size(81, 25);
+            this.nudFrecuenciaCorteMin.Size = new System.Drawing.Size(122, 33);
             this.nudFrecuenciaCorteMin.TabIndex = 13;
             this.nudFrecuenciaCorteMin.Value = new decimal(new int[] {
             49,
@@ -102,9 +109,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(256, 75);
+            this.label2.Location = new System.Drawing.Point(384, 115);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 16);
+            this.label2.Size = new System.Drawing.Size(52, 25);
             this.label2.TabIndex = 12;
             this.label2.Text = "[Hz]";
             // 
@@ -112,9 +120,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 75);
+            this.label1.Location = new System.Drawing.Point(34, 115);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 16);
+            this.label1.Size = new System.Drawing.Size(208, 25);
             this.label1.TabIndex = 11;
             this.label1.Text = "F. de Corte Superior";
             // 
@@ -122,7 +131,8 @@
             // 
             this.nudFrecuenciaCorteMax.DecimalPlaces = 1;
             this.nudFrecuenciaCorteMax.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudFrecuenciaCorteMax.Location = new System.Drawing.Point(175, 72);
+            this.nudFrecuenciaCorteMax.Location = new System.Drawing.Point(262, 111);
+            this.nudFrecuenciaCorteMax.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nudFrecuenciaCorteMax.Maximum = new decimal(new int[] {
             200,
             0,
@@ -134,7 +144,7 @@
             0,
             0});
             this.nudFrecuenciaCorteMax.Name = "nudFrecuenciaCorteMax";
-            this.nudFrecuenciaCorteMax.Size = new System.Drawing.Size(81, 25);
+            this.nudFrecuenciaCorteMax.Size = new System.Drawing.Size(122, 33);
             this.nudFrecuenciaCorteMax.TabIndex = 10;
             this.nudFrecuenciaCorteMax.Value = new decimal(new int[] {
             100,
@@ -145,9 +155,10 @@
             // BtnCancelar
             // 
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCancelar.Location = new System.Drawing.Point(187, 131);
+            this.BtnCancelar.Location = new System.Drawing.Point(277, 199);
+            this.BtnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnCancelar.Name = "BtnCancelar";
-            this.BtnCancelar.Size = new System.Drawing.Size(103, 35);
+            this.BtnCancelar.Size = new System.Drawing.Size(154, 54);
             this.BtnCancelar.TabIndex = 6;
             this.BtnCancelar.Text = "&Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
@@ -156,9 +167,10 @@
             // BtnAplicar
             // 
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAplicar.Location = new System.Drawing.Point(55, 131);
+            this.BtnAplicar.Location = new System.Drawing.Point(71, 199);
+            this.BtnAplicar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnAplicar.Name = "BtnAplicar";
-            this.BtnAplicar.Size = new System.Drawing.Size(103, 35);
+            this.BtnAplicar.Size = new System.Drawing.Size(154, 54);
             this.BtnAplicar.TabIndex = 5;
             this.BtnAplicar.Text = "&Aplicar";
             this.BtnAplicar.UseVisualStyleBackColor = true;
@@ -166,14 +178,15 @@
             // 
             // FrmPasaEliminaBanda
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(337, 174);
+            this.ClientSize = new System.Drawing.Size(508, 306);
             this.ControlBox = false;
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmPasaEliminaBanda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmPasaEliminaBanda";

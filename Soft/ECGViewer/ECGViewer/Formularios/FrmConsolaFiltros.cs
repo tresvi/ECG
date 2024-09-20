@@ -248,7 +248,7 @@ namespace ECGViewer
                 chartAreaEspectro.AxisX.LabelStyle.Format = "0.0";
                 chartAreaEspectro.AxisX.Minimum = 0;
                 chartAreaEspectro.AxisX.Maximum = 100;
-                chartAreaEspectro.AxisY.Minimum = Double.NaN;
+                chartAreaEspectro.AxisY.Minimum = 0;
                 chartAreaEspectro.AxisY.Maximum = Double.NaN;
 
 
@@ -268,10 +268,10 @@ namespace ECGViewer
 
                 chartAreaEspectroFiltrada.AxisX.Interval = 2;
                 chartAreaEspectroFiltrada.AxisX.LabelStyle.Format = "0.0";
-                chartAreaEspectroFiltrada.AxisX.Minimum = chartAreaEspectro.AxisX.Minimum;
+                chartAreaEspectroFiltrada.AxisX. Minimum = chartAreaEspectro.AxisX.Minimum;
                 chartAreaEspectroFiltrada.AxisX.Maximum = chartAreaEspectro.AxisX.Maximum;
                 chartAreaEspectroFiltrada.AxisY.Minimum = chartAreaEspectro.AxisY.Minimum;
-                chartAreaEspectroFiltrada.AxisY.Maximum = chartAreaEspectro.AxisY.Maximum;
+                chartAreaEspectroFiltrada.AxisY.Maximum = chartAreaEspectro.AxisY.ScaleView.ViewMaximum;
             }
 
         }
