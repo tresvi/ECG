@@ -1,9 +1,12 @@
 ﻿using ECGViewer.Modelos;
+using ECGViewer.Properties;
 using FftSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -24,8 +27,10 @@ namespace ECGViewer
         private bool _lecturaEnCurso = false;
         private SerialPort _serialPort = new SerialPort();
         private List<Muestra> _senalECG;
+        private decimal _tMuestreo;
+        private int _fMuestreo;
 
-        private const int FRECUENCIA_MUESTREO = 500;
+        //private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
 
@@ -61,15 +66,17 @@ namespace ECGViewer
 
 
             try
-            {
-                cmbBaudRate.Text = BAUDRATE_DEFAULT;
-                
+            {   
                 foreach (String puerto in SerialPort.GetPortNames())
                     cmbPuertos.Items.Add(puerto);
+
+                cmbBaudRate.SelectedIndex = Settings.Default.cmbBaudRateIndex;
+                cmbPuertos.Text = Settings.Default.cmbPuertosValue;
+                nudTMuestreo.Value = Settings.Default.TMuestreoValue;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No hay señal cargada", "Ver Espectro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar los puertos", "Iniciando app", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -257,6 +264,15 @@ namespace ECGViewer
             string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
             _senalECG = Utiles.LoadCsvData(filePath);
 
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+                double valor2 = 0;//0.04 * Math.Sin(2 * Math.PI * 2 * _senalECG[i].Tiempo);
+                double valor1 = 0.04 * Math.Sin(2 * Math.PI * 10 * _senalECG[i].Tiempo);
+                double valor3 = 0.02 * Math.Sin(2 * Math.PI * 25 * _senalECG[i].Tiempo);
+                double valor4 = 0.02 * Math.Sin(2 * Math.PI * 60 * _senalECG[i].Tiempo);
+                _senalECG[i].Canal[0] += valor1 + valor2 + valor3 + valor4;
+            }
+
             //Creo la nueva serie de datos.
             _graphSerie = new Series("Muestras");
             _graphSerie.Color = System.Drawing.Color.AliceBlue;
@@ -395,14 +411,14 @@ namespace ECGViewer
             }
 
             double[] signal = Utiles.ClonarVectorParaFFT(_senalECG);
-            Form form = new FrmEspectro(signal, FRECUENCIA_MUESTREO);
+            Form form = new FrmEspectro(signal, _fMuestreo);
             form.Show();
         }
 
 
         private void BtnFiltro_Click(object sender, EventArgs e)
         {
-            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, FRECUENCIA_MUESTREO);
+            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, _fMuestreo);
             frmAplicarFiltro.ShowDialog();
         }
 
@@ -415,7 +431,7 @@ namespace ECGViewer
             double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalECG);
-            double[] filtered = Filter.LowPass(senal, FRECUENCIA_MUESTREO, FRECUENCIA_CORTE_DFLT);
+            double[] filtered = Filter.LowPass(senal, _fMuestreo, FRECUENCIA_CORTE_DFLT);
 
             Series series = chartSenal.Series["Muestras"];
             series.Points.Clear();
@@ -527,15 +543,19 @@ namespace ECGViewer
                 cmbBaudRate.Enabled = false;
                 _serialPort = new SerialPort(cmbPuertos.Text, int.Parse(cmbBaudRate.Text), Parity.None, 8, StopBits.One);
                 _serialPort.NewLine = "\n";
-                _serialPort.DataReceived += SerialPort_DataReceived;
-                _serialPort.ReadTimeout = 50;
+               // _serialPort.DataReceived += SerialPort_DataReceived;
+                _serialPort.ReadTimeout = 10;
                 _serialPort.Open();
+                _serialPort.DiscardInBuffer();
                 timerPuerto.Enabled = true;
                 timerPuerto.Start();
                 //tmrGraficar.Enabled = true;
                 //tmrGraficar.Start();
                 _senalECG = new List<Muestra>();
+                _tMuestreo = nudTMuestreo.Value;
+                _fMuestreo = (int)Math.Round(1000 / _tMuestreo);
                 _contadorMuestras = 0;
+                _primerMuestra = true;
             }
             catch (Exception ex)
             {
@@ -553,7 +573,7 @@ namespace ECGViewer
                 string data = _serialPort.ReadLine();
                 Debug.WriteLine(data);
                 Muestra muestra = new Muestra();
-                muestra.Tiempo = _contadorMuestras * 0.002;
+                muestra.Tiempo = _contadorMuestras * (double) (_tMuestreo/1000);
                 _contadorMuestras++;
                 _senalECG.Add(muestra);
                 //Invoke(new MethodInvoker(() =>
@@ -579,8 +599,6 @@ namespace ECGViewer
 
             timerPuerto.Enabled = false;
             timerPuerto.Stop();
-            tmrGraficar.Enabled = false;
-            tmrGraficar.Stop();
         }
 
 
@@ -590,8 +608,37 @@ namespace ECGViewer
         }
 
 
-        private void tsbGuardarTrx_Click(object sender, EventArgs e)
+        private void tsbGuardar_Click(object sender, EventArgs e)
         {
+            // Crear y configurar el SaveFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            saveFileDialog.Title = "Guardar archivo CSV";
+            saveFileDialog.DefaultExt = "csv";
+            saveFileDialog.AddExtension = true;
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+            
+            
+            string rutaArchivo = saveFileDialog.FileName;
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(rutaArchivo))
+                {
+                    foreach (Muestra muestra in _senalECG)
+                    {
+                        string linea = string.Format(CultureInfo.InvariantCulture, "{0}\t{1}", muestra.Tiempo, -1 * muestra.Canal[0]);
+                        writer.WriteLine(linea);
+                    }
+                }
+
+                MessageBox.Show("Archivo guardado correctamente.", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el archivo: {ex.Message}", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -599,41 +646,46 @@ namespace ECGViewer
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_serialPort.IsOpen) _serialPort.Close();
+
+            //Guardo la ultima configuracion
+            Settings.Default.cmbPuertosValue = cmbPuertos.Text;
+            Settings.Default.cmbBaudRateIndex= cmbBaudRate.SelectedIndex;
+            Settings.Default.TMuestreoValue = nudTMuestreo.Value;
+            Settings.Default.Save();
         }
 
 
         bool _graficando = false;
+        bool _primerMuestra = true;
         private void timerPuerto_Tick(object sender, EventArgs e)
         {
-            if (_serialPort.IsOpen) 
-            {
+            if (!_serialPort.IsOpen) return;
 
-                try
+            try
+            {
+                do
                 {
-                    // Leer la línea completa (espera hasta recibir el salto de línea)
                     string data = _serialPort.ReadLine();
                     Debug.WriteLine(data);
                     Muestra muestra = new Muestra();
-                    muestra.Tiempo = _contadorMuestras * 0.002;
-                    double valor = (int.Parse(data) - 436) * 0.001;
-                    muestra.Canal[0] = valor;
-                    _contadorMuestras++;
-                    _senalECG.Add(muestra);
-                    //Invoke(new MethodInvoker(() =>
-                    //{
-                    //    txtLog.Text += '\n' + data;
-                    //}));
+                    muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
+                    muestra.Canal[0] = double.Parse(data); ;
+                    if (!_primerMuestra) _senalECG.Add(muestra);
+                    _primerMuestra = false;
 
-                    tmrGraficar_Tick(sender, e);
-
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show($"Error al leer datos: {ex.Message}");
-                    Debug.WriteLine($"ERROR DE LECTURA DE PUERTO {ex.Message}");
-                }
+                    if (_contadorMuestras % 100 == 0)
+                        tmrGraficar_Tick(sender, e);
+                } while (_serialPort.BytesToRead > 5);
             }
-
+            catch (TimeoutException)
+            {
+                Debug.WriteLine($"******SERIAL TIMEOUT*******");
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show($"Error al leer datos: {ex.Message}");
+                Debug.WriteLine($"ERROR DE LECTURA DE PUERTO {ex.Message}");
+            }
         }
 
         private void tmrGraficar_Tick(object sender, EventArgs e)
@@ -684,5 +736,22 @@ namespace ECGViewer
 
             tsbResetZoom_Click(sender, e);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
+            _senalECG = Utiles.LoadCsvData(filePath);
+
+            for (int i = 0; i < _senalECG.Count; i++)
+            {
+
+                double valor = Math.Sin(2 * Math.PI * 10 * _senalECG[i].Tiempo);
+                _senalECG[i].Canal[0] += valor;
+            }
+        }
+
+
+
+        //private double sin()
     }
 }

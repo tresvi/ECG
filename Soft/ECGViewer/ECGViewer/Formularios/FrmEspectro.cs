@@ -23,7 +23,7 @@ namespace ECGViewer
                 series.Points.AddXY(freq[i], psd[i]);
             }
 
-            chartSenal.ChartAreas[0].AxisX.Interval = 5;
+            chartSenal.ChartAreas[0].AxisX.Interval = 2;
             chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
             chartSenal.ChartAreas[0].AxisX.Minimum = 0;
             chartSenal.ChartAreas[0].AxisX.Maximum = 100;
