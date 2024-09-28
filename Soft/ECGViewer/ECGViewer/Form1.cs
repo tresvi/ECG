@@ -92,7 +92,7 @@ namespace ECGViewer
             chart.ChartAreas[0].CursorX.Interval = 0;
             chart.ChartAreas[0].AxisX.ScaleView.Zoomable = enable;
             chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            chart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
+            chart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
             chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 0;
 
             if (enable == false)
@@ -272,6 +272,8 @@ namespace ECGViewer
                 double valor4 = 0.02 * Math.Sin(2 * Math.PI * 60 * _senalECG[i].Tiempo);
                 _senalECG[i].Canal[0] += valor1 + valor2 + valor3 + valor4;
             }
+
+            _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
 
             //Creo la nueva serie de datos.
             _graphSerie = new Series("Muestras");
@@ -462,6 +464,15 @@ namespace ECGViewer
 
                 string rutaArchivo = openFileDialog.FileName;
                 _senalECG = Utiles.LoadCsvData(rutaArchivo);
+                if (_senalECG.Count < 2)
+                {
+                    MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
+                      , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
+
 
                 //Creo la nueva serie de datos.
                 _graphSerie = new Series("Muestras");
