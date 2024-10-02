@@ -20,7 +20,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ECGViewer
 {
-    public partial class Form1 : Form
+    public partial class FrmMain : Form
     {
         Series _graphSerie;
         private Panel chartPanel;
@@ -33,10 +33,12 @@ namespace ECGViewer
         //private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
+        const double SPAN = 0.000671;
+        const double ZERO = -248;
 
 
 
-        public Form1()
+        public FrmMain()
         {
             InitializeComponent();
         }
@@ -630,7 +632,6 @@ namespace ECGViewer
 
             if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
             
-            
             string rutaArchivo = saveFileDialog.FileName;
 
             try
@@ -650,7 +651,6 @@ namespace ECGViewer
             {
                 MessageBox.Show($"Error al guardar el archivo: {ex.Message}", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
 
@@ -678,11 +678,17 @@ namespace ECGViewer
                 {
                     string data = _serialPort.ReadLine();
                     Debug.WriteLine(data);
+
+                    if (_primerMuestra)
+                    {
+                        _primerMuestra = false;
+                        continue;
+                    }
+                    
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
-                    muestra.Canal[0] = double.Parse(data); ;
-                    if (!_primerMuestra) _senalECG.Add(muestra);
-                    _primerMuestra = false;
+                    muestra.Canal[0] = (double.Parse(data) + ZERO) * SPAN; 
+                    _senalECG.Add(muestra);
 
                     if (_contadorMuestras % 100 == 0)
                         tmrGraficar_Tick(sender, e);
@@ -761,8 +767,44 @@ namespace ECGViewer
             }
         }
 
+        private void tsbExportarATablaC_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsbExportarProteus_Click(object sender, EventArgs e)
+        {
+            // Crear y configurar el SaveFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            saveFileDialog.Title = "Exportar ECG para File Generator Proteus";
+            saveFileDialog.DefaultExt = "csv";
+            saveFileDialog.AddExtension = true;
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+
+            string rutaArchivo = saveFileDialog.FileName;
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(rutaArchivo))
+                {
+                    foreach (Muestra muestra in _senalECG)
+                    {
+                        string linea = string.Format(CultureInfo.InvariantCulture, "{0}\t{1}", muestra.Tiempo, -1 * muestra.Canal[0]);
+                        writer.WriteLine(linea);
+                    }
+                }
+
+                MessageBox.Show("Archivo exportado correctamente.", "Exportar a File Generator Proteus", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al exportar el archivo: {ex.Message}", "Exportar a File Generator Proteus", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
-        //private double sin()
+
     }
 }

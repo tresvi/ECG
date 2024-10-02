@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer
 {
-    partial class Form1
+    partial class FrmMain
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -60,11 +60,11 @@
             this.btnFinalizarLectura = new System.Windows.Forms.Button();
             this.btnIniciarLectura = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.cmbBaudRate = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cmbPuertos = new System.Windows.Forms.ComboBox();
             this.timerPuerto = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
-            this.cmbBaudRate = new System.Windows.Forms.ComboBox();
-            this.cmbPuertos = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -296,6 +296,7 @@
             this.tsbExportarATablaC.Name = "tsbExportarATablaC";
             this.tsbExportarATablaC.Size = new System.Drawing.Size(52, 52);
             this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
+            this.tsbExportarATablaC.Click += new System.EventHandler(this.tsbExportarATablaC_Click);
             // 
             // tsbExportarProteus
             // 
@@ -305,6 +306,7 @@
             this.tsbExportarProteus.Name = "tsbExportarProteus";
             this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
             this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
+            this.tsbExportarProteus.Click += new System.EventHandler(this.tsbExportarProteus_Click);
             // 
             // toolStripSeparator1
             // 
@@ -425,30 +427,6 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "BuadRate";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(68, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 17);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Puerto";
-            // 
-            // timerPuerto
-            // 
-            this.timerPuerto.Tick += new System.EventHandler(this.timerPuerto_Tick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(753, 44);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 35);
-            this.button1.TabIndex = 45;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // cmbBaudRate
             // 
             this.cmbBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -474,6 +452,16 @@
             this.cmbBaudRate.Size = new System.Drawing.Size(105, 25);
             this.cmbBaudRate.TabIndex = 13;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(68, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 17);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Puerto";
+            // 
             // cmbPuertos
             // 
             this.cmbPuertos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -484,7 +472,21 @@
             this.cmbPuertos.Size = new System.Drawing.Size(105, 25);
             this.cmbPuertos.TabIndex = 11;
             // 
-            // Form1
+            // timerPuerto
+            // 
+            this.timerPuerto.Tick += new System.EventHandler(this.timerPuerto_Tick);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(753, 44);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(135, 35);
+            this.button1.TabIndex = 45;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -501,7 +503,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.chartSenal);
-            this.Name = "Form1";
+            this.Name = "FrmMain";
             this.Text = "Visor ECG 1 Canal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
