@@ -1,4 +1,5 @@
-﻿using ECGViewer.Modelos;
+﻿using ECGViewer.Formularios;
+using ECGViewer.Modelos;
 using ECGViewer.Properties;
 using FftSharp;
 using System;
@@ -22,6 +23,12 @@ namespace ECGViewer
 {
     public partial class FrmMain : Form
     {
+        //private const int FRECUENCIA_MUESTREO = 500;
+        private const int FRECUENCIA_CORTE_DFLT = 49;
+        const string BAUDRATE_DEFAULT = "9600"; //"19200";
+        public const double SPAN = 0.000671;
+        public const double ZERO = -248;
+
         Series _graphSerie;
         private Panel chartPanel;
         private bool _lecturaEnCurso = false;
@@ -29,13 +36,6 @@ namespace ECGViewer
         private List<Muestra> _senalECG;
         private decimal _tMuestreo;
         private int _fMuestreo;
-
-        //private const int FRECUENCIA_MUESTREO = 500;
-        private const int FRECUENCIA_CORTE_DFLT = 49;
-        const string BAUDRATE_DEFAULT = "9600"; //"19200";
-        const double SPAN = 0.000671;
-        const double ZERO = -248;
-
 
 
         public FrmMain()
@@ -62,7 +62,7 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
 
             // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
-            chartSenal.ChartAreas[0].AxisX.Interval = 1;
+            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;
 
             ActivarZoom(chartSenal, true);
 
@@ -104,7 +104,6 @@ namespace ECGViewer
                 chart.ChartAreas[0].CursorY.SetCursorPosition(double.NaN);
             }
         }
-
 
 
         private void BtnMarcadores_Click(object sender, EventArgs e)
@@ -302,7 +301,7 @@ namespace ECGViewer
             }
             _graphSerie = series;
 
-            chartSenal.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de labels en X
+            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
             chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
             // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
@@ -501,7 +500,7 @@ namespace ECGViewer
                 }
                 _graphSerie = series;
 
-                chartSenal.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de labels en X
+                chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
                 chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
                 // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
@@ -734,7 +733,7 @@ namespace ECGViewer
             _graficando = false;
             _graphSerie = series;
 
-            chartSenal.ChartAreas[0].AxisX.Interval = 1;  // Intervalo de labels en X
+            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
             chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
             // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
@@ -769,7 +768,8 @@ namespace ECGViewer
 
         private void tsbExportarATablaC_Click(object sender, EventArgs e)
         {
-
+            FrmExportarATablaC frmExportarATablaC = new FrmExportarATablaC(_senalECG);
+            frmExportarATablaC.ShowDialog();
         }
 
         private void tsbExportarProteus_Click(object sender, EventArgs e)

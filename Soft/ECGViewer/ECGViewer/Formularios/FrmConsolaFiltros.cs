@@ -14,7 +14,7 @@ namespace ECGViewer
         public readonly List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
 
-        public FrmConsolaFiltros(List<Muestra> senal, int frecuenciaMuestreo)
+        public FrmConsolaFiltros(in List<Muestra> senal, int frecuenciaMuestreo)
         {
             InitializeComponent();
             _senalOriginal = senal;

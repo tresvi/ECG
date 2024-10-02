@@ -149,6 +149,8 @@
             // 
             // gbButtons
             // 
+            this.gbButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbButtons.Controls.Add(this.BtnCargar);
             this.gbButtons.Controls.Add(this.BtnGuardar);
             this.gbButtons.Controls.Add(this.label1);
