@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ECGViewer
 {
@@ -83,6 +84,33 @@ namespace ECGViewer
             }
 
             return senalCopia;
+        }
+
+
+        public static (int, int) ObtenerIndicesInicialyFinal(in List<Muestra> senal, double tiempoIni, double tiempoFin)
+        {
+            bool indiceInicialEncontrado = false;
+            bool indiceFinalEncontrado = false;
+            int indiceInicial = 0;
+            int indiceFinal = 0;
+
+            for (int i = 0; i < senal.Count; i++)
+            {
+                if (!indiceInicialEncontrado && senal[i].Tiempo >= tiempoIni)
+                { 
+                    indiceInicialEncontrado = true;
+                    indiceInicial = i;
+                }
+
+                if (!indiceFinalEncontrado && senal[i].Tiempo >= tiempoFin)
+                {
+                    indiceFinalEncontrado = true;
+                    indiceFinal = i;
+                    break;
+                }
+            }
+
+            return (indiceInicial, indiceFinal);
         }
 
     }

@@ -753,22 +753,32 @@ namespace ECGViewer
             tsbResetZoom_Click(sender, e);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
-            _senalECG = Utiles.LoadCsvData(filePath);
-
-            for (int i = 0; i < _senalECG.Count; i++)
-            {
-
-                double valor = Math.Sin(2 * Math.PI * 10 * _senalECG[i].Tiempo);
-                _senalECG[i].Canal[0] += valor;
-            }
-        }
 
         private void tsbExportarATablaC_Click(object sender, EventArgs e)
         {
-            FrmExportarATablaC frmExportarATablaC = new FrmExportarATablaC(_senalECG);
+            int indiceMin, indiceMax;
+
+            ChartArea chartArea = chartSenal.ChartAreas[0];
+            if (chartArea.AxisX.ScaleView.IsZoomed)
+            {
+                DialogResult resultado = MessageBox.Show("El gráfico tiene zoom aplicado. Recuerde que " +
+                    "la exportación de la señal se realizará en la porción visualizada en pantalla. ¿Desea " +
+                   "resetear el zoom para exportar todo el grafico completo?", "Exportacion a tabla"
+                   , MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (resultado == DialogResult.Yes) tsbResetZoom_Click(sender, e);
+
+                (indiceMin, indiceMax) = Utiles.ObtenerIndicesInicialyFinal(_senalECG
+                    , chartArea.AxisX.ScaleView.ViewMinimum
+                    , chartArea.AxisX.ScaleView.ViewMaximum);
+            }
+            else
+            {
+                indiceMin = 0;
+                indiceMax = _senalECG.Count - 1;
+            }
+
+            FrmExportarATablaC frmExportarATablaC = new FrmExportarATablaC(_senalECG, indiceMin, indiceMax);
             frmExportarATablaC.ShowDialog();
         }
 
@@ -803,8 +813,6 @@ namespace ECGViewer
                 MessageBox.Show($"Error al exportar el archivo: {ex.Message}", "Exportar a File Generator Proteus", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
     }
 }

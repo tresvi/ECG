@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmExportarATablaC));
             this.gpbSaltoLinea = new System.Windows.Forms.GroupBox();
             this.cmbSaltoLinea = new System.Windows.Forms.ComboBox();
             this.btnExportar = new System.Windows.Forms.Button();
@@ -36,8 +37,13 @@
             this.rbEstiloAssembler = new System.Windows.Forms.RadioButton();
             this.rbEstiloC = new System.Windows.Forms.RadioButton();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.gpbSaltoLinea.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpbSaltoLinea
@@ -48,7 +54,7 @@
             this.gpbSaltoLinea.Margin = new System.Windows.Forms.Padding(1);
             this.gpbSaltoLinea.Name = "gpbSaltoLinea";
             this.gpbSaltoLinea.Padding = new System.Windows.Forms.Padding(1);
-            this.gpbSaltoLinea.Size = new System.Drawing.Size(205, 60);
+            this.gpbSaltoLinea.Size = new System.Drawing.Size(205, 69);
             this.gpbSaltoLinea.TabIndex = 21;
             this.gpbSaltoLinea.TabStop = false;
             this.gpbSaltoLinea.Text = "Agregar salto de línea cada:";
@@ -69,7 +75,7 @@
             "80 valores",
             "90 valores",
             "100 valores"});
-            this.cmbSaltoLinea.Location = new System.Drawing.Point(7, 26);
+            this.cmbSaltoLinea.Location = new System.Drawing.Point(7, 29);
             this.cmbSaltoLinea.Margin = new System.Windows.Forms.Padding(1);
             this.cmbSaltoLinea.Name = "cmbSaltoLinea";
             this.cmbSaltoLinea.Size = new System.Drawing.Size(193, 24);
@@ -78,7 +84,7 @@
             // btnExportar
             // 
             this.btnExportar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportar.Location = new System.Drawing.Point(60, 209);
+            this.btnExportar.Location = new System.Drawing.Point(59, 223);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(106, 34);
             this.btnExportar.TabIndex = 20;
@@ -143,11 +149,45 @@
             this.rbEstiloC.Text = "Estilo C/C++";
             this.rbEstiloC.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ECGViewer.Properties.Resources.PWM_Picture;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 21);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(326, 227);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.pictureBox1);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(229, 10);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(662, 254);
+            this.groupBox2.TabIndex = 23;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Esquema/Programa ejemplo";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(338, 21);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(318, 228);
+            this.textBox1.TabIndex = 25;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
+            // 
             // FrmExportarATablaC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 248);
+            this.ClientSize = new System.Drawing.Size(903, 272);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gpbSaltoLinea);
             this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.groupBox1);
@@ -155,10 +195,14 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmExportarATablaC";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Exportar a tabla";
             this.gpbSaltoLinea.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -173,5 +217,8 @@
         private System.Windows.Forms.RadioButton rbEstiloAssembler;
         private System.Windows.Forms.RadioButton rbEstiloC;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

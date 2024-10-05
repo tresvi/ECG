@@ -16,11 +16,15 @@ namespace ECGViewer.Formularios
     public partial class FrmExportarATablaC : Form
     {
         public readonly List<Muestra> _senalECG;
+        public readonly int _indiceMinimo;
+        public readonly int _indiceMaximo;
 
-        public FrmExportarATablaC(in List<Muestra> senalECG)
+        public FrmExportarATablaC(in List<Muestra> senalECG, int indiceMinimo, int indiceMaximo)
         {
             InitializeComponent();
             _senalECG = senalECG;
+            _indiceMinimo = indiceMinimo;
+            _indiceMaximo = indiceMaximo;
             if (cmbSaltoLinea.SelectedIndex == -1) cmbSaltoLinea.SelectedIndex = 1;
         }
 
@@ -54,7 +58,7 @@ namespace ECGViewer.Formularios
             }
 
             StreamWriter sw = null;
-            long longTabla = _senalECG.Count;
+            long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             try
             {
                 sw = new StreamWriter(saveFileDialog.FileName);
@@ -64,7 +68,11 @@ namespace ECGViewer.Formularios
                 if (rbEstiloC.Checked)
                     EscribirTablaC(sw, insertarSaltoLinea, valoresParaSalto);
                 else if (rbEstiloAssembler.Checked)
+                {
+                    MessageBox.Show("Los valores serán reescalados de 10 a 8 bits");
                     EscribirTablaAssembler(sw, insertarSaltoLinea, valoresParaSalto);
+                }
+                    
 
                 MessageBox.Show("El archivo fué creado satisfactoriamente con " + longTabla + " valores");
             }
@@ -86,11 +94,14 @@ namespace ECGViewer.Formularios
 
         private void EscribirTablaAssembler(StreamWriter sw, bool insertarSaltoLinea, int valoresParaSalto)
         {
-            Boolean primerValor = true;
-            long longTabla = _senalECG.Count;
+            bool primerValor = true;
+            long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
-            if (longTabla % 2 == 1) MessageBox.Show(this, "Atención: La cantidad de valores a exportar en la tabla es impar!", "Advertencia");
+            if (longTabla % 2 == 1) 
+                MessageBox.Show(this, "Atención: La cantidad de valores a exportar en la tabla es impar!"
+                    , "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             sw.Write("TABLA:\t.DB    ");
 
             for (int i = 0; i < longTabla; i++)
@@ -104,7 +115,7 @@ namespace ECGViewer.Formularios
                         sw.Write(" ,");
                 }
                 primerValor = false;
-                valorMuestra = (int)((_senalECG[i].Canal[0] / FrmMain.SPAN) - FrmMain.ZERO);
+                valorMuestra = (int)((_senalECG[i].Canal[0] / FrmMain.SPAN) - FrmMain.ZERO) >> 2;
                 sw.Write(valorMuestra.ToString());
             }
         }
@@ -113,12 +124,12 @@ namespace ECGViewer.Formularios
         private void EscribirTablaC(StreamWriter sw, bool insertarSaltoLinea, int valoresParaSalto)
         {
             Boolean primerValor = true;
-            long longTabla = _senalECG.Count;
+            long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
             sw.Write("short array[" + longTabla + "] = {");
 
-            for (int i = 0; i < _senalECG.Count; i++)
+            for (int i = 0; i < longTabla; i++)
             {
                 if (!primerValor)   //Evita poner la primer coma
                 {
