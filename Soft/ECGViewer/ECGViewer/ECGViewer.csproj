@@ -69,6 +69,12 @@
     <Compile Include="Controles\ToggleButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Formularios\FrmCalibracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCalibracion.Designer.cs">
+      <DependentUpon>FrmCalibracion.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utiles.cs" />
+    <EmbeddedResource Include="Formularios\FrmCalibracion.resx">
+      <DependentUpon>FrmCalibracion.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,12 +180,14 @@
     <None Include="Recursos\export_Proteus.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
+    <None Include="Recursos\measurement.png" />
     <Content Include="Recursos\new-document.png" />
     <Content Include="Recursos\new_file.png" />
     <None Include="Recursos\PWM_Picture.PNG" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />
+    <None Include="Recursos\scisors.png" />
     <Content Include="Recursos\Zoom-reset-01.png" />
     <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />
   </ItemGroup>

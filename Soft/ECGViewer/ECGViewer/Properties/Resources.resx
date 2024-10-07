@@ -133,8 +133,11 @@
   <data name="Zoom-reset-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Zoom-reset-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="export_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\export_C.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="new_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\new_file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scisors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\scisors.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="indicador" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\indicador.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,8 +148,8 @@
   <data name="saveall_sav_10186" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\saveall_sav_10186.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="new_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\new_file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PWM_Picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="evaluacion-comparativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\evaluacion-comparativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,10 +181,13 @@
   <data name="escala-corporal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\escala-corporal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="export_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\export_C.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="disquete (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disquete (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PWM_Picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="measurement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\measurement.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -213,6 +213,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap measurement {
+            get {
+                object obj = ResourceManager.GetObject("measurement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap new_document {
             get {
                 object obj = ResourceManager.GetObject("new-document", resourceCulture);
@@ -266,6 +276,16 @@ namespace ECGViewer.Properties {
         internal static System.Drawing.Bitmap saveall_sav_10186 {
             get {
                 object obj = ResourceManager.GetObject("saveall_sav_10186", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scisors {
+            get {
+                object obj = ResourceManager.GetObject("scisors", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

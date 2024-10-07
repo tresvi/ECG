@@ -11,5 +11,14 @@
     <Setting Name="TMuestreoValue" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="nudValorYMin" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="nudValorYMax" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.012</Value>
+    </Setting>
+    <Setting Name="Unidad" Type="System.String" Scope="User">
+      <Value Profile="(Default)">V</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

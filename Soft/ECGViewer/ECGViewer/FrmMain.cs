@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.IO.Ports;
@@ -325,7 +326,10 @@ namespace ECGViewer
 
         private void button5_Click(object sender, EventArgs e)
         {
-           // Graficar2();
+            // Graficar2();
+            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
+            printDocument.DefaultPageSettings.Landscape = true;
+            chartSenal.Printing.PrintPreview();
         }
 
         /*
@@ -814,5 +818,10 @@ namespace ECGViewer
             }
         }
 
+        private void tsbCalibracion_Click(object sender, EventArgs e)
+        {
+            FrmCalibracion frmCalibracion = new FrmCalibracion();
+            frmCalibracion.ShowDialog();
+        }
     }
 }

@@ -58,5 +58,41 @@ namespace ECGViewer.Properties {
                 this["TMuestreoValue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public decimal nudValorYMin {
+            get {
+                return ((decimal)(this["nudValorYMin"]));
+            }
+            set {
+                this["nudValorYMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.012")]
+        public decimal nudValorYMax {
+            get {
+                return ((decimal)(this["nudValorYMax"]));
+            }
+            set {
+                this["nudValorYMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("V")]
+        public string Unidad {
+            get {
+                return ((string)(this["Unidad"]));
+            }
+            set {
+                this["Unidad"] = value;
+            }
+        }
     }
 }
