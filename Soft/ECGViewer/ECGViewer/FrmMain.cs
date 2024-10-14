@@ -469,7 +469,11 @@ namespace ECGViewer
         private void BtnFiltro_Click(object sender, EventArgs e)
         {
             FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, _fMuestreo);
-            frmAplicarFiltro.ShowDialog();
+            DialogResult resultado = frmAplicarFiltro.ShowDialog();
+
+            if (resultado == DialogResult.Cancel) return;
+
+            _senalECG = frmAplicarFiltro.SenalFiltrada;
         }
 
 
@@ -955,6 +959,11 @@ namespace ECGViewer
             tsbResetZoom_Click(sender, e);
 
  
+        }
+
+        private void tsbMetricas_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Funcion no disponible");
         }
     }
 }

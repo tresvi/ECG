@@ -14,6 +14,9 @@ namespace ECGViewer
         public readonly List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
 
+        public List<Muestra> SenalFiltrada { get; private set; }
+        
+
         public FrmConsolaFiltros(in List<Muestra> senal, int frecuenciaMuestreo)
         {
             InitializeComponent();
@@ -281,6 +284,23 @@ namespace ECGViewer
             }
         }
 
+        private void tsbCancelar_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
 
+        private void FrmConsolaFiltros_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void tsbAceptar_Click(object sender, EventArgs e)
+        {
+            SenalFiltrada = _senalFiltrada;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
     }
 }

@@ -273,6 +273,7 @@
             this.tsbAceptar.Name = "tsbAceptar";
             this.tsbAceptar.Size = new System.Drawing.Size(107, 69);
             this.tsbAceptar.Text = "Aceptar";
+            this.tsbAceptar.Click += new System.EventHandler(this.tsbAceptar_Click);
             // 
             // toolStripSeparator3
             // 
@@ -287,6 +288,7 @@
             this.tsbCancelar.Name = "tsbCancelar";
             this.tsbCancelar.Size = new System.Drawing.Size(112, 69);
             this.tsbCancelar.Text = "Cancelar";
+            this.tsbCancelar.Click += new System.EventHandler(this.tsbCancelar_Click);
             // 
             // toolStripSeparator4
             // 
@@ -334,6 +336,7 @@
             this.Controls.Add(this.chartSenalOriginal);
             this.Name = "FrmConsolaFiltros";
             this.Text = "Banco de Filtros";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmConsolaFiltros_FormClosed);
             this.Load += new System.EventHandler(this.FrmAplicarFiltro_Load);
             this.Resize += new System.EventHandler(this.FrmAplicarFiltro_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).EndInit();

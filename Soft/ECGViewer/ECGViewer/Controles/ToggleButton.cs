@@ -95,7 +95,6 @@ namespace ECGViewer.Controles
             pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             pevent.Graphics.Clear(this.Parent.BackColor);
 
-            // Cambia el fondo del control a transparente o usa el color definido
             if (backgroundColor == Color.Transparent)
             {
                 pevent.Graphics.Clear(this.Parent.BackColor);
