@@ -42,6 +42,7 @@ namespace ECGViewer
         public FrmMain()
         {
             InitializeComponent();
+           // chartSenal.AxisViewChanging += new EventHandler<ViewEventArgs>(chart_AxisViewChanging);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -246,6 +247,22 @@ namespace ECGViewer
 
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
+            
+            var chart = (Chart)sender;
+
+            // Asegúrate de que haya datos en el ChartArea
+            if (chart.ChartAreas.Count > 0)
+            {
+                // Convertir las coordenadas del mouse en el gráfico al valor del eje X
+                var chartArea = chart.ChartAreas[0];
+                double xValue = chartArea.AxisX.PixelPositionToValue(e.X);
+
+                // Mostrar o usar el valor en X
+                MessageBox.Show("Coordenada en X: " + xValue.ToString());
+            }
+            
+
+            /***********Para detectar clicks en un punto de la grafica***************
             // Convertir las coordenadas del clic del mouse a elementos del gráfico
             HitTestResult result = chartSenal.HitTest(e.X, e.Y);
 
@@ -258,8 +275,34 @@ namespace ECGViewer
                 // Mostrar un mensaje con la información del punto
                 MessageBox.Show($"¡Hiciste clic en el punto (X={clickedPoint.XValue}, Y={clickedPoint.YValues[0]})!");
             }
+            *************************************************************************/
         }
 
+        /*
+        private void chart_AxisViewChanging(object sender, ViewEventArgs e)
+        {
+            // Verificar si es el eje X
+            if (e.Axis.AxisName == AxisName.X)
+            {
+                // Obtener los nuevos límites del eje X (valores mínimos y máximos tras el zoom)
+                double newMin = e.NewPosition;
+                double newMax = e.NewPosition + e.NewSize;
+
+                // Mostrar o usar los nuevos límites en X
+                MessageBox.Show($"Nuevo rango de X antes del zoom: Min = {newMin}, Max = {newMax}");
+
+                // Aquí puedes obtener los puntos de la serie que están dentro de este rango de X
+                foreach (var point in chartSenal.Series[0].Points)
+                {
+                    if (point.XValue >= newMin && point.XValue <= newMax)
+                    {
+                        // Haz algo con el punto
+                        Console.WriteLine($"Punto en X: {point.XValue}, Y: {point.YValues[0]}");
+                    }
+                }
+            }
+        }
+        */
 
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
@@ -822,6 +865,96 @@ namespace ECGViewer
         {
             FrmCalibracion frmCalibracion = new FrmCalibracion();
             frmCalibracion.ShowDialog();
+        }
+
+        private void chartSenal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsbTijera_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("Desea recortar la gráfica al valor mostrado actualmente?", "Recortar grafica", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (respuesta == DialogResult.Cancel) return;
+
+            double xMin = chartSenal.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
+            double xMax = chartSenal.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
+
+            (int indiceMin, int indiceMax) = Utiles.ObtenerIndicesInicialyFinal(_senalECG, xMin, xMax);
+
+            _senalECG = _senalECG.GetRange(indiceMin, indiceMax - indiceMin + 1);
+
+            if (_senalECG.Count == 0) return;
+
+            respuesta = MessageBox.Show("El gráfico se ha cortado exitosamente. Desea establecer a 0 segundos el comienzo del gráfico?"
+            , "Recortar gráfico", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            //TODO:   Pasar el reseteo del tiempo a una funcion
+
+            if (_senalECG.Count == 1)
+            {
+                _senalECG[0].Tiempo = 0;
+                return;
+            }
+
+            double tiempoMuestreo = _senalECG[1].Tiempo - _senalECG[0].Tiempo;
+            tiempoMuestreo = Math.Round(tiempoMuestreo, 5);
+            int contador = 0;
+
+            foreach (Muestra muestra in _senalECG)
+            {
+                muestra.Tiempo = tiempoMuestreo * contador++;
+            }
+
+
+
+            //Creo la nueva serie de datos.
+            _graphSerie = new Series("Muestras");
+            _graphSerie.Color = System.Drawing.Color.AliceBlue;
+            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
+            _graphSerie.BorderWidth = 1; //2;
+            _graphSerie.XValueType = ChartValueType.Single;
+            _graphSerie.YValueType = ChartValueType.Single;
+            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+
+            ChartArea chartArea = chartSenal.ChartAreas[0];
+
+            // Configura los valores mínimo y máximo del eje Y
+            chartArea.AxisY.Minimum = -0.12;
+            chartArea.AxisY.Maximum = 0.5;
+
+            Series series = chartSenal.Series["Muestras"];
+
+            series.Points.Clear();
+            foreach (var muestra in _senalECG)
+            {
+                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
+            }
+            _graphSerie = series;
+
+            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
+            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+
+            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
+            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
+
+            // Habilitar autoescala en el eje X
+            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+                                                                  // Habilitar autoescala en el eje Y
+            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+
+            btnFiltrarSenal.Enabled = true;
+            btnEspectro.Enabled = true;
+            btnFiltrosAvanzados.Enabled = true;
+
+            tsbResetZoom_Click(sender, e);
+
+ 
         }
     }
 }

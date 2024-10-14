@@ -127,7 +127,7 @@ namespace ECGViewer.Formularios
             long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
-            sw.Write("short array[" + longTabla + "] = {");
+            sw.Write("const short tabla[" + longTabla + "] = {");
 
             for (int i = 0; i < longTabla; i++)
             {
