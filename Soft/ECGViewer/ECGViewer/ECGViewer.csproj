@@ -166,7 +166,12 @@
     <None Include="Archivos_CSV\ECG_20Seg_Filtrado.csv" />
     <None Include="Archivos_CSV\ECG_20Seg_NoFiltrado.csv" />
     <Content Include="Recursos\abrir-documento.png" />
+    <None Include="Recursos\accept.png" />
+    <None Include="Recursos\accept_48x48.png" />
+    <None Include="Recursos\BandPass.png" />
     <Content Include="Recursos\boton-de-play.png" />
+    <None Include="Recursos\cancel.png" />
+    <None Include="Recursos\cancel_48x48.png" />
     <Content Include="Recursos\carpeta-abierta.png" />
     <Content Include="Recursos\correo-electronico.png" />
     <Content Include="Recursos\disco-flexible %281%29.png" />
@@ -178,17 +183,21 @@
     <Content Include="Recursos\export.png" />
     <None Include="Recursos\export_C.png" />
     <None Include="Recursos\export_Proteus.png" />
+    <None Include="Recursos\HighPass.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
     <None Include="Recursos\measurement.png" />
+    <None Include="Recursos\LowPass.png" />
     <Content Include="Recursos\new-document.png" />
     <Content Include="Recursos\new_file.png" />
     <None Include="Recursos\PWM_Picture.PNG" />
+    <None Include="Recursos\notch.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />
     <None Include="Recursos\scisors.png" />
     <Content Include="Recursos\Zoom-reset-01.png" />
+    <None Include="Recursos\Zoom-reset-01_48x48.png" />
     <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />
   </ItemGroup>
   <ItemGroup />

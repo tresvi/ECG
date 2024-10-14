@@ -51,7 +51,7 @@ namespace ECGViewer
             const int MARGEN = 1;
             int mitadFormulario = this.Height / 2;
             //chartSenalOriginal.Top = gbButtons.Top  + gbButtons.Height + MARGEN;
-            chartSenalOriginal.Height =  this.Height/2 - (gbButtons.Top + gbButtons.Height) + 10;
+            chartSenalOriginal.Height =  this.Height/2 - (toolStrip1.Top + toolStrip1.Height) + 10;
             chartSenalFiltrada.Top = chartSenalOriginal.Height + chartSenalOriginal.Top;
             chartSenalFiltrada.Height = chartSenalOriginal.Height;
         }
@@ -106,9 +106,7 @@ namespace ECGViewer
 
         private void BtnResetZoom_Click(object sender, EventArgs e)
         {
-            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
-            chartSenalFiltrada.ChartAreas[0].AxisX.Minimum = chartSenalOriginal.ChartAreas[0].AxisX.Minimum;
-            chartSenalFiltrada.ChartAreas[0].AxisX.Maximum = chartSenalOriginal.ChartAreas[0].AxisX.Maximum;
+
         }
 
 
@@ -122,13 +120,21 @@ namespace ECGViewer
         }
 
 
-        private void BtnFiltroPasaBajo_Click(object sender, EventArgs e)
+        private void tsbResetZoom_Click(object sender, EventArgs e)
+        {
+            chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
+            chartSenalFiltrada.ChartAreas[0].AxisX.Minimum = chartSenalOriginal.ChartAreas[0].AxisX.Minimum;
+            chartSenalFiltrada.ChartAreas[0].AxisX.Maximum = chartSenalOriginal.ChartAreas[0].AxisX.Maximum;
+        }
+
+
+        private void tsbPasaBajo_Click(object sender, EventArgs e)
         {
             FrmPasaAltosBajos frmPasaBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
             if (frmPasaBajos.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
-            double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double) frmPasaBajos.FrecuenciaCorte);
+            double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double)frmPasaBajos.FrecuenciaCorte);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
                 _senalFiltrada[i].Canal[0] = filtered[i];
@@ -142,9 +148,9 @@ namespace ECGViewer
         }
 
 
-        private void BtnFiltroPasaAlto_Click(object sender, EventArgs e)
+        private void tsbPasaAlto_Click(object sender, EventArgs e)
         {
-            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 1);
+            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 0.5m);
             if (frmPAltos.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
@@ -162,13 +168,13 @@ namespace ECGViewer
         }
 
 
-        private void BtnFiltroPasaBanda_Click(object sender, EventArgs e)
+        private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1 ,  49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
-            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double) frmPBanda.FrecuenciaCorteMax);
+            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double)frmPBanda.FrecuenciaCorteMax);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
                 _senalFiltrada[i].Canal[0] = filtered[i];
@@ -182,7 +188,7 @@ namespace ECGViewer
         }
 
 
-        private void BtnFiltroNotch_Click(object sender, EventArgs e)
+        private void tsbNotch_Click(object sender, EventArgs e)
         {
             FrmPasaEliminaBanda frmEBanda = new FrmPasaEliminaBanda("Configuracion filtro Elimina Banda", 49.5M, 50.5M);
             if (frmEBanda.ShowDialog() != DialogResult.OK) return;
@@ -204,11 +210,11 @@ namespace ECGViewer
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {
             /********** TODO: Sacar esto. Poner que el filtro pueda ser aplicado con cualquier vista ********/
-            BtnResetZoom.Enabled = !tgbTipoVista.Checked;
-            BtnFiltroPasaBajo.Enabled = !tgbTipoVista.Checked;
-            BtnFiltroPasaAlto.Enabled = !tgbTipoVista.Checked;
-            BtnFiltroPasaBanda.Enabled = !tgbTipoVista.Checked;
-            BtnFiltroNotch.Enabled = !tgbTipoVista.Checked;
+            tsbResetZoom.Enabled = !tgbTipoVista.Checked;
+            tsbPasaBajo.Enabled = !tgbTipoVista.Checked;
+            tsbPasaAlto.Enabled = !tgbTipoVista.Checked;
+            tsbPasaBanda.Enabled = !tgbTipoVista.Checked;
+            tsbNotch.Enabled = !tgbTipoVista.Checked;
             /*****************************************************************************************/
 
             Series serieEspectro = chartSenalOriginal.Series["Espectro"];
@@ -268,12 +274,13 @@ namespace ECGViewer
 
                 chartAreaEspectroFiltrada.AxisX.Interval = 2;
                 chartAreaEspectroFiltrada.AxisX.LabelStyle.Format = "0.0";
-                chartAreaEspectroFiltrada.AxisX. Minimum = chartAreaEspectro.AxisX.Minimum;
+                chartAreaEspectroFiltrada.AxisX.Minimum = chartAreaEspectro.AxisX.Minimum;
                 chartAreaEspectroFiltrada.AxisX.Maximum = chartAreaEspectro.AxisX.Maximum;
                 chartAreaEspectroFiltrada.AxisY.Minimum = chartAreaEspectro.AxisY.Minimum;
                 chartAreaEspectroFiltrada.AxisY.Maximum = chartAreaEspectro.AxisY.ScaleView.ViewMaximum;
             }
-
         }
+
+
     }
 }
