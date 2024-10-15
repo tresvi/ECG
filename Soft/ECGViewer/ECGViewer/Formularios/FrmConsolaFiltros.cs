@@ -2,6 +2,8 @@
 using FftSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -10,42 +12,107 @@ namespace ECGViewer
 {
     public partial class FrmConsolaFiltros : Form
     {
+        public List<Muestra> SenalFiltrada { get; private set; }
         public readonly List<Muestra> _senalOriginal;
         public readonly List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
 
-        public List<Muestra> SenalFiltrada { get; private set; }
+        public double _yMinSenal, _yMaxSenal, _yIntervalSenal;
+        public double _yMinEspectro, _yMaxEspectro, _yIntervalEspectro;
         
-
+        
         public FrmConsolaFiltros(in List<Muestra> senal, int frecuenciaMuestreo)
         {
             InitializeComponent();
             _senalOriginal = senal;
             _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
             _frecuenciaMuestreo = frecuenciaMuestreo;
+
+            chartSenalOriginal.PostPaint += chartSenalOriginal_PostPaint;
+        }
+
+        /// <summary>
+        /// Captura todos los Maximos, minimos e Intervalos del grafico de la senal original
+        /// para que luego puedan ser aplicados al de la senal filtrada. De esta manera la 
+        /// visualizacion y escalas de ambos graficos será identica (si no, la autoescala en Y del
+        /// graf. de filtrada, estorba al cambiar escalas)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chartSenalOriginal_PostPaint(object sender, ChartPaintEventArgs e)
+        {
+            if (e.ChartElement is ChartArea)
+            {
+                _yMinEspectro = chartSenalOriginal.ChartAreas[1].AxisY.Minimum;
+                _yMaxEspectro = chartSenalOriginal.ChartAreas[1].AxisY.Maximum;
+                int cantidadLineas = chartSenalOriginal.ChartAreas[1].AxisY.CustomLabels.Count;
+
+                if (cantidadLineas - 1 != 0)
+                    _yIntervalEspectro = (_yMaxEspectro - _yMinEspectro) / (cantidadLineas - 1);
+
+                _yMinSenal = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
+                _yMaxSenal = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
+                cantidadLineas = chartSenalOriginal.ChartAreas[0].AxisY.CustomLabels.Count;
+
+                if (cantidadLineas - 1 != 0)
+                    _yIntervalSenal = (_yMaxSenal - _yMinSenal) / (cantidadLineas - 1);
+            }
+        }
+
+
+        private void InicializarGraficos()
+        {
+            ChartArea caSenalOriginal = chartSenalOriginal.ChartAreas[0];
+            caSenalOriginal.AxisX.Interval = 0.5;
+            caSenalOriginal.AxisX.Minimum = 0;  // Autoajustar el mínimo
+            caSenalOriginal.AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
+            caSenalOriginal.AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
+            caSenalOriginal.AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
+            caSenalOriginal.AxisY.Title = "Amplitud Vs Tiempo[seg]";
+            caSenalOriginal.AxisX.Title = "";
+            caSenalOriginal.AxisX.LabelStyle.Format = "0.00";
+
+            ChartArea caEspectroOriginal = chartSenalOriginal.ChartAreas[1];
+            caEspectroOriginal.AxisX.Interval = 2;
+            caEspectroOriginal.AxisX.LabelStyle.Format = "0.0";
+            caEspectroOriginal.AxisX.Minimum = 0;
+            caEspectroOriginal.AxisX.Maximum = 100;
+            caEspectroOriginal.AxisY.Minimum = 0;
+            caEspectroOriginal.AxisY.Maximum = Double.NaN;
+
+            //La config del grafico de filtrada, se toma del de senal original
+            ChartArea caSenalFiltrada = chartSenalFiltrada.ChartAreas[0];
+            caSenalFiltrada.AxisX.Interval = caSenalOriginal.AxisX.Interval;
+            caSenalFiltrada.AxisX.Minimum = caSenalOriginal.AxisX.Minimum;
+            caSenalFiltrada.AxisX.Maximum = caSenalOriginal.AxisX.Maximum;
+            caSenalFiltrada.AxisY.Interval = caSenalOriginal.AxisY.Interval;
+            caSenalFiltrada.AxisY.Minimum = caSenalOriginal.AxisY.Minimum;
+            caSenalFiltrada.AxisY.Maximum = caSenalOriginal.AxisY.Maximum;
+            caSenalFiltrada.AxisY.Title = caSenalOriginal.AxisY.Title;
+            caSenalFiltrada.AxisX.Title = caSenalOriginal.AxisX.Title;
+            caSenalFiltrada.AxisX.LabelStyle.Format = caSenalOriginal.AxisX.LabelStyle.Format;
+
+            ChartArea caEspectroFiltrada = chartSenalFiltrada.ChartAreas[1];
+            caEspectroFiltrada.AxisX.Interval = caEspectroOriginal.AxisX.Interval;
+            caEspectroFiltrada.AxisX.Minimum = caEspectroOriginal.AxisX.Minimum;
+            caEspectroFiltrada.AxisX.Maximum = caEspectroOriginal.AxisX.Maximum;
+            caEspectroFiltrada.AxisY.Interval = caEspectroOriginal.AxisY.Interval;
+            caEspectroFiltrada.AxisY.Minimum = caEspectroOriginal.AxisY.Minimum;
+            caEspectroFiltrada.AxisY.Maximum = caEspectroOriginal.AxisY.Maximum;
+            caEspectroFiltrada.AxisY.Title = caEspectroOriginal.AxisY.Title;
+            caEspectroFiltrada.AxisX.Title = caEspectroOriginal.AxisX.Title;
+            caEspectroFiltrada.AxisX.LabelStyle.Format = caEspectroOriginal.AxisX.LabelStyle.Format;
         }
 
 
         private void Graficar(Chart chart, List<Muestra> senal)
         {
-            ChartArea chartArea = chart.ChartAreas[0];
-            
-            //Autoescala en ejes
-            chartArea.AxisX.Interval = 1;
-            chartArea.AxisX.Minimum = 0;  // Autoajustar el mínimo
-            chartArea.AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-            chartArea.AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartArea.AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-            chartArea.AxisY.Title = "Amplitud Vs Tiempo[seg]";
-            chartArea.AxisX.Title = "";
-
             chart.Series["Muestras"].Points.Clear();
 
             foreach (var muestra in senal)
             {
                 chart.Series["Muestras"].Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
-            chartArea.AxisX.LabelStyle.Format = "0.00";
         }
 
 
@@ -64,6 +131,7 @@ namespace ECGViewer
         {
             Graficar(chartSenalOriginal, _senalOriginal);
             Graficar(chartSenalFiltrada, _senalFiltrada);
+            InicializarGraficos();
 
             // Configura el gráfico
             chartSenalOriginal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
@@ -82,7 +150,7 @@ namespace ECGViewer
             chartSenalOriginal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;    // Tamaño mínimo de desplazamiento
 
             // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
-            chartSenalOriginal.ChartAreas[0].AxisX.Interval = 1;
+            chartSenalOriginal.ChartAreas[0].AxisX.Interval = 0.5;
 
             ActivarZoom(chartSenalOriginal, true);
         }
@@ -104,12 +172,6 @@ namespace ECGViewer
                 chart.ChartAreas[0].CursorX.SetCursorPosition(double.NaN);
                 chart.ChartAreas[0].CursorY.SetCursorPosition(double.NaN);
             }
-        }
-
-
-        private void BtnResetZoom_Click(object sender, EventArgs e)
-        {
-
         }
 
 
@@ -144,16 +206,15 @@ namespace ECGViewer
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
-            //Por alguna razon, el valor automatico de los ejes se altera
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
 
         private void tsbPasaAlto_Click(object sender, EventArgs e)
         {
-            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 0.5m);
+            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 0.8m);
             if (frmPAltos.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
@@ -164,16 +225,15 @@ namespace ECGViewer
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
-            //Por alguna razon, el valor automatico de los ejes se altera
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
 
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 0.8m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
@@ -184,10 +244,9 @@ namespace ECGViewer
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
-            //Por alguna razon, el valor automatico de los ejes se altera
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
 
@@ -204,11 +263,11 @@ namespace ECGViewer
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
-            //Por alguna razon, el valor automatico de los ejes se altera
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = chartSenalOriginal.ChartAreas[0].AxisY.Minimum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = chartSenalOriginal.ChartAreas[0].AxisY.Maximum;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = chartSenalOriginal.ChartAreas[0].AxisY.Interval;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
+
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {
@@ -240,7 +299,6 @@ namespace ECGViewer
             if (tgbTipoVista.Checked)
             {
                 /************* senalOriginal****************/
-
                 double[] signal = Utiles.ClonarVectorParaFFT(_senalOriginal);
 
                 System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
@@ -253,16 +311,8 @@ namespace ECGViewer
                     serieEspectro.Points.AddXY(freq[i], psd[i]);
                 }
 
-                chartAreaEspectro.AxisX.Interval = 2;
-                chartAreaEspectro.AxisX.LabelStyle.Format = "0.0";
-                chartAreaEspectro.AxisX.Minimum = 0;
-                chartAreaEspectro.AxisX.Maximum = 100;
-                chartAreaEspectro.AxisY.Minimum = 0;
-                chartAreaEspectro.AxisY.Maximum = Double.NaN;
-
 
                 /************* senalFiltrada****************/
-
                 signal = Utiles.ClonarVectorParaFFT(_senalFiltrada);
 
                 System.Numerics.Complex[] spectrumFiltrado = FftSharp.FFT.Forward(signal);
@@ -275,12 +325,10 @@ namespace ECGViewer
                     serieEspectroFiltrada.Points.AddXY(freq[i], psd[i]);
                 }
 
-                chartAreaEspectroFiltrada.AxisX.Interval = 2;
-                chartAreaEspectroFiltrada.AxisX.LabelStyle.Format = "0.0";
-                chartAreaEspectroFiltrada.AxisX.Minimum = chartAreaEspectro.AxisX.Minimum;
-                chartAreaEspectroFiltrada.AxisX.Maximum = chartAreaEspectro.AxisX.Maximum;
-                chartAreaEspectroFiltrada.AxisY.Minimum = chartAreaEspectro.AxisY.Minimum;
-                chartAreaEspectroFiltrada.AxisY.Maximum = chartAreaEspectro.AxisY.ScaleView.ViewMaximum;
+                chartAreaEspectroFiltrada.AxisY.Minimum = _yMinEspectro;
+                chartAreaEspectroFiltrada.AxisY.Maximum = _yMaxEspectro;
+                chartAreaEspectroFiltrada.AxisY.Interval = _yIntervalEspectro;
+                chartAreaEspectroFiltrada.AxisY.RoundAxisValues();
             }
         }
 
@@ -302,5 +350,6 @@ namespace ECGViewer
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
     }
 }

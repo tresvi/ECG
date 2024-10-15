@@ -297,20 +297,22 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(544, 9);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(1021, 7);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(193, 16);
+            this.label3.Size = new System.Drawing.Size(209, 18);
             this.label3.TabIndex = 15;
             this.label3.Text = "Vista: Tiempo / Frecuencia";
             // 
             // tgbTipoVista
             // 
+            this.tgbTipoVista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tgbTipoVista.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tgbTipoVista.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.tgbTipoVista.Location = new System.Drawing.Point(598, 28);
+            this.tgbTipoVista.Location = new System.Drawing.Point(1092, 28);
             this.tgbTipoVista.MinimumSize = new System.Drawing.Size(45, 22);
             this.tgbTipoVista.Name = "tgbTipoVista";
             this.tgbTipoVista.OffBackColor = System.Drawing.Color.Gray;
