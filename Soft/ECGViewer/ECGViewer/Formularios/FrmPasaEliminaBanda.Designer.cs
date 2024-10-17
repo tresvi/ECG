@@ -146,6 +146,7 @@
             // 
             // BtnCancelar
             // 
+            this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnCancelar.Location = new System.Drawing.Point(185, 129);
             this.BtnCancelar.Name = "BtnCancelar";
@@ -168,8 +169,10 @@
             // 
             // FrmPasaEliminaBanda
             // 
+            this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BtnCancelar;
             this.ClientSize = new System.Drawing.Size(339, 199);
             this.ControlBox = false;
             this.Controls.Add(this.BtnCancelar);

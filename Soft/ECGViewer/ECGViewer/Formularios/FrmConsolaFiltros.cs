@@ -341,7 +341,6 @@ namespace ECGViewer
         private void FrmConsolaFiltros_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
-            this.Close();
         }
 
         private void tsbAceptar_Click(object sender, EventArgs e)

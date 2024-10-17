@@ -41,21 +41,23 @@
             this.chartSenalOriginal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label2 = new System.Windows.Forms.Label();
-            this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tgbTipoVista = new ECGViewer.Controles.ToggleButton();
+            this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
+            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
             this.tsbPasaBajo = new System.Windows.Forms.ToolStripButton();
             this.tsbPasaAlto = new System.Windows.Forms.ToolStripButton();
             this.tsbPasaBanda = new System.Windows.Forms.ToolStripButton();
             this.tsbNotch = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbAceptar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbCancelar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tgbTipoVista = new ECGViewer.Controles.ToggleButton();
+            this.tsbAceptar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -163,6 +165,80 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "Tiempo / Frecuencia";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(48, 48);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbResetZoom,
+            this.toolStripSeparator1,
+            this.tsbPasaBajo,
+            this.tsbPasaAlto,
+            this.tsbPasaBanda,
+            this.tsbNotch,
+            this.toolStripSeparator2,
+            this.tsbCancelar,
+            this.toolStripSeparator4,
+            this.tsbAceptar,
+            this.toolStripSeparator5,
+            this.toolStripButton1,
+            this.toolStripSeparator3});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1262, 72);
+            this.toolStrip1.TabIndex = 13;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 72);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 72);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 72);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 72);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(367, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(209, 18);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Vista: Tiempo / Frecuencia";
+            // 
+            // tgbTipoVista
+            // 
+            this.tgbTipoVista.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tgbTipoVista.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.tgbTipoVista.Location = new System.Drawing.Point(431, 27);
+            this.tgbTipoVista.MinimumSize = new System.Drawing.Size(45, 22);
+            this.tgbTipoVista.Name = "tgbTipoVista";
+            this.tgbTipoVista.OffBackColor = System.Drawing.Color.Gray;
+            this.tgbTipoVista.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.tgbTipoVista.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.tgbTipoVista.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.tgbTipoVista.Size = new System.Drawing.Size(75, 37);
+            this.tgbTipoVista.TabIndex = 14;
+            this.tgbTipoVista.UseVisualStyleBackColor = false;
+            this.tgbTipoVista.CheckedChanged += new System.EventHandler(this.tgbTipoVista_CheckedChanged);
+            // 
             // toggleButton1
             // 
             this.toggleButton1.BackColor = System.Drawing.Color.Transparent;
@@ -178,29 +254,6 @@
             this.toggleButton1.TabIndex = 11;
             this.toggleButton1.UseVisualStyleBackColor = true;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(48, 48);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbResetZoom,
-            this.toolStripSeparator1,
-            this.tsbPasaBajo,
-            this.tsbPasaAlto,
-            this.tsbPasaBanda,
-            this.tsbNotch,
-            this.toolStripSeparator2,
-            this.tsbAceptar,
-            this.toolStripSeparator3,
-            this.tsbCancelar,
-            this.toolStripSeparator4});
-            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1262, 72);
-            this.toolStrip1.TabIndex = 13;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
             // tsbResetZoom
             // 
             this.tsbResetZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -210,11 +263,6 @@
             this.tsbResetZoom.Size = new System.Drawing.Size(52, 69);
             this.tsbResetZoom.Text = "toolStripButton1";
             this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 72);
             // 
             // tsbPasaBajo
             // 
@@ -260,69 +308,42 @@
             this.tsbNotch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbNotch.Click += new System.EventHandler(this.tsbNotch_Click);
             // 
-            // toolStripSeparator2
+            // tsbCancelar
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 72);
+            this.tsbCancelar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbCancelar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbCancelar.Image = global::ECGViewer.Properties.Resources.cancel_48x48;
+            this.tsbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCancelar.Name = "tsbCancelar";
+            this.tsbCancelar.Size = new System.Drawing.Size(120, 69);
+            this.tsbCancelar.Text = "Cancelar";
+            this.tsbCancelar.Click += new System.EventHandler(this.tsbCancelar_Click);
             // 
             // tsbAceptar
             // 
-            this.tsbAceptar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbAceptar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbAceptar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tsbAceptar.Image = global::ECGViewer.Properties.Resources.accept_48x48;
             this.tsbAceptar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAceptar.Name = "tsbAceptar";
-            this.tsbAceptar.Size = new System.Drawing.Size(107, 69);
-            this.tsbAceptar.Text = "Aceptar";
+            this.tsbAceptar.Size = new System.Drawing.Size(110, 69);
+            this.tsbAceptar.Text = "Aplicar";
             this.tsbAceptar.Click += new System.EventHandler(this.tsbAceptar_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripButton1.Image = global::ECGViewer.Properties.Resources.reset;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(52, 69);
+            this.toolStripButton1.Text = "Reset";
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 72);
-            // 
-            // tsbCancelar
-            // 
-            this.tsbCancelar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbCancelar.Image = global::ECGViewer.Properties.Resources.cancel_48x48;
-            this.tsbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbCancelar.Name = "tsbCancelar";
-            this.tsbCancelar.Size = new System.Drawing.Size(112, 69);
-            this.tsbCancelar.Text = "Cancelar";
-            this.tsbCancelar.Click += new System.EventHandler(this.tsbCancelar_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 72);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(1021, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(209, 18);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Vista: Tiempo / Frecuencia";
-            // 
-            // tgbTipoVista
-            // 
-            this.tgbTipoVista.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tgbTipoVista.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.tgbTipoVista.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.tgbTipoVista.Location = new System.Drawing.Point(1092, 28);
-            this.tgbTipoVista.MinimumSize = new System.Drawing.Size(45, 22);
-            this.tgbTipoVista.Name = "tgbTipoVista";
-            this.tgbTipoVista.OffBackColor = System.Drawing.Color.Gray;
-            this.tgbTipoVista.OffToggleColor = System.Drawing.Color.Gainsboro;
-            this.tgbTipoVista.OnBackColor = System.Drawing.Color.MediumSlateBlue;
-            this.tgbTipoVista.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.tgbTipoVista.Size = new System.Drawing.Size(75, 37);
-            this.tgbTipoVista.TabIndex = 14;
-            this.tgbTipoVista.UseVisualStyleBackColor = false;
-            this.tgbTipoVista.CheckedChanged += new System.EventHandler(this.tgbTipoVista_CheckedChanged);
             // 
             // FrmConsolaFiltros
             // 
@@ -365,10 +386,12 @@
         private System.Windows.Forms.ToolStripButton tsbNotch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tsbAceptar;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton tsbCancelar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Label label3;
         private Controles.ToggleButton tgbTipoVista;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

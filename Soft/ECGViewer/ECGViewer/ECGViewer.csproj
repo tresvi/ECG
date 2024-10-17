@@ -75,6 +75,12 @@
     <Compile Include="Formularios\FrmCalibracion.Designer.cs">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmMarcadorGrafico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmMarcadorGrafico.Designer.cs">
+      <DependentUpon>FrmMarcadorGrafico.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     <Compile Include="Utiles.cs" />
     <EmbeddedResource Include="Formularios\FrmCalibracion.resx">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmMarcadorGrafico.resx">
+      <DependentUpon>FrmMarcadorGrafico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -165,6 +174,7 @@
   <ItemGroup>
     <None Include="Archivos_CSV\ECG_20Seg_Filtrado.csv" />
     <None Include="Archivos_CSV\ECG_20Seg_NoFiltrado.csv" />
+    <Content Include="Codigo desechado.txt" />
     <Content Include="Recursos\abrir-documento.png" />
     <None Include="Recursos\accept.png" />
     <None Include="Recursos\accept_48x48.png" />
@@ -192,6 +202,7 @@
     <Content Include="Recursos\new_file.png" />
     <None Include="Recursos\PWM_Picture.PNG" />
     <None Include="Recursos\notch.png" />
+    <None Include="Recursos\reset.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />

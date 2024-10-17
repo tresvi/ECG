@@ -160,7 +160,7 @@ namespace ECGViewer
         {
             // Crear una línea horizontal en el eje Y
             StripLine stripLine = new StripLine();
-            stripLine.IntervalOffset = 0.2;  // Valor en el eje Y donde se dibujará la línea
+            stripLine.IntervalOffset = 0.2;  // Valor en el eje X donde se dibujará la línea
             stripLine.BorderColor = Color.Red;
             stripLine.BorderWidth = 2;
             stripLine.BorderDashStyle = ChartDashStyle.Dash;
@@ -168,6 +168,9 @@ namespace ECGViewer
             // Agregar la línea de referencia al eje Y
             chartSenal.ChartAreas[0].AxisY.StripLines.Add(stripLine);
             chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
+
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -247,35 +250,52 @@ namespace ECGViewer
 
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
-            
+            if (e.Button != MouseButtons.Right) return;
             var chart = (Chart)sender;
-
-            // Asegúrate de que haya datos en el ChartArea
-            if (chart.ChartAreas.Count > 0)
-            {
-                // Convertir las coordenadas del mouse en el gráfico al valor del eje X
-                var chartArea = chart.ChartAreas[0];
-                double xValue = chartArea.AxisX.PixelPositionToValue(e.X);
-
-                // Mostrar o usar el valor en X
-                MessageBox.Show("Coordenada en X: " + xValue.ToString());
-            }
+            if (chart.ChartAreas.Count == 0) return;                
             
+            double xValue, yValue = 0;
+            var chartArea = chart.ChartAreas[0];
+            xValue = chartArea.AxisX.PixelPositionToValue(e.X);
+            yValue = chartArea.AxisY.PixelPositionToValue(e.Y);
 
-            /***********Para detectar clicks en un punto de la grafica***************
-            // Convertir las coordenadas del clic del mouse a elementos del gráfico
-            HitTestResult result = chartSenal.HitTest(e.X, e.Y);
+            StripLine stripLine = new StripLine();
+            stripLine.IntervalOffset = xValue;
+            stripLine.BorderColor = Color.Red;
+            stripLine.BorderWidth = 2;
+            stripLine.BorderDashStyle = ChartDashStyle.Dash;
 
-            // Verificar si el clic fue en un punto de la serie
-            if (result.ChartElementType == ChartElementType.DataPoint)
+            chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
+
+            FrmMarcadorGrafico frmMarcadorGrafico = new FrmMarcadorGrafico();
+            frmMarcadorGrafico.ShowDialog();
+            DialogResult resultado = frmMarcadorGrafico.DialogResult;
+
+            if (resultado == DialogResult.Cancel)
             {
-                // Obtener el punto que fue tocado
-                DataPoint clickedPoint = _graphSerie.Points[result.PointIndex];
-
-                // Mostrar un mensaje con la información del punto
-                MessageBox.Show($"¡Hiciste clic en el punto (X={clickedPoint.XValue}, Y={clickedPoint.YValues[0]})!");
+                chartSenal.ChartAreas[0].AxisX.StripLines.Remove(stripLine);
+                return;
             }
-            *************************************************************************/
+
+
+
+            //// Crear una anotación de texto
+            // Crear una anotación de texto en el punto (X=3, Y=30)
+            TextAnnotation textAnnotation = new TextAnnotation();
+            textAnnotation.Text = frmMarcadorGrafico.MarcadorDescripcion.Substring(0, 10) + "...";
+            textAnnotation.X = xValue;   // Posición en el eje X
+            textAnnotation.Y = yValue;  // Posición en el eje Y
+            textAnnotation.Font = new Font("Arial", 12, FontStyle.Bold);
+            textAnnotation.ForeColor = Color.Blue;
+
+            // Colocar la anotación en la ubicación correcta
+            textAnnotation.AnchorX = xValue; //3;
+            textAnnotation.AnchorY = yValue; //0.33;
+            textAnnotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
+
+            // Agregar la anotación al gráfico
+            chartSenal.Annotations.Add(textAnnotation);
+
         }
 
         /*
@@ -871,10 +891,6 @@ namespace ECGViewer
             frmCalibracion.ShowDialog();
         }
 
-        private void chartSenal_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void tsbTijera_Click(object sender, EventArgs e)
         {

@@ -85,7 +85,7 @@
             // btnResetECGValues
             // 
             this.btnResetECGValues.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetECGValues.Location = new System.Drawing.Point(89, 146);
+            this.btnResetECGValues.Location = new System.Drawing.Point(87, 146);
             this.btnResetECGValues.Name = "btnResetECGValues";
             this.btnResetECGValues.Size = new System.Drawing.Size(207, 35);
             this.btnResetECGValues.TabIndex = 7;
@@ -170,8 +170,10 @@
             // 
             // FrmCalibracion
             // 
+            this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BtnCancelar;
             this.ClientSize = new System.Drawing.Size(411, 281);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
@@ -180,6 +182,7 @@
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmCalibracion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calibracion";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
