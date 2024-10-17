@@ -14,7 +14,7 @@ namespace ECGViewer
     {
         public List<Muestra> SenalFiltrada { get; private set; }
         public readonly List<Muestra> _senalOriginal;
-        public readonly List<Muestra> _senalFiltrada;
+        public List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
 
         public double _yMinSenal, _yMaxSenal, _yIntervalSenal;
@@ -268,6 +268,17 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
+        private void tsbResetSenal_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("Si continua perderá todos los filtros aplicados al gráfico. Desea continuar?"
+                , "Reset Filtros", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (respuesta == DialogResult.No) return;
+
+            _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+        }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {
