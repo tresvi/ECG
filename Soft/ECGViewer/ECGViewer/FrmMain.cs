@@ -251,51 +251,26 @@ namespace ECGViewer
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
-            var chart = (Chart)sender;
-            if (chart.ChartAreas.Count == 0) return;                
             
             double xValue, yValue = 0;
-            var chartArea = chart.ChartAreas[0];
+            ChartArea chartArea = chartSenal.ChartAreas[0];
             xValue = chartArea.AxisX.PixelPositionToValue(e.X);
             yValue = chartArea.AxisY.PixelPositionToValue(e.Y);
 
-            StripLine stripLine = new StripLine();
-            stripLine.IntervalOffset = xValue;
-            stripLine.BorderColor = Color.Red;
-            stripLine.BorderWidth = 2;
-            stripLine.BorderDashStyle = ChartDashStyle.Dash;
-
+            StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "Hola que tal como estas?");
             chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
 
             FrmMarcadorGrafico frmMarcadorGrafico = new FrmMarcadorGrafico();
             frmMarcadorGrafico.ShowDialog();
-            DialogResult resultado = frmMarcadorGrafico.DialogResult;
-
-            if (resultado == DialogResult.Cancel)
+            if (frmMarcadorGrafico.DialogResult == DialogResult.Cancel)
             {
                 chartSenal.ChartAreas[0].AxisX.StripLines.Remove(stripLine);
                 return;
             }
 
-
-
-            //// Crear una anotación de texto
-            // Crear una anotación de texto en el punto (X=3, Y=30)
-            TextAnnotation textAnnotation = new TextAnnotation();
-            textAnnotation.Text = frmMarcadorGrafico.MarcadorDescripcion.Substring(0, 10) + "...";
-            textAnnotation.X = xValue;   // Posición en el eje X
-            textAnnotation.Y = yValue;  // Posición en el eje Y
-            textAnnotation.Font = new Font("Arial", 12, FontStyle.Bold);
-            textAnnotation.ForeColor = Color.Blue;
-
-            // Colocar la anotación en la ubicación correcta
-            textAnnotation.AnchorX = xValue; //3;
-            textAnnotation.AnchorY = yValue; //0.33;
-            textAnnotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
-
-            // Agregar la anotación al gráfico
-            chartSenal.Annotations.Add(textAnnotation);
-
+            stripLine.SetTexto(frmMarcadorGrafico.MarcadorDescripcion, 12, 10);
+            stripLine.Annotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
+            chartSenal.Annotations.Add(stripLine.Annotation);
         }
 
         /*
@@ -980,6 +955,12 @@ namespace ECGViewer
         private void tsbMetricas_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Funcion no disponible");
+        }
+
+        private void tsbAdminMarcadores_Click(object sender, EventArgs e)
+        {
+            FrmAdministrarMarcadores frmAdminMarcadores = new FrmAdministrarMarcadores(chartSenal);
+            frmAdminMarcadores.ShowDialog();
         }
     }
 }

@@ -5,6 +5,10 @@ namespace ECGViewer.Formularios
     public partial class FrmMarcadorGrafico : Form
     {
         public string MarcadorDescripcion { get; set; }
+        public string MarcadorDescripcionResumen 
+        { 
+            get { return MarcadorDescripcion.PadRight(10, ' ').Substring(0, 10) + "..."; } 
+        }
 
         public FrmMarcadorGrafico()
         {
