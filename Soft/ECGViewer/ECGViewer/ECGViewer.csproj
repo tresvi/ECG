@@ -81,11 +81,11 @@
     <Compile Include="Formularios\FrmCalibracion.Designer.cs">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmTextoMarcadorGrafico.cs">
+    <Compile Include="Formularios\FrmEditorTextoMarcadores.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmTextoMarcadorGrafico.Designer.cs">
-      <DependentUpon>FrmTextoMarcadorGrafico.cs</DependentUpon>
+    <Compile Include="Formularios\FrmEditorTextoMarcadores.Designer.cs">
+      <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -134,8 +134,8 @@
     <EmbeddedResource Include="Formularios\FrmCalibracion.resx">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmTextoMarcadorGrafico.resx">
-      <DependentUpon>FrmTextoMarcadorGrafico.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmEditorTextoMarcadores.resx">
+      <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>

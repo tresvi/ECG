@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer.Formularios
 {
-    partial class FrmTextoMarcadorGrafico
+    partial class FrmEditorTextoMarcadores
     {
         /// <summary>
         /// Required designer variable.
@@ -37,12 +37,13 @@
             // 
             // BtnCancelar
             // 
+            this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnCancelar.Location = new System.Drawing.Point(209, 172);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(103, 36);
             this.BtnCancelar.TabIndex = 7;
-            this.BtnCancelar.Text = "&Cancelar";
+            this.BtnCancelar.Text = "Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
             this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
@@ -53,7 +54,7 @@
             this.BtnAplicar.Name = "BtnAplicar";
             this.BtnAplicar.Size = new System.Drawing.Size(103, 36);
             this.BtnAplicar.TabIndex = 6;
-            this.BtnAplicar.Text = "&Aplicar";
+            this.BtnAplicar.Text = "Aplicar";
             this.BtnAplicar.UseVisualStyleBackColor = true;
             this.BtnAplicar.Click += new System.EventHandler(this.BtnAplicar_Click);
             // 
@@ -79,21 +80,22 @@
             this.txtDescripcion.Size = new System.Drawing.Size(331, 107);
             this.txtDescripcion.TabIndex = 0;
             // 
-            // FrmTextoMarcadorGrafico
+            // FrmEditorTextoMarcadores
             // 
             this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BtnCancelar;
             this.ClientSize = new System.Drawing.Size(384, 225);
             this.ControlBox = false;
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FrmTextoMarcadorGrafico";
+            this.Name = "FrmEditorTextoMarcadores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Descripcion del marcador";
-            this.Load += new System.EventHandler(this.FrmTextoMarcadorGrafico_Load);
+            this.Shown += new System.EventHandler(this.FrmEditorTextoMarcadores_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

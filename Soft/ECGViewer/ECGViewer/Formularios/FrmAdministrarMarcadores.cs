@@ -41,6 +41,10 @@ namespace ECGViewer.Formularios
         private void BorrarItem()
         {
             if (lBMarcadores.SelectedIndex == -1) return;
+            DialogResult respuesta = MessageBox.Show("Esta seguro de que desea borrar este marcador?"
+                , "Borrar marcador", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if(respuesta == DialogResult.No) return;
 
             try
             {
@@ -56,14 +60,15 @@ namespace ECGViewer.Formularios
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+
+        private void EditarItem()
         {
             if (lBMarcadores.SelectedIndex == -1) return;
 
             try
             {
                 StripLineWithComment itemSeleccionado = (StripLineWithComment)lBMarcadores.SelectedItem;
-                FrmTextoMarcadorGrafico frmTextoMarcador = new FrmTextoMarcadorGrafico();
+                FrmEditorTextoMarcadores frmTextoMarcador = new FrmEditorTextoMarcadores();
                 frmTextoMarcador.MarcadorDescripcion = itemSeleccionado?.Descripcion ?? "";
                 frmTextoMarcador.ShowDialog();
 
@@ -78,11 +83,26 @@ namespace ECGViewer.Formularios
             }
         }
 
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            EditarItem();
+        }
+
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        private void lBMarcadores_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            EditarItem();
+        }
+
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            BorrarItem();
+        }
     }
 }

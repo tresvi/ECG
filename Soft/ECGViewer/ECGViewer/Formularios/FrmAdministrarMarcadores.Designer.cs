@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.lBMarcadores = new System.Windows.Forms.ListBox();
-            this.btnBorrarMarcador = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnEditar = new System.Windows.Forms.Button();
+            this.btnBorrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lBMarcadores
@@ -45,30 +45,7 @@
             this.lBMarcadores.Size = new System.Drawing.Size(639, 310);
             this.lBMarcadores.TabIndex = 1;
             this.lBMarcadores.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lBMarcadores_KeyDown);
-            // 
-            // btnBorrarMarcador
-            // 
-            this.btnBorrarMarcador.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnBorrarMarcador.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBorrarMarcador.Location = new System.Drawing.Point(275, 336);
-            this.btnBorrarMarcador.Name = "btnBorrarMarcador";
-            this.btnBorrarMarcador.Size = new System.Drawing.Size(119, 51);
-            this.btnBorrarMarcador.TabIndex = 2;
-            this.btnBorrarMarcador.Text = "&Borrar";
-            this.btnBorrarMarcador.UseVisualStyleBackColor = true;
-            this.btnBorrarMarcador.Click += new System.EventHandler(this.btnBorrarMarcador_Click);
-            // 
-            // btnEditar
-            // 
-            this.btnEditar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditar.Location = new System.Drawing.Point(87, 336);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(119, 51);
-            this.btnEditar.TabIndex = 3;
-            this.btnEditar.Text = "&Editar";
-            this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.lBMarcadores.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lBMarcadores_MouseDoubleClick);
             // 
             // btnCancelar
             // 
@@ -78,9 +55,31 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 51);
             this.btnCancelar.TabIndex = 4;
-            this.btnCancelar.Text = "&Cancelar";
+            this.btnCancelar.Text = "Salir";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditar.Location = new System.Drawing.Point(78, 337);
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(108, 49);
+            this.btnEditar.TabIndex = 5;
+            this.btnEditar.Text = "Editar";
+            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            // 
+            // btnBorrar
+            // 
+            this.btnBorrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBorrar.Location = new System.Drawing.Point(270, 336);
+            this.btnBorrar.Name = "btnBorrar";
+            this.btnBorrar.Size = new System.Drawing.Size(119, 51);
+            this.btnBorrar.TabIndex = 6;
+            this.btnBorrar.Text = "Borrar";
+            this.btnBorrar.UseVisualStyleBackColor = true;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
             // 
             // FrmAdministrarMarcadores
             // 
@@ -88,9 +87,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancelar;
             this.ClientSize = new System.Drawing.Size(663, 400);
-            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnBorrar);
             this.Controls.Add(this.btnEditar);
-            this.Controls.Add(this.btnBorrarMarcador);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.lBMarcadores);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -103,8 +102,8 @@
 
         #endregion
         private System.Windows.Forms.ListBox lBMarcadores;
-        private System.Windows.Forms.Button btnBorrarMarcador;
-        private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.Button btnBorrar;
     }
 }

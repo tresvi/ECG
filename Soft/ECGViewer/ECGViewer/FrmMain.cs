@@ -116,15 +116,15 @@ namespace ECGViewer
             StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "Hola que tal como estas?", 12, 10);
             chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
 
-            FrmTextoMarcadorGrafico frmMarcadorGrafico = new FrmTextoMarcadorGrafico();
-            frmMarcadorGrafico.ShowDialog();
-            if (frmMarcadorGrafico.DialogResult == DialogResult.Cancel)
+            FrmEditorTextoMarcadores frmEditorTextoMarcadores = new FrmEditorTextoMarcadores();
+            frmEditorTextoMarcadores.ShowDialog();
+            if (frmEditorTextoMarcadores.DialogResult == DialogResult.Cancel)
             {
                 chartSenal.ChartAreas[0].AxisX.StripLines.Remove(stripLine);
                 return;
             }
 
-            stripLine.Descripcion = frmMarcadorGrafico.MarcadorDescripcion;
+            stripLine.Descripcion = frmEditorTextoMarcadores.MarcadorDescripcion;
             stripLine.Annotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
             chartSenal.Annotations.Add(stripLine.Annotation);
         }
