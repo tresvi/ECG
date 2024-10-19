@@ -13,10 +13,6 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-//TODO: Agregar captura en vivo desde puerto serie
-//TODO: Agregar sistema de marcas
-//TODO: Agregar guardado de archivo
-//TODO: Agregar exportacion a CSV y tabla C++
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
 
@@ -108,146 +104,6 @@ namespace ECGViewer
         }
 
 
-        private void BtnMarcadores_Click(object sender, EventArgs e)
-        {
-
-            //Marca los puntos del grafico. Todos
-            // Configurar estilo del marcador
-            //chartEspectro.Series[0].MarkerStyle = MarkerStyle.Circle;  // Estilo de marcador (ej. círculo)
-            //chartEspectro.Series[0].MarkerSize = 10;                   // Tamaño del marcador
-            //chartEspectro.Series[0].MarkerColor = Color.Red;           // Color del marcador
-
-            // Crear una línea vertical en el gráfico
-            //VerticalLineAnnotation annotation = new VerticalLineAnnotation();
-            //annotation.AxisX = chartEspectro.ChartAreas[0].AxisX;
-            //annotation.AxisY = chartEspectro.ChartAreas[0].AxisY;
-            //annotation.X = 2;  // Posición en el eje X
-            //annotation.LineColor = Color.Blue;
-            //annotation.LineWidth = 2;
-
-            //// Agregar la anotación al gráfico
-            //chartEspectro.Annotations.Add(annotation);
-
-
-            //// Crear una anotación de texto
-            // Crear una anotación de texto en el punto (X=3, Y=30)
-            TextAnnotation textAnnotation = new TextAnnotation();
-            textAnnotation.Text = "Marca en (3, 30)";
-            textAnnotation.X = 3;   // Posición en el eje X
-            textAnnotation.Y =0.23;  // Posición en el eje Y
-            textAnnotation.Font = new Font("Arial", 10, FontStyle.Bold);
-            textAnnotation.ForeColor = Color.Blue;
-
-            // Colocar la anotación en la ubicación correcta
-            textAnnotation.AnchorX = 3;
-            textAnnotation.AnchorY = 0.33;
-            textAnnotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
-
-            // Agregar la anotación al gráfico
-            chartSenal.Annotations.Add(textAnnotation);
-
-            // Agregar un marcador en el punto específico (X=3, Y=30)
-            DataPoint markerPoint = new DataPoint(3, 0.24);
-            markerPoint.MarkerStyle = MarkerStyle.Star4;  // Estilo del marcador (ej. estrella)
-            markerPoint.MarkerSize = 10;                 // Tamaño del marcador
-            markerPoint.MarkerColor = Color.Red;         // Color del marcador
-
-            // Agregar el marcador a la serie
-            chartSenal.Series[0].Points.Add(markerPoint);
-        }
-
-        private void BtnLineaReferencia_Click(object sender, EventArgs e)
-        {
-            // Crear una línea horizontal en el eje Y
-            StripLine stripLine = new StripLine();
-            stripLine.IntervalOffset = 0.2;  // Valor en el eje X donde se dibujará la línea
-            stripLine.BorderColor = Color.Red;
-            stripLine.BorderWidth = 2;
-            stripLine.BorderDashStyle = ChartDashStyle.Dash;
-
-            // Agregar la línea de referencia al eje Y
-            chartSenal.ChartAreas[0].AxisY.StripLines.Add(stripLine);
-            chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
-
-
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // Crear una nueva serie para los puntos aislados
-            Series isolatedPointsSeries = new Series("Puntos Aislados");
-            isolatedPointsSeries.ChartType = SeriesChartType.Point;  // Tipo de gráfico: puntos
-            isolatedPointsSeries.MarkerStyle = MarkerStyle.Circle;   // Estilo de los marcadores
-            isolatedPointsSeries.MarkerSize = 8;                    // Tamaño de los marcadores
-            isolatedPointsSeries.Color = Color.Red;                 // Color de los puntos
-
-            // Agregar puntos aislados
-            isolatedPointsSeries.Points.AddXY(2, 10);  // Punto aislado en (X=2, Y=10)
-            isolatedPointsSeries.Points.AddXY(5, 15);  // Punto aislado en (X=5, Y=15)
-            isolatedPointsSeries.Points.AddXY(7, 5);   // Punto aislado en (X=7, Y=5)
-
-            // Agregar la serie al gráfico
-            chartSenal.Series.Add(isolatedPointsSeries);
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            // Crear una línea vertical en el punto X=3
-            VerticalLineAnnotation verticalLine = new VerticalLineAnnotation();
-            verticalLine.AxisX = chartSenal.ChartAreas[0].AxisX;
-            verticalLine.AxisY = chartSenal.ChartAreas[0].AxisY;
-            verticalLine.X = 3;  // Posición en el eje X
-            verticalLine.LineColor = Color.Green;
-            verticalLine.LineWidth = 2;
-            verticalLine.LineDashStyle = ChartDashStyle.Dash;
-
-            // Agregar la línea vertical al gráfico
-            chartSenal.Annotations.Add(verticalLine);
-
-            // Agregar un marcador en la intersección de la línea vertical y el eje Y
-            Series markerSeries = new Series("Marcador");
-            markerSeries.ChartType = SeriesChartType.Point;
-            markerSeries.MarkerStyle = MarkerStyle.Circle;   // Estilo del marcador
-            markerSeries.MarkerSize = 10;                    // Tamaño del marcador
-            markerSeries.MarkerColor = Color.Red;            // Color del marcador
-
-            // Agregar el marcador en la posición X=3, Y=25 (por ejemplo)
-            markerSeries.Points.AddXY(2.5, 0.3);
-
-            // Agregar la serie con el marcador al gráfico
-            chartSenal.Series.Add(markerSeries);
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            // Crear una línea vertical que sea interactiva
-            VerticalLineAnnotation interactiveLine = new VerticalLineAnnotation();
-            interactiveLine.AxisX = chartSenal.ChartAreas[0].AxisX;
-            interactiveLine.AxisY = chartSenal.ChartAreas[0].AxisY;
-            interactiveLine.X = 3;  // Posición en el eje X
-            interactiveLine.LineColor = Color.Blue;
-            interactiveLine.LineWidth = 2;
-            interactiveLine.LineDashStyle = ChartDashStyle.Solid;
-            interactiveLine.ToolTip = "Haz clic en esta línea";  // Mostrar un tooltip al pasar el mouse
-
-            //// Agregar un evento para capturar clics
-            //interactiveLine.Click += (sender, e) => {
-            //    MessageBox.Show("¡Hiciste clic en la línea!");
-            //};
-
-            // Agregar la anotación al gráfico
-            chartSenal.Annotations.Add(interactiveLine);
-
-        }
-
-        private void chartEspectro_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
@@ -257,10 +113,10 @@ namespace ECGViewer
             xValue = chartArea.AxisX.PixelPositionToValue(e.X);
             yValue = chartArea.AxisY.PixelPositionToValue(e.Y);
 
-            StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "Hola que tal como estas?");
+            StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "Hola que tal como estas?", 12, 10);
             chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
 
-            FrmMarcadorGrafico frmMarcadorGrafico = new FrmMarcadorGrafico();
+            FrmTextoMarcadorGrafico frmMarcadorGrafico = new FrmTextoMarcadorGrafico();
             frmMarcadorGrafico.ShowDialog();
             if (frmMarcadorGrafico.DialogResult == DialogResult.Cancel)
             {
@@ -268,37 +124,12 @@ namespace ECGViewer
                 return;
             }
 
-            stripLine.SetTexto(frmMarcadorGrafico.MarcadorDescripcion, 12, 10);
+            stripLine.Descripcion = frmMarcadorGrafico.MarcadorDescripcion;
             stripLine.Annotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
             chartSenal.Annotations.Add(stripLine.Annotation);
         }
 
-        /*
-        private void chart_AxisViewChanging(object sender, ViewEventArgs e)
-        {
-            // Verificar si es el eje X
-            if (e.Axis.AxisName == AxisName.X)
-            {
-                // Obtener los nuevos límites del eje X (valores mínimos y máximos tras el zoom)
-                double newMin = e.NewPosition;
-                double newMax = e.NewPosition + e.NewSize;
-
-                // Mostrar o usar los nuevos límites en X
-                MessageBox.Show($"Nuevo rango de X antes del zoom: Min = {newMin}, Max = {newMax}");
-
-                // Aquí puedes obtener los puntos de la serie que están dentro de este rango de X
-                foreach (var point in chartSenal.Series[0].Points)
-                {
-                    if (point.XValue >= newMin && point.XValue <= newMax)
-                    {
-                        // Haz algo con el punto
-                        Console.WriteLine($"Punto en X: {point.XValue}, Y: {point.YValues[0]}");
-                    }
-                }
-            }
-        }
-        */
-
+        
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
             string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
@@ -359,92 +190,6 @@ namespace ECGViewer
 
             tsbResetZoom_Click(sender, e);
         }
-
-
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            // Graficar2();
-            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
-            printDocument.DefaultPageSettings.Landscape = true;
-            chartSenal.Printing.PrintPreview();
-        }
-
-        /*
-        private void Graficar2()
-        {
-            //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.Green;
-            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-            ChartArea chartArea = chartSenal.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NoFiltrado.csv"; // Ruta al archivo CSV
-                                                                     // List<(double, double)> muestras = LoadCsvData(filePath);
-
-            List<(double, double)> dataList = LoadCsvData(filePath);
-            Series series = chartSenal.Series["Muestras"];
-
-            //foreach (var (x, y) in dataList)
-            //{
-            //    series.Points.AddXY(x, y);
-            //}
-            //_graphSerie = series;
-
-
-            // sample audio with tones at 2, 10, and 20 kHz plus white noise
-            //double[] signal = FftSharp.SampleData.SampleAudio1();
-            double[] signal = new double[16_384];
-            for (int i = 0; i < dataList.Count; i++)
-            {
-                signal[i] = dataList[i].Item2;
-            }
-        
-
-            int sampleRate = 500;
-
-            // calculate the power spectral density using FFT
-            System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
-            double[] psd = FftSharp.FFT.Magnitude(spectrum);
-            double[] freq = FftSharp.FFT.FrequencyScale(psd.Length, sampleRate);
-
-            for (int i = 0; i < psd.Count(); i++)
-            {
-                series.Points.AddXY(freq[i], psd[i]); //Calculado 15.2 ms
-            }
-
-
-            //Visuaizacion del eje X
-            // Configurar el intervalo del eje X
-            chartSenal.ChartAreas[0].AxisX.Interval = 10;  // Intervalo de 1 unidad
-
-            // Configurar el formato de las etiquetas del eje X
-            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";  // Mostrar solo números enteros (sin decimales)
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-
-            //Autoescala
-            // Habilitar autoescala en el eje X
-            chartSenal.ChartAreas[0].AxisX.Minimum = 0;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            // Habilitar autoescala en el eje Y
-            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-        }
-        */
 
 
         private void btnEspectro_Click(object sender, EventArgs e)
@@ -962,5 +707,39 @@ namespace ECGViewer
             FrmAdministrarMarcadores frmAdminMarcadores = new FrmAdministrarMarcadores(chartSenal);
             frmAdminMarcadores.ShowDialog();
         }
+
+        private void tsbImprimir_Click(object sender, EventArgs e)
+        {
+            /*
+            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
+            
+            printDocument.DefaultPageSettings.Landscape = true;
+            printDocument.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(10, 10, 10, 10); // Márgenes de 10 píxeles en todos los lados
+
+            chartSenal.Printing.PrintPreview();
+            */
+
+            // Obtener el documento de impresión del chart
+            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
+
+            // Mostrar la vista previa de impresión
+            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
+            printPreviewDialog.Document = printDocument;
+            //printPreviewDialog.Controls.Clear();
+            printPreviewDialog.ShowDialog();
+            
+
+            // Después de la vista previa, mostrar el diálogo de selección de impresora
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDocument;
+
+            // Mostrar el diálogo de impresión
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Si el usuario selecciona una impresora y confirma, procede con la impresión
+                printDocument.Print();
+            }
+        }
+
     }
 }

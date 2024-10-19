@@ -263,6 +263,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap filePreview {
+            get {
+                object obj = ResourceManager.GetObject("filePreview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HighPass {
             get {
                 object obj = ResourceManager.GetObject("HighPass", resourceCulture);
@@ -353,6 +363,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap printer {
+            get {
+                object obj = ResourceManager.GetObject("printer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PWM_Picture {
             get {
                 object obj = ResourceManager.GetObject("PWM_Picture", resourceCulture);
@@ -406,6 +426,16 @@ namespace ECGViewer.Properties {
         internal static System.Drawing.Bitmap scisors {
             get {
                 object obj = ResourceManager.GetObject("scisors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap xlsx {
+            get {
+                object obj = ResourceManager.GetObject("xlsx", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

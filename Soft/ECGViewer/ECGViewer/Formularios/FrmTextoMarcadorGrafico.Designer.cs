@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer.Formularios
 {
-    partial class FrmMarcadorGrafico
+    partial class FrmTextoMarcadorGrafico
     {
         /// <summary>
         /// Required designer variable.
@@ -79,7 +79,7 @@
             this.txtDescripcion.Size = new System.Drawing.Size(331, 107);
             this.txtDescripcion.TabIndex = 0;
             // 
-            // FrmMarcadorGrafico
+            // FrmTextoMarcadorGrafico
             // 
             this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,9 +90,10 @@
             this.Controls.Add(this.BtnAplicar);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FrmMarcadorGrafico";
+            this.Name = "FrmTextoMarcadorGrafico";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Descripcion del marcador";
+            this.Load += new System.EventHandler(this.FrmTextoMarcadorGrafico_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

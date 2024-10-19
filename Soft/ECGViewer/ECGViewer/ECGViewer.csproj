@@ -81,11 +81,11 @@
     <Compile Include="Formularios\FrmCalibracion.Designer.cs">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmMarcadorGrafico.cs">
+    <Compile Include="Formularios\FrmTextoMarcadorGrafico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmMarcadorGrafico.Designer.cs">
-      <DependentUpon>FrmMarcadorGrafico.cs</DependentUpon>
+    <Compile Include="Formularios\FrmTextoMarcadorGrafico.Designer.cs">
+      <DependentUpon>FrmTextoMarcadorGrafico.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -134,8 +134,8 @@
     <EmbeddedResource Include="Formularios\FrmCalibracion.resx">
       <DependentUpon>FrmCalibracion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmMarcadorGrafico.resx">
-      <DependentUpon>FrmMarcadorGrafico.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmTextoMarcadorGrafico.resx">
+      <DependentUpon>FrmTextoMarcadorGrafico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -204,6 +204,7 @@
     <None Include="Recursos\export_C.png" />
     <None Include="Recursos\export_Proteus.png" />
     <None Include="Recursos\HighPass.png" />
+    <None Include="Recursos\filePreview.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
     <None Include="Recursos\measurement.png" />
@@ -214,10 +215,12 @@
     <None Include="Recursos\PWM_Picture.PNG" />
     <None Include="Recursos\notch.png" />
     <None Include="Recursos\reset.png" />
+    <None Include="Recursos\printer.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />
     <None Include="Recursos\scisors.png" />
+    <None Include="Recursos\xlsx.png" />
     <Content Include="Recursos\Zoom-reset-01.png" />
     <None Include="Recursos\Zoom-reset-01_48x48.png" />
     <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />

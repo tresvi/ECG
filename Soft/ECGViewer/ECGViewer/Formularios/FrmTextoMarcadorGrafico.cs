@@ -2,17 +2,28 @@
 
 namespace ECGViewer.Formularios
 {
-    public partial class FrmMarcadorGrafico : Form
+    public partial class FrmTextoMarcadorGrafico : Form
     {
-        public string MarcadorDescripcion { get; set; }
-        public string MarcadorDescripcionResumen 
-        { 
-            get { return MarcadorDescripcion.PadRight(10, ' ').Substring(0, 10) + "..."; } 
+        string _marcadorDescripcion;
+        public string MarcadorDescripcion  
+        {
+            get { return _marcadorDescripcion ?? ""; }
+            set { _marcadorDescripcion = value; }
         }
 
-        public FrmMarcadorGrafico()
+        public string MarcadorDescripcionResumen 
+        { 
+            get { return (MarcadorDescripcion ?? "").PadRight(10, ' ').Substring(0, 10) + "..."; } 
+        }
+
+        public FrmTextoMarcadorGrafico()
         {
             InitializeComponent();
+        }
+
+        private void FrmTextoMarcadorGrafico_Load(object sender, System.EventArgs e)
+        {
+            txtDescripcion.Text = MarcadorDescripcion;
         }
 
         private void BtnCancelar_Click(object sender, System.EventArgs e)
@@ -27,5 +38,6 @@ namespace ECGViewer.Formularios
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
     }
 }

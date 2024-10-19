@@ -53,3 +53,54 @@
             }
             *************************************************************************/
         }
+
+        //DataPoints
+                private void button2_Click(object sender, EventArgs e)
+        {
+            // Crear una nueva serie para los puntos aislados
+            Series isolatedPointsSeries = new Series("Puntos Aislados");
+            isolatedPointsSeries.ChartType = SeriesChartType.Point;  // Tipo de gráfico: puntos
+            isolatedPointsSeries.MarkerStyle = MarkerStyle.Circle;   // Estilo de los marcadores
+            isolatedPointsSeries.MarkerSize = 8;                    // Tamaño de los marcadores
+            isolatedPointsSeries.Color = Color.Red;                 // Color de los puntos
+
+            // Agregar puntos aislados
+            isolatedPointsSeries.Points.AddXY(2, 10);  // Punto aislado en (X=2, Y=10)
+            isolatedPointsSeries.Points.AddXY(5, 15);  // Punto aislado en (X=5, Y=15)
+            isolatedPointsSeries.Points.AddXY(7, 5);   // Punto aislado en (X=7, Y=5)
+
+            // Agregar la serie al gráfico
+            chartSenal.Series.Add(isolatedPointsSeries);
+
+        }
+
+
+        //Vertical Annotations
+                private void button3_Click(object sender, EventArgs e)
+        {
+            // Crear una línea vertical en el punto X=3
+            VerticalLineAnnotation verticalLine = new VerticalLineAnnotation();
+            verticalLine.AxisX = chartSenal.ChartAreas[0].AxisX;
+            verticalLine.AxisY = chartSenal.ChartAreas[0].AxisY;
+            verticalLine.X = 3;  // Posición en el eje X
+            verticalLine.LineColor = Color.Green;
+            verticalLine.LineWidth = 2;
+            verticalLine.LineDashStyle = ChartDashStyle.Dash;
+
+            // Agregar la línea vertical al gráfico
+            chartSenal.Annotations.Add(verticalLine);
+
+            // Agregar un marcador en la intersección de la línea vertical y el eje Y
+            Series markerSeries = new Series("Marcador");
+            markerSeries.ChartType = SeriesChartType.Point;
+            markerSeries.MarkerStyle = MarkerStyle.Circle;   // Estilo del marcador
+            markerSeries.MarkerSize = 10;                    // Tamaño del marcador
+            markerSeries.MarkerColor = Color.Red;            // Color del marcador
+
+            // Agregar el marcador en la posición X=3, Y=25 (por ejemplo)
+            markerSeries.Points.AddXY(2.5, 0.3);
+
+            // Agregar la serie con el marcador al gráfico
+            chartSenal.Series.Add(markerSeries);
+
+        }
