@@ -1,4 +1,7 @@
-﻿using ECGViewer.Formularios;
+﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Spreadsheet;
+using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
 using FftSharp;
@@ -12,6 +15,10 @@ using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Filter = FftSharp.Filter;
 
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -708,6 +715,8 @@ namespace ECGViewer
             frmAdminMarcadores.ShowDialog();
         }
 
+
+        private PrintDocument printDocument;
         private void tsbImprimir_Click(object sender, EventArgs e)
         {
             /*
@@ -720,6 +729,9 @@ namespace ECGViewer
             */
 
             // Obtener el documento de impresión del chart
+
+
+            /*
             PrintDocument printDocument = chartSenal.Printing.PrintDocument;
 
             // Mostrar la vista previa de impresión
@@ -738,8 +750,145 @@ namespace ECGViewer
             {
                 // Si el usuario selecciona una impresora y confirma, procede con la impresión
                 printDocument.Print();
+            }*/
+
+            printDocument = new PrintDocument();
+            printDocument.DefaultPageSettings.Landscape = true; // Configurar orientación Landscape
+            printDocument.PrintPage += new PrintPageEventHandler(PrintDocument_PrintPage);
+
+            PrintChart();
+        }
+
+
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Obtener el área de impresión
+            Graphics g = e.Graphics;
+
+            // Definir el área de impresión para la parte superior
+            int width = e.MarginBounds.Width + 150 ; // Reducir el margen derecho en 50 píxeles
+            Rectangle topArea = new Rectangle(0, 0, width, e.MarginBounds.Height / 2);
+
+            // Definir el área de impresión para la parte inferior
+            Rectangle bottomArea = new Rectangle(0, e.MarginBounds.Height / 2, width, e.MarginBounds.Height / 2);
+
+            // Obtener el tamaño original del gráfico
+            var originalSize = chartSenal.Size;
+
+            chartSenal.ChartAreas[0].AxisX.Title = ""; // Ocultar el título del eje X
+            chartSenal.ChartAreas[0].AxisY.Title = ""; // Ocultar el título del eje Y
+
+            // Redimensionar el gráfico para imprimir
+            chartSenal.Size = new Size((int)e.MarginBounds.Width, (int)e.MarginBounds.Height);
+
+            // Calcular el punto medio para dividir el gráfico
+            int midPoint = chartSenal.Series[0].Points.Count / 2;
+
+            // Crear listas temporales para guardar los puntos de la serie
+            var topHalfPoints = new DataPoint[midPoint];
+            var bottomHalfPoints = new DataPoint[chartSenal.Series[0].Points.Count - midPoint];
+
+            // Copiar la primera mitad de los puntos
+            for (int i = 0; i < midPoint; i++)
+            {
+                topHalfPoints[i] = chartSenal.Series[0].Points[i];
+            }
+
+            // Copiar la segunda mitad de los puntos
+            for (int i = midPoint; i < chartSenal.Series[0].Points.Count; i++)
+            {
+                bottomHalfPoints[i - midPoint] = chartSenal.Series[0].Points[i];
+            }
+
+            // Dibujar la parte superior del gráfico
+            chartSenal.Series[0].Points.Clear(); // Limpiar los puntos de la serie
+            foreach (var point in topHalfPoints)
+            {
+                chartSenal.Series[0].Points.Add(point); // Agregar cada punto de la mitad superior
+            }
+            chartSenal.Printing.PrintPaint(g, topArea);
+
+            // Dibujar la parte inferior del gráfico
+            chartSenal.Series[0].Points.Clear(); // Limpiar los puntos de la serie
+            foreach (var point in bottomHalfPoints)
+            {
+                chartSenal.Series[0].Points.Add(point); // Agregar cada punto de la mitad inferior
+            }
+            chartSenal.Printing.PrintPaint(g, bottomArea);
+
+            // Restaurar el tamaño original del gráfico
+            chartSenal.Size = originalSize;
+        }
+
+        private void PrintChart()
+        {
+            // Mostrar la vista previa de impresión
+            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
+            printPreviewDialog.Document = printDocument;
+            printPreviewDialog.ShowDialog();
+        }
+
+
+        private void tsbExportarExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Archivos XLSX (*.xlsx)|*.xlsx";
+                saveFileDialog.Title = "Guardar archivo XLSX";
+                saveFileDialog.DefaultExt = "xlsx";
+                saveFileDialog.AddExtension = true;
+
+                if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                using (SpreadsheetDocument document = SpreadsheetDocument.Create(saveFileDialog.FileName, SpreadsheetDocumentType.Workbook))
+                {
+                    WorkbookPart workbookPart = document.AddWorkbookPart();
+                    workbookPart.Workbook = new Workbook();
+
+                    WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
+                    worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+                    SheetData sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+
+                    Row headerRow = new Row();
+                    Cell header1 = new Cell() { DataType = CellValues.String, CellValue = new CellValue("Tiempo[ms]") };
+                    Cell header2 = new Cell() { DataType = CellValues.String, CellValue = new CellValue("Valor") };
+
+                    headerRow.Append(header1, header2);
+                    sheetData.AppendChild(headerRow);
+
+                    foreach (Muestra muestra in _senalECG)
+                    {
+                        Cell cell1 = new Cell() { DataType = CellValues.Number, CellValue = new CellValue(muestra.Tiempo) };
+                        Cell cell2 = new Cell() { DataType = CellValues.Number, CellValue = new CellValue(muestra.Canal[0]) };
+                        Row row = new Row();
+                        row.Append(cell1, cell2);
+                        sheetData.AppendChild(row);
+                    }
+
+                    Sheets sheets = document.WorkbookPart.Workbook.AppendChild(new Sheets());
+                    Sheet sheet = new Sheet()
+                    {
+                        Id = document.WorkbookPart.GetIdOfPart(worksheetPart),
+                        SheetId = 1,
+                        Name = "Grafico"
+                    };
+                    sheets.Append(sheet);
+
+                    // Guardar el libro de trabajo
+                    workbookPart.Workbook.Save();
+                }
+
+                MessageBox.Show("El archivo fue creado correctamente", "Exportacion a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+     
 
     }
 }
