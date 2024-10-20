@@ -19,6 +19,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Filter = FftSharp.Filter;
+using ClosedXML.Excel;
 
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -842,50 +843,29 @@ namespace ECGViewer
 
                 if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                using (SpreadsheetDocument document = SpreadsheetDocument.Create(saveFileDialog.FileName, SpreadsheetDocumentType.Workbook))
+                using (var workbook = new XLWorkbook())
                 {
-                    WorkbookPart workbookPart = document.AddWorkbookPart();
-                    workbookPart.Workbook = new Workbook();
+                    IXLWorksheet worksheet = workbook.Worksheets.Add("Graficar");
+                    worksheet.Cell(1, 1).Value = "Tiempo";
+                    worksheet.Cell(1, 2).Value = "Valores";
 
-                    WorksheetPart worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
-                    worksheetPart.Worksheet = new Worksheet(new SheetData());
-
-                    SheetData sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-
-                    Row headerRow = new Row();
-                    Cell header1 = new Cell() { DataType = CellValues.String, CellValue = new CellValue("Tiempo[ms]") };
-                    Cell header2 = new Cell() { DataType = CellValues.String, CellValue = new CellValue("Valor") };
-
-                    headerRow.Append(header1, header2);
-                    sheetData.AppendChild(headerRow);
-
-                    foreach (Muestra muestra in _senalECG)
+                    for (int i = 0; i < _senalECG.Count; i++)
                     {
-                        Cell cell1 = new Cell() { DataType = CellValues.Number, CellValue = new CellValue(muestra.Tiempo) };
-                        Cell cell2 = new Cell() { DataType = CellValues.Number, CellValue = new CellValue(muestra.Canal[0]) };
-                        Row row = new Row();
-                        row.Append(cell1, cell2);
-                        sheetData.AppendChild(row);
+                        worksheet.Cell(i + 2, 1).Value = _senalECG[i].Tiempo;
+                        worksheet.Cell(i + 2, 2).Value = _senalECG[i].Canal[0];
                     }
 
-                    Sheets sheets = document.WorkbookPart.Workbook.AppendChild(new Sheets());
-                    Sheet sheet = new Sheet()
-                    {
-                        Id = document.WorkbookPart.GetIdOfPart(worksheetPart),
-                        SheetId = 1,
-                        Name = "Grafico"
-                    };
-                    sheets.Append(sheet);
-
-                    // Guardar el libro de trabajo
-                    workbookPart.Workbook.Save();
+                    worksheet.Columns().AdjustToContents();
+                    workbook.SaveAs(saveFileDialog.FileName);
                 }
 
-                MessageBox.Show("El archivo fue creado correctamente", "Exportacion a Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("El archivo fue creado correctamente", "Exportacion a Excel"
+                    , MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar"
+                    , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
      
