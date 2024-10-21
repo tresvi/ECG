@@ -359,6 +359,7 @@
             this.Controls.Add(this.toggleButton1);
             this.Controls.Add(this.chartSenalFiltrada);
             this.Controls.Add(this.chartSenalOriginal);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmConsolaFiltros";
             this.Text = "Banco de Filtros";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmConsolaFiltros_FormClosed);

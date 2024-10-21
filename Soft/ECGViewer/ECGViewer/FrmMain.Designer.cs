@@ -136,7 +136,7 @@
             this.btnFiltrosAvanzados.TabIndex = 13;
             this.btnFiltrosAvanzados.Text = "Filtros Avanzados";
             this.btnFiltrosAvanzados.UseVisualStyleBackColor = true;
-            this.btnFiltrosAvanzados.Click += new System.EventHandler(this.BtnFiltro_Click);
+            this.btnFiltrosAvanzados.Click += new System.EventHandler(this.BtnFiltroAvanzados_Click);
             // 
             // gbSenal
             // 

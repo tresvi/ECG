@@ -40,6 +40,7 @@
             // 
             // BtnAplicar
             // 
+            this.BtnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAplicar.Location = new System.Drawing.Point(38, 98);
             this.BtnAplicar.Name = "BtnAplicar";

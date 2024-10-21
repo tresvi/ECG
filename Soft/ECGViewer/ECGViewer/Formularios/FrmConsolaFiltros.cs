@@ -345,20 +345,20 @@ namespace ECGViewer
 
         private void tsbCancelar_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void FrmConsolaFiltros_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            if (DialogResult == DialogResult.None) DialogResult = DialogResult.Cancel;
         }
 
         private void tsbAceptar_Click(object sender, EventArgs e)
         {
             SenalFiltrada = _senalFiltrada;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
     }

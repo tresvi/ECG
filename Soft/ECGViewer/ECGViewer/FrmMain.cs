@@ -100,28 +100,35 @@ namespace ECGViewer
             }
 
             double[] signal = Utiles.ClonarVectorParaFFT(_senalECG);
-            Form form = new FrmEspectro(signal, _fMuestreo);
-            form.Show();
+            Form frmEspectro = new FrmEspectro(signal, _fMuestreo);
+            frmEspectro.ShowDialog();
         }
 
 
-        private void BtnFiltro_Click(object sender, EventArgs e)
+        private void BtnFiltroAvanzados_Click(object sender, EventArgs e)
         {
+            double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
+            double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
+            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
+
             FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, _fMuestreo);
             DialogResult resultado = frmAplicarFiltro.ShowDialog();
-
-            if (resultado == DialogResult.Cancel) return;
+            if (resultado != DialogResult.OK) return;
 
             _senalECG = frmAplicarFiltro.SenalFiltrada;
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+
+            chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
+            chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
+            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;
         }
 
 
         private void BtnFiltrarSenal_Click(object sender, EventArgs e)
         {
-            //Por alguna razon, el valor automatico de los ejes se altera
-        /*    double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
+            double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
             double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
-            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;*/
+            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalECG);
             double[] filtered = Filter.LowPass(senal, _fMuestreo, FRECUENCIA_CORTE_DFLT);
@@ -135,11 +142,9 @@ namespace ECGViewer
                 series.Points.AddXY(_senalECG[i].Tiempo, _senalECG[i].Canal[0]);
             }
 
-            //TODO: esto va?
-            //Por alguna razon, el valor automatico de los ejes se altera
-         /*   chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
+            chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
             chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
-            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;*/
+            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;
         }
 
 
