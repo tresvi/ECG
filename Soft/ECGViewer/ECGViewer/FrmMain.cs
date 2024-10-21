@@ -1,10 +1,7 @@
-﻿using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Spreadsheet;
+﻿using ClosedXML.Excel;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
-using FftSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,11 +12,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Filter = FftSharp.Filter;
-using ClosedXML.Excel;
 
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -46,36 +39,15 @@ namespace ECGViewer
         public FrmMain()
         {
             InitializeComponent();
-           // chartSenal.AxisViewChanging += new EventHandler<ViewEventArgs>(chart_AxisViewChanging);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Configura el gráfico
-            chartSenal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
-            chartSenal.ChartAreas[0].AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
-
-            // Define el tamaño de la vista y habilita el desplazamiento
-            chartSenal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
-            //chartSenal.ChartAreas[0].AxisX.ScaleView.Size = 50;                   // Cantidad de puntos visibles inicialmente
-
-            // Habilitar el desplazamiento
-            chartSenal.ChartAreas[0].AxisX.ScaleView.MinSize = 1;                 // Mínima vista permitida (1 punto)
-            chartSenal.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
-
-            // Configura el comportamiento del scroll
-            chartSenal.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
-            chartSenal.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
-
-            // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
-            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;
-
-            ActivarZoom(chartSenal, true);
-
+            GraphicHelpers.InicializarGrafico(chartSenal);
 
             try
             {   
-                foreach (String puerto in SerialPort.GetPortNames())
+                foreach (string puerto in SerialPort.GetPortNames())
                     cmbPuertos.Items.Add(puerto);
 
                 cmbBaudRate.SelectedIndex = Settings.Default.cmbBaudRateIndex;
@@ -84,30 +56,7 @@ namespace ECGViewer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los puertos", "Iniciando app", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-
-
-
-
-        public static void ActivarZoom(Chart chart, bool enable)
-        {
-            chart.ChartAreas[0].CursorX.IsUserEnabled = enable;
-            chart.ChartAreas[0].CursorX.IsUserSelectionEnabled = enable;
-            chart.ChartAreas[0].CursorX.Interval = 0;
-            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = enable;
-            chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            chart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-            chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 0;
-
-            if (enable == false)
-            {
-                //Quita la linea de los cursores
-                chart.ChartAreas[0].CursorX.SetCursorPosition(double.NaN);
-                chart.ChartAreas[0].CursorY.SetCursorPosition(double.NaN);
+                MessageBox.Show($"Error al cargar los puertos. Detalles: {ex.Message}", "Iniciando app", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -115,26 +64,7 @@ namespace ECGViewer
         private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
-            
-            double xValue, yValue = 0;
-            ChartArea chartArea = chartSenal.ChartAreas[0];
-            xValue = chartArea.AxisX.PixelPositionToValue(e.X);
-            yValue = chartArea.AxisY.PixelPositionToValue(e.Y);
-
-            StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "Hola que tal como estas?", 12, 10);
-            chartSenal.ChartAreas[0].AxisX.StripLines.Add(stripLine);
-
-            FrmEditorTextoMarcadores frmEditorTextoMarcadores = new FrmEditorTextoMarcadores();
-            frmEditorTextoMarcadores.ShowDialog();
-            if (frmEditorTextoMarcadores.DialogResult == DialogResult.Cancel)
-            {
-                chartSenal.ChartAreas[0].AxisX.StripLines.Remove(stripLine);
-                return;
-            }
-
-            stripLine.Descripcion = frmEditorTextoMarcadores.MarcadorDescripcion;
-            stripLine.Annotation.AnchorDataPoint = chartSenal.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");  // Anclar a un punto específico
-            chartSenal.Annotations.Add(stripLine.Annotation);
+            GraphicHelpers.InsertarMarcador(chartSenal, e.X, e.Y);
         }
 
         
@@ -154,48 +84,9 @@ namespace ECGViewer
 
             _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
 
-            //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.AliceBlue;
-            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
 
-            ChartArea chartArea = chartSenal.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            Series series = chartSenal.Series["Muestras"];
-
-            series.Points.Clear();
-            foreach (var muestra in _senalECG)
-            {
-                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
-            }
-            _graphSerie = series;
-
-            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
-            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-            // Habilitar autoescala en el eje X
-            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-            // Habilitar autoescala en el eje Y
-            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            btnFiltrarSenal.Enabled = true;
-            btnEspectro.Enabled = true;
-            btnFiltrosAvanzados.Enabled = true;
-
+            gbSenal.Enabled = true;
             tsbResetZoom_Click(sender, e);
         }
 
@@ -228,9 +119,9 @@ namespace ECGViewer
         private void BtnFiltrarSenal_Click(object sender, EventArgs e)
         {
             //Por alguna razon, el valor automatico de los ejes se altera
-            double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
+        /*    double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
             double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
-            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
+            double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;*/
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalECG);
             double[] filtered = Filter.LowPass(senal, _fMuestreo, FRECUENCIA_CORTE_DFLT);
@@ -244,27 +135,28 @@ namespace ECGViewer
                 series.Points.AddXY(_senalECG[i].Tiempo, _senalECG[i].Canal[0]);
             }
 
+            //TODO: esto va?
             //Por alguna razon, el valor automatico de los ejes se altera
-            chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
+         /*   chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
             chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
-            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;
+            chartSenal.ChartAreas[0].AxisY.Interval = AxisYInterval;*/
         }
+
 
         private void tsbAbrirTrx_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv"; // Solo archivos CSV
+            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
             openFileDialog.Title = "Seleccionar archivo CSV";
-            openFileDialog.Multiselect = false; // Deshabilitar selección múltiple
+            openFileDialog.Multiselect = false;
             openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
 
             try
             {
                 if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                string rutaArchivo = openFileDialog.FileName;
-                _senalECG = Utiles.LoadCsvData(rutaArchivo);
-                if (_senalECG.Count < 2)
+                _senalECG = Utiles.LoadCsvData(openFileDialog.FileName);
+                if (_senalECG.Count <= 1)
                 {
                     MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
                       , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -272,51 +164,7 @@ namespace ECGViewer
                 }
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-
-
-                //Creo la nueva serie de datos.
-                _graphSerie = new Series("Muestras");
-                _graphSerie.Color = System.Drawing.Color.AliceBlue;
-                _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-                _graphSerie.BorderWidth = 1; //2;
-                _graphSerie.XValueType = ChartValueType.Single;
-                _graphSerie.YValueType = ChartValueType.Single;
-                //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-                //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-                ChartArea chartArea = chartSenal.ChartAreas[0];
-
-                // Configura los valores mínimo y máximo del eje Y
-                chartArea.AxisY.Minimum = -0.12;
-                chartArea.AxisY.Maximum = 0.5;
-
-                Series series = chartSenal.Series["Muestras"];
-
-                series.Points.Clear();
-                foreach (var muestra in _senalECG)
-                {
-                    series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
-                }
-                _graphSerie = series;
-
-                chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
-                chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
-
-                // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-                // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-                // Habilitar autoescala en el eje X
-                chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-                chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-                                                                      // Habilitar autoescala en el eje Y
-                chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-                chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-
-                btnFiltrarSenal.Enabled = true;
-                btnEspectro.Enabled = true;
-                btnFiltrosAvanzados.Enabled = true;
-
-                tsbResetZoom_Click(sender, e);
+                GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
             }
             catch (Exception ex)
             {
@@ -324,17 +172,16 @@ namespace ECGViewer
                     , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-
+            gbSenal.Enabled = true;
+            tsbResetZoom_Click(sender, e);
         }
+
 
         private void tsbResetZoom_Click(object sender, EventArgs e)
         {
-            //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-            //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
-            //ChartUtils.InicializarChart(chartEspectro);
-            this.chartSenal.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
-            this.chartSenal.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
+            GraphicHelpers.ResetZoom(chartSenal);
         }
+
 
         private void btnIniciarLectura_Click(object sender, EventArgs e)
         {
@@ -464,7 +311,6 @@ namespace ECGViewer
         }
 
 
-        bool _graficando = false;
         bool _primerMuestra = true;
         private void timerPuerto_Tick(object sender, EventArgs e)
         {
@@ -505,50 +351,8 @@ namespace ECGViewer
 
         private void tmrGraficar_Tick(object sender, EventArgs e)
         {
-            //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.AliceBlue;
-            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-            ChartArea chartArea = chartSenal.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            Series series = chartSenal.Series["Muestras"];
-
-            series.Points.Clear();
-            _graficando = true;
-            foreach (var muestra in _senalECG)
-            {
-                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
-            }
-            _graficando = false;
-            _graphSerie = series;
-
-            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
-            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-            // Habilitar autoescala en el eje X
-            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-                                                                  // Habilitar autoescala en el eje Y
-            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            btnFiltrarSenal.Enabled = true;
-            btnEspectro.Enabled = true;
-            btnFiltrosAvanzados.Enabled = true;
-
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);   
+            gbSenal.Enabled = true;
             tsbResetZoom_Click(sender, e);
         }
 
@@ -632,77 +436,14 @@ namespace ECGViewer
             (int indiceMin, int indiceMax) = Utiles.ObtenerIndicesInicialyFinal(_senalECG, xMin, xMax);
 
             _senalECG = _senalECG.GetRange(indiceMin, indiceMax - indiceMin + 1);
-
             if (_senalECG.Count == 0) return;
 
             respuesta = MessageBox.Show("El gráfico se ha cortado exitosamente. Desea establecer a 0 segundos el comienzo del gráfico?"
             , "Recortar gráfico", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-
-            //TODO:   Pasar el reseteo del tiempo a una funcion
-
-            if (_senalECG.Count == 1)
-            {
-                _senalECG[0].Tiempo = 0;
-                return;
-            }
-
-            double tiempoMuestreo = _senalECG[1].Tiempo - _senalECG[0].Tiempo;
-            tiempoMuestreo = Math.Round(tiempoMuestreo, 5);
-            int contador = 0;
-
-            foreach (Muestra muestra in _senalECG)
-            {
-                muestra.Tiempo = tiempoMuestreo * contador++;
-            }
-
-
-
-            //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.AliceBlue;
-            _graphSerie.ChartType = SeriesChartType.Line;  //SeriesChartType.Column; //SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-            //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-
-            ChartArea chartArea = chartSenal.ChartAreas[0];
-
-            // Configura los valores mínimo y máximo del eje Y
-            chartArea.AxisY.Minimum = -0.12;
-            chartArea.AxisY.Maximum = 0.5;
-
-            Series series = chartSenal.Series["Muestras"];
-
-            series.Points.Clear();
-            foreach (var muestra in _senalECG)
-            {
-                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
-            }
-            _graphSerie = series;
-
-            chartSenal.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
-            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
-
-            // Opcional: Asegurarse de que las etiquetas estén alineadas correctamente
-            // chartEspectro.ChartAreas[0].AxisX.RoundAxisValues();
-
-            // Habilitar autoescala en el eje X
-            chartSenal.ChartAreas[0].AxisX.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisX.Maximum = Double.NaN;  // Autoajustar el máximo
-                                                                  // Habilitar autoescala en el eje Y
-            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;  // Autoajustar el mínimo
-            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;  // Autoajustar el máximo
-
-            btnFiltrarSenal.Enabled = true;
-            btnEspectro.Enabled = true;
-            btnFiltrosAvanzados.Enabled = true;
-
+            Utiles.ResetearTiempo(ref _senalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
             tsbResetZoom_Click(sender, e);
-
- 
         }
 
         private void tsbMetricas_Click(object sender, EventArgs e)

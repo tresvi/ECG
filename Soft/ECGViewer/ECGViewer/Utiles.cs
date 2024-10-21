@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ECGViewer
 {
@@ -111,6 +112,25 @@ namespace ECGViewer
             }
 
             return (indiceInicial, indiceFinal);
+        }
+
+
+        public static void ResetearTiempo(ref List<Muestra> senal)
+        {
+            if (senal.Count == 1)
+            {
+                senal[0].Tiempo = 0;
+                return;
+            }
+
+            double tiempoMuestreo = senal[1].Tiempo - senal[0].Tiempo;
+            tiempoMuestreo = Math.Round(tiempoMuestreo, 5);
+            int contador = 0;
+
+            foreach (Muestra muestra in senal)
+            {
+                muestra.Tiempo = tiempoMuestreo * contador++;
+            }
         }
 
     }

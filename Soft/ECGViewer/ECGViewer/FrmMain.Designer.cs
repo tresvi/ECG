@@ -29,22 +29,35 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartSenal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BtnCargarSenal = new System.Windows.Forms.Button();
             this.btnEspectro = new System.Windows.Forms.Button();
             this.btnFiltrosAvanzados = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbSenal = new System.Windows.Forms.GroupBox();
             this.btnFiltrarSenal = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbNuevoArchivo = new System.Windows.Forms.ToolStripButton();
+            this.tsbAbrirTrx = new System.Windows.Forms.ToolStripButton();
+            this.tsbGuardarTrx = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbPrintPreview = new System.Windows.Forms.ToolStripButton();
+            this.tsbImprimir = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
+            this.tsbTijera = new System.Windows.Forms.ToolStripButton();
+            this.tsbAdminMarcadores = new System.Windows.Forms.ToolStripButton();
+            this.tsbCalibracion = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
+            this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
+            this.tsbExportarExcel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.nudTMuestreo = new System.Windows.Forms.NumericUpDown();
@@ -56,21 +69,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbPuertos = new System.Windows.Forms.ComboBox();
             this.timerPuerto = new System.Windows.Forms.Timer(this.components);
-            this.tsbNuevoArchivo = new System.Windows.Forms.ToolStripButton();
-            this.tsbAbrirTrx = new System.Windows.Forms.ToolStripButton();
-            this.tsbGuardarTrx = new System.Windows.Forms.ToolStripButton();
-            this.tsbPrintPreview = new System.Windows.Forms.ToolStripButton();
-            this.tsbImprimir = new System.Windows.Forms.ToolStripButton();
-            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
-            this.tsbTijera = new System.Windows.Forms.ToolStripButton();
-            this.tsbAdminMarcadores = new System.Windows.Forms.ToolStripButton();
-            this.tsbCalibracion = new System.Windows.Forms.ToolStripButton();
-            this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
-            this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
-            this.tsbExportarExcel = new System.Windows.Forms.ToolStripButton();
-            this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTMuestreo)).BeginInit();
@@ -82,26 +82,26 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartSenal.BorderlineColor = System.Drawing.Color.Black;
-            chartArea2.AxisX.LabelAutoFitMaxFontSize = 15;
-            chartArea2.AxisX.LabelAutoFitMinFontSize = 8;
-            chartArea2.AxisX.Title = "Tiempo[Seg]";
-            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea2.AxisY.Maximum = 250D;
-            chartArea2.AxisY.Title = "Amplitud";
-            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea2.Name = "ChartArea1";
-            this.chartSenal.ChartAreas.Add(chartArea2);
+            chartArea3.AxisX.LabelAutoFitMaxFontSize = 15;
+            chartArea3.AxisX.LabelAutoFitMinFontSize = 8;
+            chartArea3.AxisX.Title = "Tiempo[Seg]";
+            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisY.Maximum = 250D;
+            chartArea3.AxisY.Title = "Amplitud";
+            chartArea3.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea3.Name = "ChartArea1";
+            this.chartSenal.ChartAreas.Add(chartArea3);
             this.chartSenal.Location = new System.Drawing.Point(19, 75);
             this.chartSenal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenal.Name = "chartSenal";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series2.MarkerStep = 10;
-            series2.Name = "Muestras";
-            this.chartSenal.Series.Add(series2);
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series3.MarkerStep = 10;
+            series3.Name = "Muestras";
+            this.chartSenal.Series.Add(series3);
             this.chartSenal.Size = new System.Drawing.Size(1282, 473);
             this.chartSenal.TabIndex = 1;
             this.chartSenal.Text = "chart1";
@@ -120,7 +120,6 @@
             // 
             // btnEspectro
             // 
-            this.btnEspectro.Enabled = false;
             this.btnEspectro.Location = new System.Drawing.Point(276, 24);
             this.btnEspectro.Name = "btnEspectro";
             this.btnEspectro.Size = new System.Drawing.Size(99, 78);
@@ -131,7 +130,6 @@
             // 
             // btnFiltrosAvanzados
             // 
-            this.btnFiltrosAvanzados.Enabled = false;
             this.btnFiltrosAvanzados.Location = new System.Drawing.Point(144, 24);
             this.btnFiltrosAvanzados.Name = "btnFiltrosAvanzados";
             this.btnFiltrosAvanzados.Size = new System.Drawing.Size(114, 78);
@@ -140,23 +138,23 @@
             this.btnFiltrosAvanzados.UseVisualStyleBackColor = true;
             this.btnFiltrosAvanzados.Click += new System.EventHandler(this.BtnFiltro_Click);
             // 
-            // groupBox1
+            // gbSenal
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.Controls.Add(this.btnFiltrarSenal);
-            this.groupBox1.Controls.Add(this.btnEspectro);
-            this.groupBox1.Controls.Add(this.btnFiltrosAvanzados);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(639, 556);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(395, 118);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Señal";
+            this.gbSenal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbSenal.Controls.Add(this.btnFiltrarSenal);
+            this.gbSenal.Controls.Add(this.btnEspectro);
+            this.gbSenal.Controls.Add(this.btnFiltrosAvanzados);
+            this.gbSenal.Enabled = false;
+            this.gbSenal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbSenal.Location = new System.Drawing.Point(639, 556);
+            this.gbSenal.Name = "gbSenal";
+            this.gbSenal.Size = new System.Drawing.Size(395, 118);
+            this.gbSenal.TabIndex = 14;
+            this.gbSenal.TabStop = false;
+            this.gbSenal.Text = "Señal";
             // 
             // btnFiltrarSenal
             // 
-            this.btnFiltrarSenal.Enabled = false;
             this.btnFiltrarSenal.Location = new System.Drawing.Point(20, 24);
             this.btnFiltrarSenal.Name = "btnFiltrarSenal";
             this.btnFiltrarSenal.Size = new System.Drawing.Size(101, 78);
@@ -197,6 +195,36 @@
             this.toolStrip1.TabIndex = 43;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // tsbNuevoArchivo
+            // 
+            this.tsbNuevoArchivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbNuevoArchivo.Image = global::ECGViewer.Properties.Resources.new_file;
+            this.tsbNuevoArchivo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNuevoArchivo.Name = "tsbNuevoArchivo";
+            this.tsbNuevoArchivo.Size = new System.Drawing.Size(52, 52);
+            this.tsbNuevoArchivo.Text = "Nuevo Archivo";
+            this.tsbNuevoArchivo.Click += new System.EventHandler(this.tsbNuevoArchivo_Click);
+            // 
+            // tsbAbrirTrx
+            // 
+            this.tsbAbrirTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAbrirTrx.Image = global::ECGViewer.Properties.Resources.carpeta_abierta;
+            this.tsbAbrirTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAbrirTrx.Name = "tsbAbrirTrx";
+            this.tsbAbrirTrx.Size = new System.Drawing.Size(52, 52);
+            this.tsbAbrirTrx.Text = "Abrir Transaccion";
+            this.tsbAbrirTrx.Click += new System.EventHandler(this.tsbAbrirTrx_Click);
+            // 
+            // tsbGuardarTrx
+            // 
+            this.tsbGuardarTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbGuardarTrx.Image = global::ECGViewer.Properties.Resources.disco_flexible__1_;
+            this.tsbGuardarTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbGuardarTrx.Name = "tsbGuardarTrx";
+            this.tsbGuardarTrx.Size = new System.Drawing.Size(52, 52);
+            this.tsbGuardarTrx.Text = "Guardar Transaccion";
+            this.tsbGuardarTrx.Click += new System.EventHandler(this.tsbGuardar_Click);
+            // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
@@ -207,30 +235,130 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
             // 
+            // tsbPrintPreview
+            // 
+            this.tsbPrintPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPrintPreview.Image = global::ECGViewer.Properties.Resources.filePreview;
+            this.tsbPrintPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPrintPreview.Name = "tsbPrintPreview";
+            this.tsbPrintPreview.Size = new System.Drawing.Size(52, 52);
+            this.tsbPrintPreview.Text = "toolStripButton1";
+            // 
+            // tsbImprimir
+            // 
+            this.tsbImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbImprimir.Image = global::ECGViewer.Properties.Resources.printer;
+            this.tsbImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbImprimir.Name = "tsbImprimir";
+            this.tsbImprimir.Size = new System.Drawing.Size(52, 52);
+            this.tsbImprimir.Text = "toolStripButton1";
+            this.tsbImprimir.Click += new System.EventHandler(this.tsbImprimir_Click);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
             // 
+            // tsbResetZoom
+            // 
+            this.tsbResetZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01;
+            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbResetZoom.Name = "tsbResetZoom";
+            this.tsbResetZoom.Size = new System.Drawing.Size(52, 52);
+            this.tsbResetZoom.Text = "Reset Zoom";
+            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
+            // 
+            // tsbTijera
+            // 
+            this.tsbTijera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbTijera.Image = global::ECGViewer.Properties.Resources.scisors;
+            this.tsbTijera.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbTijera.Name = "tsbTijera";
+            this.tsbTijera.Size = new System.Drawing.Size(52, 52);
+            this.tsbTijera.Text = "toolStripButton1";
+            this.tsbTijera.Click += new System.EventHandler(this.tsbTijera_Click);
+            // 
+            // tsbAdminMarcadores
+            // 
+            this.tsbAdminMarcadores.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAdminMarcadores.Image = global::ECGViewer.Properties.Resources.marker;
+            this.tsbAdminMarcadores.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAdminMarcadores.Name = "tsbAdminMarcadores";
+            this.tsbAdminMarcadores.Size = new System.Drawing.Size(52, 52);
+            this.tsbAdminMarcadores.Text = "toolStripButton1";
+            this.tsbAdminMarcadores.Click += new System.EventHandler(this.tsbAdminMarcadores_Click);
+            // 
+            // tsbCalibracion
+            // 
+            this.tsbCalibracion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCalibracion.Image = global::ECGViewer.Properties.Resources.measurement;
+            this.tsbCalibracion.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCalibracion.Name = "tsbCalibracion";
+            this.tsbCalibracion.Size = new System.Drawing.Size(52, 52);
+            this.tsbCalibracion.Text = "toolStripButton2";
+            this.tsbCalibracion.Click += new System.EventHandler(this.tsbCalibracion_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
+            // 
+            // tsbExportarATablaC
+            // 
+            this.tsbExportarATablaC.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarATablaC.Image = global::ECGViewer.Properties.Resources.export_C;
+            this.tsbExportarATablaC.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarATablaC.Name = "tsbExportarATablaC";
+            this.tsbExportarATablaC.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
+            this.tsbExportarATablaC.Click += new System.EventHandler(this.tsbExportarATablaC_Click);
+            // 
+            // tsbExportarProteus
+            // 
+            this.tsbExportarProteus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarProteus.Image = global::ECGViewer.Properties.Resources.export_Proteus;
+            this.tsbExportarProteus.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarProteus.Name = "tsbExportarProteus";
+            this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
+            this.tsbExportarProteus.Click += new System.EventHandler(this.tsbExportarProteus_Click);
+            // 
+            // tsbExportarExcel
+            // 
+            this.tsbExportarExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarExcel.Image = global::ECGViewer.Properties.Resources.xlsx;
+            this.tsbExportarExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarExcel.Name = "tsbExportarExcel";
+            this.tsbExportarExcel.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarExcel.Text = "toolStripButton1";
+            this.tsbExportarExcel.Click += new System.EventHandler(this.tsbExportarExcel_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 55);
+            // 
+            // tsbMetricas
+            // 
+            this.tsbMetricas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbMetricas.Image = global::ECGViewer.Properties.Resources.kpi;
+            this.tsbMetricas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbMetricas.Name = "tsbMetricas";
+            this.tsbMetricas.Size = new System.Drawing.Size(52, 52);
+            this.tsbMetricas.Text = "Continuity test";
+            this.tsbMetricas.Visible = false;
+            this.tsbMetricas.Click += new System.EventHandler(this.tsbMetricas_Click);
             // 
             // groupBox3
             // 
@@ -376,136 +504,6 @@
             // 
             this.timerPuerto.Tick += new System.EventHandler(this.timerPuerto_Tick);
             // 
-            // tsbNuevoArchivo
-            // 
-            this.tsbNuevoArchivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbNuevoArchivo.Image = global::ECGViewer.Properties.Resources.new_file;
-            this.tsbNuevoArchivo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbNuevoArchivo.Name = "tsbNuevoArchivo";
-            this.tsbNuevoArchivo.Size = new System.Drawing.Size(52, 52);
-            this.tsbNuevoArchivo.Text = "Nuevo Archivo";
-            this.tsbNuevoArchivo.Click += new System.EventHandler(this.tsbNuevoArchivo_Click);
-            // 
-            // tsbAbrirTrx
-            // 
-            this.tsbAbrirTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAbrirTrx.Image = global::ECGViewer.Properties.Resources.carpeta_abierta;
-            this.tsbAbrirTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAbrirTrx.Name = "tsbAbrirTrx";
-            this.tsbAbrirTrx.Size = new System.Drawing.Size(52, 52);
-            this.tsbAbrirTrx.Text = "Abrir Transaccion";
-            this.tsbAbrirTrx.Click += new System.EventHandler(this.tsbAbrirTrx_Click);
-            // 
-            // tsbGuardarTrx
-            // 
-            this.tsbGuardarTrx.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbGuardarTrx.Image = global::ECGViewer.Properties.Resources.disco_flexible__1_;
-            this.tsbGuardarTrx.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbGuardarTrx.Name = "tsbGuardarTrx";
-            this.tsbGuardarTrx.Size = new System.Drawing.Size(52, 52);
-            this.tsbGuardarTrx.Text = "Guardar Transaccion";
-            this.tsbGuardarTrx.Click += new System.EventHandler(this.tsbGuardar_Click);
-            // 
-            // tsbPrintPreview
-            // 
-            this.tsbPrintPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbPrintPreview.Image = global::ECGViewer.Properties.Resources.filePreview;
-            this.tsbPrintPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPrintPreview.Name = "tsbPrintPreview";
-            this.tsbPrintPreview.Size = new System.Drawing.Size(52, 52);
-            this.tsbPrintPreview.Text = "toolStripButton1";
-            // 
-            // tsbImprimir
-            // 
-            this.tsbImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbImprimir.Image = global::ECGViewer.Properties.Resources.printer;
-            this.tsbImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbImprimir.Name = "tsbImprimir";
-            this.tsbImprimir.Size = new System.Drawing.Size(52, 52);
-            this.tsbImprimir.Text = "toolStripButton1";
-            this.tsbImprimir.Click += new System.EventHandler(this.tsbImprimir_Click);
-            // 
-            // tsbResetZoom
-            // 
-            this.tsbResetZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01;
-            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbResetZoom.Name = "tsbResetZoom";
-            this.tsbResetZoom.Size = new System.Drawing.Size(52, 52);
-            this.tsbResetZoom.Text = "Reset Zoom";
-            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
-            // 
-            // tsbTijera
-            // 
-            this.tsbTijera.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbTijera.Image = global::ECGViewer.Properties.Resources.scisors;
-            this.tsbTijera.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbTijera.Name = "tsbTijera";
-            this.tsbTijera.Size = new System.Drawing.Size(52, 52);
-            this.tsbTijera.Text = "toolStripButton1";
-            this.tsbTijera.Click += new System.EventHandler(this.tsbTijera_Click);
-            // 
-            // tsbAdminMarcadores
-            // 
-            this.tsbAdminMarcadores.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAdminMarcadores.Image = global::ECGViewer.Properties.Resources.marker;
-            this.tsbAdminMarcadores.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAdminMarcadores.Name = "tsbAdminMarcadores";
-            this.tsbAdminMarcadores.Size = new System.Drawing.Size(52, 52);
-            this.tsbAdminMarcadores.Text = "toolStripButton1";
-            this.tsbAdminMarcadores.Click += new System.EventHandler(this.tsbAdminMarcadores_Click);
-            // 
-            // tsbCalibracion
-            // 
-            this.tsbCalibracion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbCalibracion.Image = global::ECGViewer.Properties.Resources.measurement;
-            this.tsbCalibracion.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbCalibracion.Name = "tsbCalibracion";
-            this.tsbCalibracion.Size = new System.Drawing.Size(52, 52);
-            this.tsbCalibracion.Text = "toolStripButton2";
-            this.tsbCalibracion.Click += new System.EventHandler(this.tsbCalibracion_Click);
-            // 
-            // tsbExportarATablaC
-            // 
-            this.tsbExportarATablaC.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarATablaC.Image = global::ECGViewer.Properties.Resources.export_C;
-            this.tsbExportarATablaC.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarATablaC.Name = "tsbExportarATablaC";
-            this.tsbExportarATablaC.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
-            this.tsbExportarATablaC.Click += new System.EventHandler(this.tsbExportarATablaC_Click);
-            // 
-            // tsbExportarProteus
-            // 
-            this.tsbExportarProteus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarProteus.Image = global::ECGViewer.Properties.Resources.export_Proteus;
-            this.tsbExportarProteus.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarProteus.Name = "tsbExportarProteus";
-            this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
-            this.tsbExportarProteus.Click += new System.EventHandler(this.tsbExportarProteus_Click);
-            // 
-            // tsbExportarExcel
-            // 
-            this.tsbExportarExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarExcel.Image = global::ECGViewer.Properties.Resources.xlsx;
-            this.tsbExportarExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarExcel.Name = "tsbExportarExcel";
-            this.tsbExportarExcel.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarExcel.Text = "toolStripButton1";
-            this.tsbExportarExcel.Click += new System.EventHandler(this.tsbExportarExcel_Click);
-            // 
-            // tsbMetricas
-            // 
-            this.tsbMetricas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbMetricas.Image = global::ECGViewer.Properties.Resources.kpi;
-            this.tsbMetricas.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbMetricas.Name = "tsbMetricas";
-            this.tsbMetricas.Size = new System.Drawing.Size(52, 52);
-            this.tsbMetricas.Text = "Continuity test";
-            this.tsbMetricas.Visible = false;
-            this.tsbMetricas.Click += new System.EventHandler(this.tsbMetricas_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -514,7 +512,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.BtnCargarSenal);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbSenal);
             this.Controls.Add(this.chartSenal);
             this.Name = "FrmMain";
             this.Text = "Visor ECG 1 Canal";
@@ -522,7 +520,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.gbSenal.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -539,7 +537,7 @@
         private System.Windows.Forms.Button BtnCargarSenal;
         private System.Windows.Forms.Button btnEspectro;
         private System.Windows.Forms.Button btnFiltrosAvanzados;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbSenal;
         private System.Windows.Forms.Button btnFiltrarSenal;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbAbrirTrx;
