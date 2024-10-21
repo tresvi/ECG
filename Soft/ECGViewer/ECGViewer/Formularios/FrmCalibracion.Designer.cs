@@ -45,6 +45,7 @@
             // 
             // BtnAplicar
             // 
+            this.BtnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnAplicar.Location = new System.Drawing.Point(69, 225);
             this.BtnAplicar.Name = "BtnAplicar";
@@ -56,6 +57,7 @@
             // 
             // BtnCancelar
             // 
+            this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnCancelar.Location = new System.Drawing.Point(236, 225);
             this.BtnCancelar.Name = "BtnCancelar";
