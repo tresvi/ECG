@@ -280,6 +280,7 @@
     <Compile Include="Formularios\FrmPasaEliminaBanda.Designer.cs">
       <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphicHelpers.cs" />
     <Compile Include="Modelos\StripLineWithComment.cs" />
     <Compile Include="Modelos\Muestra.cs" />
     <Compile Include="Program.cs" />
