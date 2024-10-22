@@ -614,7 +614,11 @@ namespace ECGViewer
                     , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-     
 
+        private void tsbGridECG_Click(object sender, EventArgs e)
+        {
+            //chartSenal.ChartAreas[0].AxisX.MajorGrid.Enabled = tsbGridECG.Checked;
+            GraphicHelpers.ModoECG(chartSenal, tsbGridECG.Checked);
+        }
     }
 }

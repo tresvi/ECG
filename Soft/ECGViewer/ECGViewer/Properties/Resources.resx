@@ -142,11 +142,8 @@
   <data name="disco-flexible (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disco-flexible (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="new_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\new_file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cancel_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\cancel_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="measurement" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\measurement.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="escala-corporal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\escala-corporal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,11 +151,11 @@
   <data name="cancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BandPass2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="BandPass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\BandPass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="kpi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\kpi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="scisors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\scisors.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PWM_Picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,17 +172,17 @@
   <data name="disquete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disquete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="boton-de-play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\boton-de-play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cancel_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\cancel_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="measurement" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\measurement.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BandPass2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\BandPass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="export_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\export_C.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BandPass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\BandPass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="new_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\new_file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="filePreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\filePreview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,6 +196,9 @@
   <data name="export" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Save_as-80_icon-icons.com_57275" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\Save_as-80_icon-icons.com_57275.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="carpeta-abierta" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\carpeta-abierta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -208,8 +208,8 @@
   <data name="LowPass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\LowPass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scisors" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\scisors.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="kpi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\kpi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="accept" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\accept.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,11 +217,14 @@
   <data name="saveall_sav_10186" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\saveall_sav_10186.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="xlsx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\xlsx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="export_Proteus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\export_Proteus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Save_as-80_icon-icons.com_57275" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\Save_as-80_icon-icons.com_57275.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="boton-de-play" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\boton-de-play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="notch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\notch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,7 +238,7 @@
   <data name="Zoom-reset-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Zoom-reset-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="xlsx" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\xlsx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="grid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\grid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
