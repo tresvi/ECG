@@ -263,6 +263,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap export_to_xlsx_2 {
+            get {
+                object obj = ResourceManager.GetObject("export_to_xlsx_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap filePreview {
             get {
                 object obj = ResourceManager.GetObject("filePreview", resourceCulture);
@@ -286,6 +296,16 @@ namespace ECGViewer.Properties {
         internal static System.Drawing.Bitmap HighPass {
             get {
                 object obj = ResourceManager.GetObject("HighPass", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Import_From_xlsx {
+            get {
+                object obj = ResourceManager.GetObject("Import_From_xlsx", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

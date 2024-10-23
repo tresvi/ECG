@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
@@ -617,8 +618,42 @@ namespace ECGViewer
 
         private void tsbGridECG_Click(object sender, EventArgs e)
         {
-            //chartSenal.ChartAreas[0].AxisX.MajorGrid.Enabled = tsbGridECG.Checked;
             GraphicHelpers.ModoECG(chartSenal, tsbGridECG.Checked);
+        }
+
+        private void tsbImportarDesdeXLSX_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos XLSX (*.xlsx)|*.xlsx";
+            openFileDialog.Title = "Seleccionar archivo CSV";
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                _senalECG = Utiles.LoadXlsxData(openFileDialog.FileName);
+                if (_senalECG.Count <= 1)
+                {
+                    MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
+                      , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
+                GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+
+                MessageBox.Show($"Archivo importado correctamente. Se importaron {_senalECG.Count} muestras"
+                    , "Error al importar" , MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al importar archivo de de excel. {ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar"
+                    , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
         }
     }
 }
