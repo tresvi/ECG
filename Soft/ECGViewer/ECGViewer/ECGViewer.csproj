@@ -363,6 +363,7 @@
     <None Include="Recursos\export_Proteus.png" />
     <None Include="Recursos\HighPass.png" />
     <None Include="Recursos\filePreview.png" />
+    <None Include="Recursos\grid.png" />
     <Content Include="Recursos\indicador.png" />
     <Content Include="Recursos\kpi.png" />
     <None Include="Recursos\measurement.png" />

@@ -54,7 +54,7 @@ namespace ECGViewer
                     {
                         Muestra muestra = new Muestra();
                         muestra.Tiempo = value1;
-                        muestra.Canal[0] = -1 * value2;
+                        muestra.Canal[0] = value2;
                         dataList.Add(muestra);
                     }
                     else

@@ -2,6 +2,7 @@
 using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -103,16 +104,6 @@ namespace ECGViewer
 
         internal static void CargarGrafico(Chart chart, in List<Muestra> senal)
         {
-            //Creo la nueva serie de datos.
-            /*
-            Series serie = new Series();
-            serie = new Series("Muestras");
-            serie.Color = System.Drawing.Color.AliceBlue;
-            serie.ChartType = SeriesChartType.Line;
-            serie.BorderWidth = 1; //2;
-            serie.XValueType = ChartValueType.Single;
-            serie.YValueType = ChartValueType. Single;
-            */
             ChartArea chartArea = chart.ChartAreas[0];
 
             Series series = chart.Series["Muestras"];
@@ -127,10 +118,57 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
             //Autoescalas
-            chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+            chart.ChartAreas[0].AxisX.Minimum = 0;
             chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
             chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
             chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+        }
+
+
+        internal static void ModoECG(Chart chart, bool activar)
+        {
+            if (activar)
+            {
+                //!!
+                // Configuración del eje X del chart
+                chart.ChartAreas[0].AxisX.MajorGrid.LineWidth = 2;  // Línea de la cuadrícula mayor
+                chart.ChartAreas[0].AxisX.MinorGrid.LineWidth = 1;  // Línea de la cuadrícula menor
+
+                // Subdivisiones mayores (cada 0.2 segundos)
+                chart.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
+                chart.ChartAreas[0].AxisX.MajorTickMark.Interval = 0.2;
+                chart.ChartAreas[0].AxisX.MajorGrid.Interval = 0.2;
+                chart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Solid;
+
+                // Subdivisiones menores (cada 0.04 segundos)
+                chart.ChartAreas[0].AxisX.MinorGrid.Enabled = true;
+                chart.ChartAreas[0].AxisX.MinorTickMark.Interval = 0.04;
+                chart.ChartAreas[0].AxisX.MinorGrid.Interval = 0.04;
+                chart.ChartAreas[0].AxisX.MinorGrid.LineDashStyle = ChartDashStyle.Dash;
+                chart.ChartAreas[0].AxisX.MinorTickMark.Enabled = true;
+                chart.ChartAreas[0].AxisX.MinorGrid.LineWidth = 1;
+
+                chart.ChartAreas[0].AxisY.MinorGrid.Enabled = true;
+                chart.ChartAreas[0].AxisY.MinorGrid.Interval = 0.1;
+                chart.ChartAreas[0].AxisY.MajorGrid.Interval = 0.5;
+                chart.ChartAreas[0].AxisY.MajorTickMark.Interval = 0.5;
+                chart.ChartAreas[0].AxisY.MajorGrid.LineWidth = 2;  // Línea de la cuadrícula mayor
+
+            }
+            else
+            {
+                chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                chart.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                chart.ChartAreas[0].AxisX.MajorTickMark.Interval = 0.5;
+                chart.ChartAreas[0].AxisX.MinorTickMark.Enabled = false;
+
+                // Subdivisiones mayores (cada 1 segundo)
+                chart.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
+                chart.ChartAreas[0].AxisX.MajorGrid.LineWidth = 1;
+                chart.ChartAreas[0].AxisX.MajorTickMark.Interval = 0.5;
+                chart.ChartAreas[0].AxisX.MajorGrid.Interval = 0.5;
+                chart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Solid;
+            }
         }
 
     }
