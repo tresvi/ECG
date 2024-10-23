@@ -118,7 +118,7 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
             //Autoescalas
-            chart.ChartAreas[0].AxisX.Minimum = Double.NaN;
+            chart.ChartAreas[0].AxisX.Minimum = 0;
             chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
             chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
             chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
@@ -147,9 +147,17 @@ namespace ECGViewer
                 chart.ChartAreas[0].AxisX.MinorGrid.LineDashStyle = ChartDashStyle.Dash;
                 chart.ChartAreas[0].AxisX.MinorTickMark.Enabled = true;
                 chart.ChartAreas[0].AxisX.MinorGrid.LineWidth = 1;
+
+                chart.ChartAreas[0].AxisY.MinorGrid.Enabled = true;
+                chart.ChartAreas[0].AxisY.MinorGrid.Interval = 0.1;
+                chart.ChartAreas[0].AxisY.MajorGrid.Interval = 0.5;
+                chart.ChartAreas[0].AxisY.MajorTickMark.Interval = 0.5;
+                chart.ChartAreas[0].AxisY.MajorGrid.LineWidth = 2;  // Línea de la cuadrícula mayor
+
             }
             else
             {
+                chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
                 chart.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
                 chart.ChartAreas[0].AxisX.MajorTickMark.Interval = 0.5;
                 chart.ChartAreas[0].AxisX.MinorTickMark.Enabled = false;
