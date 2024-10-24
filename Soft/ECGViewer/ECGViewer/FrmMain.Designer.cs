@@ -42,7 +42,6 @@
             this.tsbNuevoArchivo = new System.Windows.Forms.ToolStripButton();
             this.tsbAbrirTrx = new System.Windows.Forms.ToolStripButton();
             this.tsbGuardarTrx = new System.Windows.Forms.ToolStripButton();
-            this.tsbImportarDesdeXLSX = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbPrintPreview = new System.Windows.Forms.ToolStripButton();
@@ -56,9 +55,10 @@
             this.tsbGridECG = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbImportarDesdeXLSX = new System.Windows.Forms.ToolStripButton();
+            this.tsbExportarExcel = new System.Windows.Forms.ToolStripButton();
             this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
             this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
-            this.tsbExportarExcel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -72,6 +72,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmbPuertos = new System.Windows.Forms.ComboBox();
             this.timerPuerto = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -113,7 +114,7 @@
             // BtnCargarSenal
             // 
             this.BtnCargarSenal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCargarSenal.Location = new System.Drawing.Point(893, 6);
+            this.BtnCargarSenal.Location = new System.Drawing.Point(971, 6);
             this.BtnCargarSenal.Name = "BtnCargarSenal";
             this.BtnCargarSenal.Size = new System.Drawing.Size(96, 58);
             this.BtnCargarSenal.TabIndex = 2;
@@ -230,16 +231,6 @@
             this.tsbGuardarTrx.Text = "Guardar Transaccion";
             this.tsbGuardarTrx.Click += new System.EventHandler(this.tsbGuardar_Click);
             // 
-            // tsbImportarDesdeXLSX
-            // 
-            this.tsbImportarDesdeXLSX.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbImportarDesdeXLSX.Image = global::ECGViewer.Properties.Resources.Import_From_xlsx;
-            this.tsbImportarDesdeXLSX.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbImportarDesdeXLSX.Name = "tsbImportarDesdeXLSX";
-            this.tsbImportarDesdeXLSX.Size = new System.Drawing.Size(52, 52);
-            this.tsbImportarDesdeXLSX.Text = "toolStripButton1";
-            this.tsbImportarDesdeXLSX.Click += new System.EventHandler(this.tsbImportarDesdeXLSX_Click);
-            // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
@@ -257,7 +248,7 @@
             this.tsbPrintPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPrintPreview.Name = "tsbPrintPreview";
             this.tsbPrintPreview.Size = new System.Drawing.Size(52, 52);
-            this.tsbPrintPreview.Text = "toolStripButton1";
+            this.tsbPrintPreview.Text = "Vista Previa";
             // 
             // tsbImprimir
             // 
@@ -266,7 +257,7 @@
             this.tsbImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbImprimir.Name = "tsbImprimir";
             this.tsbImprimir.Size = new System.Drawing.Size(52, 52);
-            this.tsbImprimir.Text = "toolStripButton1";
+            this.tsbImprimir.Text = "Imprimir";
             this.tsbImprimir.Click += new System.EventHandler(this.tsbImprimir_Click);
             // 
             // toolStripSeparator6
@@ -296,7 +287,7 @@
             this.tsbTijera.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTijera.Name = "tsbTijera";
             this.tsbTijera.Size = new System.Drawing.Size(52, 52);
-            this.tsbTijera.Text = "toolStripButton1";
+            this.tsbTijera.Text = "Cortar Grafico";
             this.tsbTijera.Click += new System.EventHandler(this.tsbTijera_Click);
             // 
             // tsbAdminMarcadores
@@ -306,7 +297,7 @@
             this.tsbAdminMarcadores.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAdminMarcadores.Name = "tsbAdminMarcadores";
             this.tsbAdminMarcadores.Size = new System.Drawing.Size(52, 52);
-            this.tsbAdminMarcadores.Text = "toolStripButton1";
+            this.tsbAdminMarcadores.Text = "Administrar Marcadores";
             this.tsbAdminMarcadores.Click += new System.EventHandler(this.tsbAdminMarcadores_Click);
             // 
             // tsbCalibracion
@@ -316,7 +307,7 @@
             this.tsbCalibracion.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbCalibracion.Name = "tsbCalibracion";
             this.tsbCalibracion.Size = new System.Drawing.Size(52, 52);
-            this.tsbCalibracion.Text = "toolStripButton2";
+            this.tsbCalibracion.Text = "Calibracion";
             this.tsbCalibracion.Click += new System.EventHandler(this.tsbCalibracion_Click);
             // 
             // tsbGridECG
@@ -327,7 +318,7 @@
             this.tsbGridECG.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbGridECG.Name = "tsbGridECG";
             this.tsbGridECG.Size = new System.Drawing.Size(52, 52);
-            this.tsbGridECG.Text = "toolStripButton1";
+            this.tsbGridECG.Text = "Activar Grilla ECG";
             this.tsbGridECG.Click += new System.EventHandler(this.tsbGridECG_Click);
             // 
             // toolStripSeparator1
@@ -339,6 +330,26 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
+            // 
+            // tsbImportarDesdeXLSX
+            // 
+            this.tsbImportarDesdeXLSX.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbImportarDesdeXLSX.Image = global::ECGViewer.Properties.Resources.Import_From_xlsx;
+            this.tsbImportarDesdeXLSX.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbImportarDesdeXLSX.Name = "tsbImportarDesdeXLSX";
+            this.tsbImportarDesdeXLSX.Size = new System.Drawing.Size(52, 52);
+            this.tsbImportarDesdeXLSX.Text = "Importar desde XLSX";
+            this.tsbImportarDesdeXLSX.Click += new System.EventHandler(this.tsbImportarDesdeXLSX_Click);
+            // 
+            // tsbExportarExcel
+            // 
+            this.tsbExportarExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbExportarExcel.Image = global::ECGViewer.Properties.Resources.export_to_xlsx_2;
+            this.tsbExportarExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbExportarExcel.Name = "tsbExportarExcel";
+            this.tsbExportarExcel.Size = new System.Drawing.Size(52, 52);
+            this.tsbExportarExcel.Text = "Exportar a XLSX";
+            this.tsbExportarExcel.Click += new System.EventHandler(this.tsbExportarExcel_Click);
             // 
             // tsbExportarATablaC
             // 
@@ -359,16 +370,6 @@
             this.tsbExportarProteus.Size = new System.Drawing.Size(52, 52);
             this.tsbExportarProteus.Text = "Exportar A Archivo Generador Proteus";
             this.tsbExportarProteus.Click += new System.EventHandler(this.tsbExportarProteus_Click);
-            // 
-            // tsbExportarExcel
-            // 
-            this.tsbExportarExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbExportarExcel.Image = global::ECGViewer.Properties.Resources.export_to_xlsx_2;
-            this.tsbExportarExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbExportarExcel.Name = "tsbExportarExcel";
-            this.tsbExportarExcel.Size = new System.Drawing.Size(52, 52);
-            this.tsbExportarExcel.Text = "toolStripButton1";
-            this.tsbExportarExcel.Click += new System.EventHandler(this.tsbExportarExcel_Click);
             // 
             // toolStripSeparator3
             // 
@@ -530,11 +531,22 @@
             // 
             this.timerPuerto.Tick += new System.EventHandler(this.timerPuerto_Tick);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(866, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 48);
+            this.button1.TabIndex = 45;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 682);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.BtnCargarSenal);
             this.Controls.Add(this.toolStrip1);
@@ -600,6 +612,7 @@
         private System.Windows.Forms.ToolStripButton tsbExportarExcel;
         private System.Windows.Forms.ToolStripButton tsbGridECG;
         private System.Windows.Forms.ToolStripButton tsbImportarDesdeXLSX;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -247,6 +247,12 @@
     <Compile Include="Formularios\FrmEditorTextoMarcadores.Designer.cs">
       <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmImpresion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmImpresion.Designer.cs">
+      <DependentUpon>FrmImpresion.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +303,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmEditorTextoMarcadores.resx">
       <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmImpresion.resx">
+      <DependentUpon>FrmImpresion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>

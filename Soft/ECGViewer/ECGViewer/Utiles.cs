@@ -39,11 +39,9 @@ namespace ECGViewer
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("El archivo CSV no se encontró.", filePath);
 
-            foreach (var line in File.ReadLines(filePath))
+            foreach (string line in File.ReadLines(filePath))
             {
-                var parts = line.Split('\t');
-
-                if (parts.Length > 2) throw new Exception($"Linea con formato incorrecto: {line}");
+                string[] parts = line.Split(',');
                 
                 if (double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double value1) &&
                     double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double value2))
@@ -55,7 +53,8 @@ namespace ECGViewer
                 }
                 else
                 {
-                    throw new Exception($"No se pudieron convertir los valores: {line}");
+                    //TODO: Decidir si se van a tolerar filas mal formadas en los archivos
+                    //throw new Exception($"No se pudieron convertir los valores: {line}");
                 }
             }
 
