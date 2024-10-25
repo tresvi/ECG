@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
@@ -26,6 +27,7 @@ namespace ECGViewer
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
         public const double SPAN = 0.000671;
         public const double ZERO = -248;
+        private const string DESCRIPCION_APLICACION = "ECG Viewer 1 Canal";
 
         Series _graphSerie;
         private Panel chartPanel;
@@ -70,7 +72,7 @@ namespace ECGViewer
         
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
-            string filePath = @"..\..\Archivos_CSV\ECG_20Seg_NOFiltrado.csv"; // Ruta al archivo CSV
+            string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
             _senalECG = Utiles.LoadCsvData(filePath);
 
             for (int i = 0; i < _senalECG.Count; i++)
@@ -161,6 +163,7 @@ namespace ECGViewer
                 if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
                 _senalECG = Utiles.LoadCsvData(openFileDialog.FileName);
+
                 if (_senalECG.Count <= 1)
                 {
                     MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
@@ -170,6 +173,8 @@ namespace ECGViewer
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+
+                this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
             }
             catch (Exception ex)
             {
@@ -290,11 +295,12 @@ namespace ECGViewer
                 {
                     foreach (Muestra muestra in _senalECG)
                     {
-                        string linea = string.Format(CultureInfo.InvariantCulture, "{0}\t{1}", muestra.Tiempo, -1 * muestra.Canal[0]);
+                        string linea = string.Format(CultureInfo.InvariantCulture, "{0},{1}", muestra.Tiempo, muestra.Canal[0]);
                         writer.WriteLine(linea);
                     }
                 }
 
+                this.Text = $"{DESCRIPCION_APLICACION} | {saveFileDialog.FileName}";
                 MessageBox.Show("Archivo guardado correctamente.", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -394,9 +400,9 @@ namespace ECGViewer
         {
             // Crear y configurar el SaveFileDialog
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            saveFileDialog.Filter = "Archivos TXT (*.txt)|*.txt";
             saveFileDialog.Title = "Exportar ECG para File Generator Proteus";
-            saveFileDialog.DefaultExt = "csv";
+            saveFileDialog.DefaultExt = "txt";
             saveFileDialog.AddExtension = true;
 
             if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
@@ -463,9 +469,14 @@ namespace ECGViewer
         }
 
 
-        private PrintDocument printDocument;
         private void tsbImprimir_Click(object sender, EventArgs e)
         {
+            if (_senalECG == null || _senalECG.Count < 1)
+            {
+                MessageBox.Show("No hay gráfico para imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             /*
             PrintDocument printDocument = chartSenal.Printing.PrintDocument;
             
@@ -499,82 +510,10 @@ namespace ECGViewer
                 printDocument.Print();
             }*/
 
-            printDocument = new PrintDocument();
-            printDocument.DefaultPageSettings.Landscape = true; // Configurar orientación Landscape
-            printDocument.PrintPage += new PrintPageEventHandler(PrintDocument_PrintPage);
 
-            PrintChart();
         }
 
 
-
-        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            // Obtener el área de impresión
-            Graphics g = e.Graphics;
-
-            // Definir el área de impresión para la parte superior
-            int width = e.MarginBounds.Width + 150 ; // Reducir el margen derecho en 50 píxeles
-            Rectangle topArea = new Rectangle(0, 0, width, e.MarginBounds.Height / 2);
-
-            // Definir el área de impresión para la parte inferior
-            Rectangle bottomArea = new Rectangle(0, e.MarginBounds.Height / 2, width, e.MarginBounds.Height / 2);
-
-            // Obtener el tamaño original del gráfico
-            var originalSize = chartSenal.Size;
-
-            chartSenal.ChartAreas[0].AxisX.Title = ""; // Ocultar el título del eje X
-            chartSenal.ChartAreas[0].AxisY.Title = ""; // Ocultar el título del eje Y
-
-            // Redimensionar el gráfico para imprimir
-            chartSenal.Size = new Size((int)e.MarginBounds.Width, (int)e.MarginBounds.Height);
-
-            // Calcular el punto medio para dividir el gráfico
-            int midPoint = chartSenal.Series[0].Points.Count / 2;
-
-            // Crear listas temporales para guardar los puntos de la serie
-            var topHalfPoints = new DataPoint[midPoint];
-            var bottomHalfPoints = new DataPoint[chartSenal.Series[0].Points.Count - midPoint];
-
-            // Copiar la primera mitad de los puntos
-            for (int i = 0; i < midPoint; i++)
-            {
-                topHalfPoints[i] = chartSenal.Series[0].Points[i];
-            }
-
-            // Copiar la segunda mitad de los puntos
-            for (int i = midPoint; i < chartSenal.Series[0].Points.Count; i++)
-            {
-                bottomHalfPoints[i - midPoint] = chartSenal.Series[0].Points[i];
-            }
-
-            // Dibujar la parte superior del gráfico
-            chartSenal.Series[0].Points.Clear(); // Limpiar los puntos de la serie
-            foreach (var point in topHalfPoints)
-            {
-                chartSenal.Series[0].Points.Add(point); // Agregar cada punto de la mitad superior
-            }
-            chartSenal.Printing.PrintPaint(g, topArea);
-
-            // Dibujar la parte inferior del gráfico
-            chartSenal.Series[0].Points.Clear(); // Limpiar los puntos de la serie
-            foreach (var point in bottomHalfPoints)
-            {
-                chartSenal.Series[0].Points.Add(point); // Agregar cada punto de la mitad inferior
-            }
-            chartSenal.Printing.PrintPaint(g, bottomArea);
-
-            // Restaurar el tamaño original del gráfico
-            chartSenal.Size = originalSize;
-        }
-
-        private void PrintChart()
-        {
-            // Mostrar la vista previa de impresión
-            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
-            printPreviewDialog.Document = printDocument;
-            printPreviewDialog.ShowDialog();
-        }
 
 
         private void tsbExportarExcel_Click(object sender, EventArgs e)
@@ -617,8 +556,57 @@ namespace ECGViewer
 
         private void tsbGridECG_Click(object sender, EventArgs e)
         {
-            //chartSenal.ChartAreas[0].AxisX.MajorGrid.Enabled = tsbGridECG.Checked;
             GraphicHelpers.ModoECG(chartSenal, tsbGridECG.Checked);
         }
+
+        private void tsbImportarDesdeXLSX_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos XLSX (*.xlsx)|*.xlsx";
+            openFileDialog.Title = "Seleccionar archivo CSV";
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                _senalECG = Utiles.LoadXlsxData(openFileDialog.FileName);
+                if (_senalECG.Count <= 1)
+                {
+                    MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
+                      , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
+                GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+
+                MessageBox.Show($"Archivo importado correctamente. Se importaron {_senalECG.Count} muestras"
+                    , "Error al importar" , MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al importar archivo de de excel. {ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar"
+                    , MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_senalECG == null || _senalECG.Count < 1)
+            {
+                MessageBox.Show("No hay gráfico para imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG);
+            frmImpresion.ShowDialog();
+        }
+
+
     }
 }

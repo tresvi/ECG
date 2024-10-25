@@ -139,6 +139,9 @@
   <data name="accept_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\accept_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="grid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\grid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="disco-flexible (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\disco-flexible (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -156,6 +159,9 @@
   </data>
   <data name="scisors" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\scisors.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="export_to_xlsx_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\export_to_xlsx_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PWM_Picture" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,7 +244,7 @@
   <data name="Zoom-reset-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Zoom-reset-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="grid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\grid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Import_From_xlsx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\Import_From_xlsx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
