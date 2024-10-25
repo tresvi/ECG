@@ -603,7 +603,7 @@ namespace ECGViewer
                 return;
             }
 
-            FrmImpresion frmImpresion = new FrmImpresion(chartSenal);
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG);
             frmImpresion.ShowDialog();
         }
 

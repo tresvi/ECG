@@ -47,7 +47,7 @@
             this.gbSecciones.Size = new System.Drawing.Size(213, 158);
             this.gbSecciones.TabIndex = 0;
             this.gbSecciones.TabStop = false;
-            this.gbSecciones.Text = "Modo de Impresion";
+            this.gbSecciones.Text = "Modo de Impresión";
             // 
             // rbTriple
             // 
@@ -55,9 +55,9 @@
             this.rbTriple.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbTriple.Location = new System.Drawing.Point(67, 111);
             this.rbTriple.Name = "rbTriple";
-            this.rbTriple.Size = new System.Drawing.Size(87, 22);
+            this.rbTriple.Size = new System.Drawing.Size(119, 22);
             this.rbTriple.TabIndex = 5;
-            this.rbTriple.Text = "3 partes";
+            this.rbTriple.Text = "3 Secciones";
             this.rbTriple.UseVisualStyleBackColor = true;
             // 
             // rbDoble
@@ -66,10 +66,11 @@
             this.rbDoble.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbDoble.Location = new System.Drawing.Point(67, 74);
             this.rbDoble.Name = "rbDoble";
-            this.rbDoble.Size = new System.Drawing.Size(87, 22);
+            this.rbDoble.Size = new System.Drawing.Size(119, 22);
             this.rbDoble.TabIndex = 4;
-            this.rbDoble.Text = "2 partes";
+            this.rbDoble.Text = "2 Secciones";
             this.rbDoble.UseVisualStyleBackColor = true;
+            this.rbDoble.CheckedChanged += new System.EventHandler(this.rbDoble_CheckedChanged);
             // 
             // rbSimple
             // 
@@ -106,6 +107,7 @@
             this.Controls.Add(this.gbSecciones);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmImpresion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Impresion";
             this.gbSecciones.ResumeLayout(false);
             this.gbSecciones.PerformLayout();
