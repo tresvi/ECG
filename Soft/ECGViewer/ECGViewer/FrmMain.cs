@@ -233,6 +233,7 @@ namespace ECGViewer
         }
 
         long _contadorMuestras = 0;
+
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -323,6 +324,8 @@ namespace ECGViewer
 
 
         bool _primerMuestra = true;
+        double _cuentaMax = 0;
+        double _cuentaMin = 10000;
         private void timerPuerto_Tick(object sender, EventArgs e)
         {
             if (!_serialPort.IsOpen) return;
@@ -342,7 +345,10 @@ namespace ECGViewer
                     
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
-                    muestra.Canal[0] = (double.Parse(data) + ZERO) * SPAN; 
+                    double cuenta = double.Parse(data);
+                    if (cuenta > _cuentaMax) _cuentaMax = cuenta;
+                    if (cuenta < _cuentaMin) _cuentaMin = cuenta;
+                    muestra.Canal[0] = (cuenta + ZERO) * SPAN; 
                     _senalECG.Add(muestra);
 
                     if (_contadorMuestras % 100 == 0)
@@ -477,43 +483,9 @@ namespace ECGViewer
                 return;
             }
 
-            /*
-            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
-            
-            printDocument.DefaultPageSettings.Landscape = true;
-            printDocument.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(10, 10, 10, 10); // Márgenes de 10 píxeles en todos los lados
-
-            chartSenal.Printing.PrintPreview();
-            */
-
-            // Obtener el documento de impresión del chart
-
-
-            /*
-            PrintDocument printDocument = chartSenal.Printing.PrintDocument;
-
-            // Mostrar la vista previa de impresión
-            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
-            printPreviewDialog.Document = printDocument;
-            //printPreviewDialog.Controls.Clear();
-            printPreviewDialog.ShowDialog();
-            
-
-            // Después de la vista previa, mostrar el diálogo de selección de impresora
-            PrintDialog printDialog = new PrintDialog();
-            printDialog.Document = printDocument;
-
-            // Mostrar el diálogo de impresión
-            if (printDialog.ShowDialog() == DialogResult.OK)
-            {
-                // Si el usuario selecciona una impresora y confirma, procede con la impresión
-                printDocument.Print();
-            }*/
-
-
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG);
+            frmImpresion.ShowDialog();
         }
-
-
 
 
         private void tsbExportarExcel_Click(object sender, EventArgs e)
@@ -590,23 +562,7 @@ namespace ECGViewer
                 MessageBox.Show($"Error al importar archivo de de excel. {ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar"
                     , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
         }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (_senalECG == null || _senalECG.Count < 1)
-            {
-                MessageBox.Show("No hay gráfico para imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG);
-            frmImpresion.ShowDialog();
-        }
-
 
     }
 }

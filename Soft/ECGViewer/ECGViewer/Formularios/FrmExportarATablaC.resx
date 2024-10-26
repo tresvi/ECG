@@ -130,7 +130,7 @@ void setup() {
 void loop() {
   for (int i = 0; i &lt; 10; i++) {
     analogWrite(pwmPin, tabla[i]);
-    delay(2);   //Tiempo de muestreo
+    delay(1);   //Tiempo de muestreo
   }
 }</value>
   </data>

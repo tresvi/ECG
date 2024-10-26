@@ -390,11 +390,13 @@
     <None Include="Recursos\notch.png" />
     <None Include="Recursos\reset.png" />
     <None Include="Recursos\printer.png" />
+    <None Include="Recursos\play-button.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />
     <None Include="Recursos\scisors.png" />
     <None Include="Recursos\xlsx.png" />
+    <None Include="Recursos\stop.png" />
     <Content Include="Recursos\Zoom-reset-01.png" />
     <None Include="Recursos\Zoom-reset-01_48x48.png" />
     <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />

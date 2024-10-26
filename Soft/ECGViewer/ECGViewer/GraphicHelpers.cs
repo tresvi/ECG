@@ -106,12 +106,13 @@ namespace ECGViewer
         {
             ChartArea chartArea = chart.ChartAreas[0];
 
-            Series series = chart.Series["Muestras"];
+            Series serie = chart.Series["Muestras"];
+            //serie.Color = Color.Red;
 
-            series.Points.Clear();
+            serie.Points.Clear();
             foreach (var muestra in senal)
             {
-                series.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
+                serie.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
 
             chart.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X

@@ -169,6 +169,7 @@
             this.txtUnidad.Name = "txtUnidad";
             this.txtUnidad.Size = new System.Drawing.Size(119, 25);
             this.txtUnidad.TabIndex = 0;
+            this.txtUnidad.Text = "mV";
             // 
             // FrmCalibracion
             // 

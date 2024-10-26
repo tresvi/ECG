@@ -2,11 +2,8 @@
 using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ECGViewer
 {
@@ -156,6 +153,13 @@ namespace ECGViewer
             {
                 muestra.Tiempo = tiempoMuestreo * contador++;
             }
+        }
+
+
+        public static (double zero, double span) GetSpan(int x0, int x1, double y0, double y1)
+        {
+            double m = (y0 - y1) / (x0 - x1);
+            return (y0, m);
         }
 
     }
