@@ -38,16 +38,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtUnidad = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nudMuestrasPorGrafico = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMin)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMuestrasPorGrafico)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnAplicar
             // 
             this.BtnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAplicar.Location = new System.Drawing.Point(51, 229);
+            this.BtnAplicar.Location = new System.Drawing.Point(51, 391);
             this.BtnAplicar.Name = "BtnAplicar";
             this.BtnAplicar.Size = new System.Drawing.Size(103, 35);
             this.BtnAplicar.TabIndex = 2;
@@ -59,7 +65,7 @@
             // 
             this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCancelar.Location = new System.Drawing.Point(237, 229);
+            this.BtnCancelar.Location = new System.Drawing.Point(241, 391);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(103, 35);
             this.BtnCancelar.TabIndex = 3;
@@ -77,12 +83,12 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtUnidad);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(15, 11);
+            this.groupBox1.Location = new System.Drawing.Point(12, 172);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(380, 197);
+            this.groupBox1.Size = new System.Drawing.Size(387, 197);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mapeo de Valores";
+            this.groupBox1.Text = "Calibración - Mapeo de Valores";
             // 
             // btnResetECGValues
             // 
@@ -171,14 +177,71 @@
             this.txtUnidad.TabIndex = 0;
             this.txtUnidad.Text = "mV";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.nudMuestrasPorGrafico);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(12, 10);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(387, 144);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Gráfico";
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(8, 55);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(373, 53);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "(Para equipos con bajas prestaciones se recomienda un valor mas chico. Valor esta" +
+    "ndar recomendado: 4000)";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(6, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(204, 18);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Nro Muestras por pantalla";
+            // 
+            // nudMuestrasPorGrafico
+            // 
+            this.nudMuestrasPorGrafico.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
+            this.nudMuestrasPorGrafico.Location = new System.Drawing.Point(235, 28);
+            this.nudMuestrasPorGrafico.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudMuestrasPorGrafico.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMuestrasPorGrafico.Name = "nudMuestrasPorGrafico";
+            this.nudMuestrasPorGrafico.Size = new System.Drawing.Size(120, 25);
+            this.nudMuestrasPorGrafico.TabIndex = 8;
+            this.nudMuestrasPorGrafico.Value = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            // 
             // FrmAjustes
             // 
             this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancelar;
-            this.ClientSize = new System.Drawing.Size(411, 288);
+            this.ClientSize = new System.Drawing.Size(411, 454);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
@@ -191,6 +254,9 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMin)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMuestrasPorGrafico)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -207,5 +273,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudValorYMax;
         private System.Windows.Forms.Button btnResetECGValues;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown nudMuestrasPorGrafico;
+        private System.Windows.Forms.Label label5;
     }
 }

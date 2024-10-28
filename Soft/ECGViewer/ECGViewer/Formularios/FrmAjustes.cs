@@ -1,4 +1,5 @@
-﻿using ECGViewer.Properties;
+﻿using ECGViewer.Modelos;
+using ECGViewer.Properties;
 using System;
 using System.Windows.Forms;
 
@@ -6,16 +7,18 @@ namespace ECGViewer.Formularios
 {
     public partial class FrmAjustes : Form
     {
-        public decimal ValorYMin { get { return Settings.Default.nudValorYMin; }  }
-        public decimal ValorYMax { get { return Settings.Default.nudValorYMax; } }
+        public decimal MuestrasPorGrafico { get { return Settings.Default.MuestrasPorGrafico; } }
+        public decimal ValorYMin { get { return Settings.Default.CalibValorYMin; }  }
+        public decimal ValorYMax { get { return Settings.Default.CalibValorYMax; } }
         public string Unidad { get { return Settings.Default.Unidad; } }
-        public decimal Span { get { return (ValorYMax - ValorYMin) / (1023 - 0); }}
-        public decimal Zero { get { return ValorYMin; }}
+
 
         public FrmAjustes()
         {
             InitializeComponent();
 
+
+            nudMuestrasPorGrafico.Value = Settings.Default.MuestrasPorGrafico;
             nudValorYMin.Value = ValorYMin;
             nudValorYMax.Value = ValorYMax;
             txtUnidad.Text = Unidad;
@@ -23,9 +26,10 @@ namespace ECGViewer.Formularios
 
         private void BtnAplicar_Click(object sender, EventArgs e)
         {
-            Settings.Default.nudValorYMin = nudValorYMin.Value;
-            Settings.Default.nudValorYMax = nudValorYMax.Value;
+            Settings.Default.CalibValorYMin = nudValorYMin.Value;
+            Settings.Default.CalibValorYMax = nudValorYMax.Value;
             Settings.Default.Unidad = txtUnidad.Text;
+            Settings.Default.MuestrasPorGrafico = (int) nudMuestrasPorGrafico.Value;
             Settings.Default.Save();
 
             this.DialogResult = DialogResult.OK;
@@ -37,5 +41,6 @@ namespace ECGViewer.Formularios
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
     }
 }

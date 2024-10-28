@@ -26,60 +26,60 @@ namespace ECGViewer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string cmbPuertosValue {
+        public string PuertoCOM {
             get {
-                return ((string)(this["cmbPuertosValue"]));
+                return ((string)(this["PuertoCOM"]));
             }
             set {
-                this["cmbPuertosValue"] = value;
+                this["PuertoCOM"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int cmbBaudRateIndex {
+        public int BaudRate {
             get {
-                return ((int)(this["cmbBaudRateIndex"]));
+                return ((int)(this["BaudRate"]));
             }
             set {
-                this["cmbBaudRateIndex"] = value;
+                this["BaudRate"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public decimal TMuestreoValue {
+        public decimal TMuestreo {
             get {
-                return ((decimal)(this["TMuestreoValue"]));
+                return ((decimal)(this["TMuestreo"]));
             }
             set {
-                this["TMuestreoValue"] = value;
+                this["TMuestreo"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public decimal nudValorYMin {
+        public decimal CalibValorYMin {
             get {
-                return ((decimal)(this["nudValorYMin"]));
+                return ((decimal)(this["CalibValorYMin"]));
             }
             set {
-                this["nudValorYMin"] = value;
+                this["CalibValorYMin"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.012")]
-        public decimal nudValorYMax {
+        public decimal CalibValorYMax {
             get {
-                return ((decimal)(this["nudValorYMax"]));
+                return ((decimal)(this["CalibValorYMax"]));
             }
             set {
-                this["nudValorYMax"] = value;
+                this["CalibValorYMax"] = value;
             }
         }
         
@@ -92,6 +92,18 @@ namespace ECGViewer.Properties {
             }
             set {
                 this["Unidad"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4000")]
+        public int MuestrasPorGrafico {
+            get {
+                return ((int)(this["MuestrasPorGrafico"]));
+            }
+            set {
+                this["MuestrasPorGrafico"] = value;
             }
         }
     }

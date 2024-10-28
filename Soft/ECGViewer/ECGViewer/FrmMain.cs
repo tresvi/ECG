@@ -52,9 +52,10 @@ namespace ECGViewer
                 foreach (string puerto in SerialPort.GetPortNames())
                     cmbPuertos.Items.Add(puerto);
 
-                cmbBaudRate.SelectedIndex = Settings.Default.cmbBaudRateIndex;
-                cmbPuertos.Text = Settings.Default.cmbPuertosValue;
-                nudTMuestreo.Value = Settings.Default.TMuestreoValue;
+                Configuracion config = new Configuracion();
+                cmbBaudRate.SelectedIndex = config.BaudRate;
+                cmbPuertos.Text = config.PuertoCOM;
+                nudTMuestreo.Value = config.TiempoMuestreo;
             }
             catch (Exception ex)
             {
@@ -317,9 +318,9 @@ namespace ECGViewer
             if (_serialPort.IsOpen) _serialPort.Close();
 
             //Guardo la ultima configuracion
-            Settings.Default.cmbPuertosValue = cmbPuertos.Text;
-            Settings.Default.cmbBaudRateIndex= cmbBaudRate.SelectedIndex;
-            Settings.Default.TMuestreoValue = nudTMuestreo.Value;
+            Settings.Default.PuertoCOM = cmbPuertos.Text;
+            Settings.Default.BaudRate= cmbBaudRate.SelectedIndex;
+            Settings.Default.TMuestreo = nudTMuestreo.Value;
             Settings.Default.Save();
         }
 
@@ -371,12 +372,13 @@ namespace ECGViewer
             }
         }
 
+
         private void tmrGraficar_Tick(object sender, EventArgs e)
         {
-            //if (_senalECG.Count < 1000) 
-            //    GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+            int muestrasPorGrafico = Settings.Default.MuestrasPorGrafico;
+            if (muestrasPorGrafico <= 0) muestrasPorGrafico = 4000;
 
-            GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG);   
+            GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG, muestrasPorGrafico);
             gbSenal.Enabled = true;
         }
 
