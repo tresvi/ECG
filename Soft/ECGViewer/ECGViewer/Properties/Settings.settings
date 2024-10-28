@@ -2,23 +2,26 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ECGViewer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="cmbPuertosValue" Type="System.String" Scope="User">
+    <Setting Name="PuertoCOM" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="cmbBaudRateIndex" Type="System.Int32" Scope="User">
+    <Setting Name="BaudRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="TMuestreoValue" Type="System.Decimal" Scope="User">
+    <Setting Name="TMuestreo" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="nudValorYMin" Type="System.Decimal" Scope="User">
+    <Setting Name="CalibValorYMin" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="nudValorYMax" Type="System.Decimal" Scope="User">
+    <Setting Name="CalibValorYMax" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.012</Value>
     </Setting>
     <Setting Name="Unidad" Type="System.String" Scope="User">
       <Value Profile="(Default)">V</Value>
+    </Setting>
+    <Setting Name="MuestrasPorGrafico" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -3,7 +3,6 @@ using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -22,7 +21,6 @@ namespace ECGViewer
                     //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
          */
-        private const int NRO_MUESTRAS_GRAFICO = 4000;
 
         internal static void InicializarGrafico(Chart chart)
         {
@@ -148,14 +146,14 @@ namespace ECGViewer
 
         static Stopwatch _stopwatch = new Stopwatch();
         static int _contadorImpresion = 0;
-        internal static void ActualizarGrafico(Chart chart, in List<Muestra> senal)
+        internal static void ActualizarGrafico(Chart chart, in List<Muestra> senal, int nroMuestrasPorPantalla)
         {
             ChartArea chartArea = chart.ChartAreas[0];
             _contadorImpresion++;
             Series serie = chart.Series["Muestras"];
             //serie.Color = Color.Red;
             
-            int inicioGrafico = senal.Count - NRO_MUESTRAS_GRAFICO;
+            int inicioGrafico = senal.Count - nroMuestrasPorPantalla;
             inicioGrafico = inicioGrafico < 0 ? 0 : inicioGrafico;
             
             chart.SuspendLayout();

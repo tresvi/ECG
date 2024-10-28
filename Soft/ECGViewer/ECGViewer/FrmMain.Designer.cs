@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.chartSenal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BtnCargarSenal = new System.Windows.Forms.Button();
@@ -73,7 +73,7 @@
             this.cmbPuertos = new System.Windows.Forms.ComboBox();
             this.timerPuerto = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
-            this.timerGrafico = new System.Windows.Forms.Timer(this.components);
+            this.timerGraficar = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -87,26 +87,26 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartSenal.BorderlineColor = System.Drawing.Color.Black;
-            chartArea1.AxisX.LabelAutoFitMaxFontSize = 15;
-            chartArea1.AxisX.LabelAutoFitMinFontSize = 8;
-            chartArea1.AxisX.Title = "Tiempo[Seg]";
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.Maximum = 250D;
-            chartArea1.AxisY.Title = "mV";
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            chartArea1.Name = "ChartArea1";
-            this.chartSenal.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.LabelAutoFitMaxFontSize = 15;
+            chartArea2.AxisX.LabelAutoFitMinFontSize = 8;
+            chartArea2.AxisX.Title = "Tiempo[Seg]";
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisY.Maximum = 250D;
+            chartArea2.AxisY.Title = "mV";
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea2.Name = "ChartArea1";
+            this.chartSenal.ChartAreas.Add(chartArea2);
             this.chartSenal.Location = new System.Drawing.Point(0, 75);
             this.chartSenal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chartSenal.Name = "chartSenal";
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.MarkerStep = 10;
-            series1.Name = "Muestras";
-            this.chartSenal.Series.Add(series1);
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            series2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series2.MarkerStep = 10;
+            series2.Name = "Muestras";
+            this.chartSenal.Series.Add(series2);
             this.chartSenal.Size = new System.Drawing.Size(1283, 473);
             this.chartSenal.TabIndex = 1;
             this.chartSenal.Text = "chart1";
@@ -497,9 +497,6 @@
             this.cmbBaudRate.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbBaudRate.FormattingEnabled = true;
             this.cmbBaudRate.Items.AddRange(new object[] {
-            "50",
-            "110",
-            "300",
             "1200",
             "2400",
             "4800",
@@ -551,9 +548,9 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 
-            // timerGrafico
+            // timerGraficar
             // 
-            this.timerGrafico.Tick += new System.EventHandler(this.timerGrafico_Tick);
+            this.timerGraficar.Tick += new System.EventHandler(this.timerGrafico_Tick);
             // 
             // FrmMain
             // 
@@ -627,7 +624,7 @@
         private System.Windows.Forms.ToolStripButton tsbGridECG;
         private System.Windows.Forms.ToolStripButton tsbImportarDesdeXLSX;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Timer timerGrafico;
+        private System.Windows.Forms.Timer timerGraficar;
     }
 }
 
