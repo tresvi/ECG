@@ -71,7 +71,6 @@
             this.BtnCancelar.TabIndex = 3;
             this.BtnCancelar.Text = "&Cancelar";
             this.BtnCancelar.UseVisualStyleBackColor = true;
-            this.BtnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
             // 
             // groupBox1
             // 

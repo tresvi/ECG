@@ -218,6 +218,8 @@ namespace ECGViewer
                 _serialPort.DiscardInBuffer();
                 timerPuerto.Enabled = true;
                 timerPuerto.Start();
+                timerGraficar.Enabled = true;
+                timerGraficar.Start();
                 //tmrGraficar.Enabled = true;
                 //tmrGraficar.Start();
                 _senalECG = new List<Muestra>();
@@ -270,6 +272,9 @@ namespace ECGViewer
 
             timerPuerto.Enabled = false;
             timerPuerto.Stop();
+
+            timerGraficar.Enabled = false;
+            timerGraficar.Stop();
         }
 
 
@@ -354,11 +359,6 @@ namespace ECGViewer
                     muestra.Canal[0] = (cuenta + ZERO) * SPAN; 
                     _senalECG.Add(muestra);
 
-                    if (_contadorMuestras % 50 == 0)
-                    { 
-                        tmrGraficar_Tick(sender, e);
-                        //Debug.WriteLine(DateTime.Now.ToString("MM:ss.fff"));
-                    }
                 } while (_serialPort.BytesToRead > 5);
             }
             catch (TimeoutException)
@@ -373,14 +373,21 @@ namespace ECGViewer
         }
 
 
-        private void tmrGraficar_Tick(object sender, EventArgs e)
+        private void timerGrafico_Tick(object sender, EventArgs e)
         {
+            timerGraficar.Start();
             int muestrasPorGrafico = Settings.Default.MuestrasPorGrafico;
             if (muestrasPorGrafico <= 0) muestrasPorGrafico = 4000;
+            try
+            {
+                GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG, muestrasPorGrafico);
+            }
+            catch (Exception) { }
 
-            GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG, muestrasPorGrafico);
             gbSenal.Enabled = true;
+            timerGraficar.Start();
         }
+
 
 
         private void tsbExportarATablaC_Click(object sender, EventArgs e)
@@ -573,9 +580,6 @@ namespace ECGViewer
             }
         }
 
-        private void timerGrafico_Tick(object sender, EventArgs e)
-        {
 
-        }
     }
 }
