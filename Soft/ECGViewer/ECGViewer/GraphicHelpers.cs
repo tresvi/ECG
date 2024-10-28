@@ -76,6 +76,8 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
             chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 0;
 
+            chart.ChartAreas[0].CursorY.Interval = 0;
+
             if (enable == false)
             {
                 //Quita la linea de los cursores

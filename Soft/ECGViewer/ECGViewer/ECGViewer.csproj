@@ -400,6 +400,8 @@
     <None Include="Recursos\measurement.png" />
     <None Include="Recursos\LowPass.png" />
     <None Include="Recursos\marker.png" />
+    <None Include="Recursos\measureX.png" />
+    <None Include="Recursos\measureY.png" />
     <Content Include="Recursos\new-document.png" />
     <Content Include="Recursos\new_file.png" />
     <None Include="Recursos\PWM_Picture.PNG" />
@@ -407,6 +409,7 @@
     <None Include="Recursos\reset.png" />
     <None Include="Recursos\printer.png" />
     <None Include="Recursos\play-button.png" />
+    <None Include="Recursos\ruler.png" />
     <Content Include="Recursos\salvar.png" />
     <Content Include="Recursos\saveall_sav_10186.png" />
     <Content Include="Recursos\Save_as-80_icon-icons.com_57275.png" />

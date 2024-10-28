@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
 using System.IO.Ports;
@@ -48,7 +46,7 @@ namespace ECGViewer
             GraphicHelpers.InicializarGrafico(chartSenal);
 
             try
-            {   
+            {
                 foreach (string puerto in SerialPort.GetPortNames())
                     cmbPuertos.Items.Add(puerto);
 
@@ -64,13 +62,54 @@ namespace ECGViewer
         }
 
 
-        private void chartEspectro_MouseClick(object sender, MouseEventArgs e)
+        private void chartSenal_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Right) return;
-            GraphicHelpers.InsertarMarcador(chartSenal, e.X, e.Y);
+            if (e.Button == MouseButtons.Right)
+                GraphicHelpers.InsertarMarcador(chartSenal, e.X, e.Y);
         }
 
-        
+
+        private void chartSenal_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (tsbReglaX.Checked && e.Button == MouseButtons.Left)
+            {
+                double valorX = chartSenal.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                double valorY = chartSenal.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
+                lblRegla.Location = new Point(e.X + chartSenal.Location.X + 10, e.Y + chartSenal.Location.Y + 10);
+                lblRegla.Visible = true;
+            }
+        }
+
+
+        private void chartSenal_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (tsbReglaX.Checked && e.Button == MouseButtons.Left)
+            {
+                double inicioSeleccionX = chartSenal.ChartAreas[0].CursorX.SelectionStart;
+                double finSeleccionX = chartSenal.ChartAreas[0].CursorX.SelectionEnd;
+                double inicioSeleccionY = chartSenal.ChartAreas[0].CursorY.SelectionStart;
+                double finSeleccionY = chartSenal.ChartAreas[0].CursorY.SelectionEnd;
+                double diferenciaX = Math.Abs(finSeleccionX - inicioSeleccionX);
+                double diferenciaY = Math.Abs(finSeleccionY - inicioSeleccionY);
+
+                lblRegla.Text = $"X: {diferenciaX.ToString("0.00")} Seg. \nY: {diferenciaY.ToString("0.00")} mV";
+            }
+        }
+    
+
+        private void chartSenal_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (tsbReglaX.Checked && e.Button == MouseButtons.Left)
+            {
+                lblRegla.Visible = false;
+                chartSenal.ChartAreas[0].CursorX.SelectionStart = double.NaN;
+                chartSenal.ChartAreas[0].CursorX.SelectionEnd = double.NaN;
+                chartSenal.ChartAreas[0].CursorY.SelectionStart = double.NaN;
+                chartSenal.ChartAreas[0].CursorY.SelectionEnd = double.NaN;
+            }
+        }
+
+
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
             string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
@@ -220,8 +259,6 @@ namespace ECGViewer
                 timerPuerto.Start();
                 timerGraficar.Enabled = true;
                 timerGraficar.Start();
-                //tmrGraficar.Enabled = true;
-                //tmrGraficar.Start();
                 _senalECG = new List<Muestra>();
                 _tMuestreo = nudTMuestreo.Value;
                 _fMuestreo = (int)Math.Round(1000 / _tMuestreo);
@@ -387,7 +424,6 @@ namespace ECGViewer
             gbSenal.Enabled = true;
             timerGraficar.Start();
         }
-
 
 
         private void tsbExportarATablaC_Click(object sender, EventArgs e)
@@ -578,6 +614,22 @@ namespace ECGViewer
                 MessageBox.Show($"Error al importar archivo de de excel. {ex.Message} \n Stack: {ex.StackTrace}", "Error al exportar"
                     , MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void tsbReglaX_Click(object sender, EventArgs e)
+        {
+            chartSenal.ChartAreas[0].AxisX.ScaleView.Zoomable = !tsbReglaX.Checked;
+            chartSenal.ChartAreas[0].AxisY.ScaleView.Zoomable = !tsbReglaX.Checked;
+            //chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
+            //chart1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+
+            chartSenal.ChartAreas[0].CursorY.IsUserEnabled = tsbReglaX.Checked;
+            chartSenal.ChartAreas[0].CursorY.IsUserSelectionEnabled = tsbReglaX.Checked;
+        }
+
+        private void tsbReglaY_Click(object sender, EventArgs e)
+        {
+            
         }
 
 
