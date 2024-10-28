@@ -2,6 +2,7 @@
 using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -21,7 +22,7 @@ namespace ECGViewer
                     //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
          */
-
+        private const int NRO_MUESTRAS_GRAFICO = 4000;
 
         internal static void InicializarGrafico(Chart chart)
         {
@@ -45,7 +46,25 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.Interval = 0.5;
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
+            //Autoescalas
+            chart.ChartAreas[0].AxisX.Minimum = 0;
+            chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+            chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+            chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+
+            chart.PostPaint += chartSenal_PostPaint;
+
             ActivarZoom(chart, true);
+        }
+
+        static private void chartSenal_PostPaint(object sender, ChartPaintEventArgs e)
+        {
+            // Detener el cronómetro después de que el gráfico se haya dibujado
+            _stopwatch.Stop();
+            
+            // Mostrar el tiempo en milisegundos
+            Debug.WriteLine("T: " + _stopwatch.ElapsedMilliseconds + " - " + DateTime.Now.ToString("ss.fff"));
+            _contadorImpresion = 0;
         }
 
 
@@ -92,13 +111,14 @@ namespace ECGViewer
         }
 
 
-        internal static void ResetZoom(Chart chart)
+        internal static void ResetZoom(Chart chart, List<Muestra> senal)
         {
             //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
             //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
             //ChartUtils.InicializarChart(chartEspectro);
             chart.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
             chart.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
+            CargarGrafico(chart, senal);
         }
 
 
@@ -125,6 +145,43 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
         }
 
+
+        static Stopwatch _stopwatch = new Stopwatch();
+        static int _contadorImpresion = 0;
+        internal static void ActualizarGrafico(Chart chart, in List<Muestra> senal)
+        {
+            ChartArea chartArea = chart.ChartAreas[0];
+            _contadorImpresion++;
+            Series serie = chart.Series["Muestras"];
+            //serie.Color = Color.Red;
+            
+            int inicioGrafico = senal.Count - NRO_MUESTRAS_GRAFICO;
+            inicioGrafico = inicioGrafico < 0 ? 0 : inicioGrafico;
+            
+            chart.SuspendLayout();
+
+            serie.Points.Clear();
+
+            for (int i = inicioGrafico; i < senal.Count -1; i++) 
+            {
+                Muestra muestra = senal[i];
+                serie.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
+            }
+            _stopwatch.Restart();
+            chart.ResumeLayout();
+            chart.Invalidate();
+            //Debug.WriteLine($"Tiempo de graficado: {sw.ElapsedMilliseconds}");
+            /*
+            chart.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
+            chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+
+            //Autoescalas
+            chart.ChartAreas[0].AxisX.Minimum = 0;
+            chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+            chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+            chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            */
+        }
 
         internal static void ModoECG(Chart chart, bool activar)
         {

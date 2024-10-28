@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer.Formularios
 {
-    partial class FrmCalibracion
+    partial class FrmAjustes
     {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +47,7 @@
             // 
             this.BtnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAplicar.Location = new System.Drawing.Point(69, 225);
+            this.BtnAplicar.Location = new System.Drawing.Point(51, 229);
             this.BtnAplicar.Name = "BtnAplicar";
             this.BtnAplicar.Size = new System.Drawing.Size(103, 35);
             this.BtnAplicar.TabIndex = 2;
@@ -59,7 +59,7 @@
             // 
             this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCancelar.Location = new System.Drawing.Point(236, 225);
+            this.BtnCancelar.Location = new System.Drawing.Point(237, 229);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(103, 35);
             this.BtnCancelar.TabIndex = 3;
@@ -171,22 +171,22 @@
             this.txtUnidad.TabIndex = 0;
             this.txtUnidad.Text = "mV";
             // 
-            // FrmCalibracion
+            // FrmAjustes
             // 
             this.AcceptButton = this.BtnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancelar;
-            this.ClientSize = new System.Drawing.Size(411, 281);
+            this.ClientSize = new System.Drawing.Size(411, 288);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnCancelar);
             this.Controls.Add(this.BtnAplicar);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FrmCalibracion";
+            this.Name = "FrmAjustes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Calibracion";
+            this.Text = "Ajustes";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMax)).EndInit();

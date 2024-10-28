@@ -189,7 +189,7 @@ namespace ECGViewer
 
         private void tsbResetZoom_Click(object sender, EventArgs e)
         {
-            GraphicHelpers.ResetZoom(chartSenal);
+            GraphicHelpers.ResetZoom(chartSenal, _senalECG);
         }
 
 
@@ -224,6 +224,7 @@ namespace ECGViewer
                 _fMuestreo = (int)Math.Round(1000 / _tMuestreo);
                 _contadorMuestras = 0;
                 _primerMuestra = true;
+                chartSenal.ChartAreas[0].AxisX.Minimum = double.NaN;    //!! TODO: Ver si esto queda
             }
             catch (Exception ex)
             {
@@ -240,7 +241,7 @@ namespace ECGViewer
             {
                 // Leer la línea completa (espera hasta recibir el salto de línea)
                 string data = _serialPort.ReadLine();
-                Debug.WriteLine(data);
+               // Debug.WriteLine(data);
                 Muestra muestra = new Muestra();
                 muestra.Tiempo = _contadorMuestras * (double) (_tMuestreo/1000);
                 _contadorMuestras++;
@@ -328,14 +329,15 @@ namespace ECGViewer
         double _cuentaMin = 10000;
         private void timerPuerto_Tick(object sender, EventArgs e)
         {
-            if (!_serialPort.IsOpen) return;
+            chartSenal.ChartAreas[0].AxisX.Minimum = double.NaN;
 
+            if (!_serialPort.IsOpen) return;
             try
             {
                 do
                 {
                     string data = _serialPort.ReadLine();
-                    Debug.WriteLine(data);
+                    //Debug.WriteLine(data);
 
                     if (_primerMuestra)
                     {
@@ -351,8 +353,11 @@ namespace ECGViewer
                     muestra.Canal[0] = (cuenta + ZERO) * SPAN; 
                     _senalECG.Add(muestra);
 
-                    if (_contadorMuestras % 100 == 0)
+                    if (_contadorMuestras % 50 == 0)
+                    { 
                         tmrGraficar_Tick(sender, e);
+                        //Debug.WriteLine(DateTime.Now.ToString("MM:ss.fff"));
+                    }
                 } while (_serialPort.BytesToRead > 5);
             }
             catch (TimeoutException)
@@ -368,9 +373,11 @@ namespace ECGViewer
 
         private void tmrGraficar_Tick(object sender, EventArgs e)
         {
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);   
+            //if (_senalECG.Count < 1000) 
+            //    GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+
+            GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG);   
             gbSenal.Enabled = true;
-            tsbResetZoom_Click(sender, e);
         }
 
 
@@ -436,7 +443,7 @@ namespace ECGViewer
 
         private void tsbCalibracion_Click(object sender, EventArgs e)
         {
-            FrmCalibracion frmCalibracion = new FrmCalibracion();
+            FrmAjustes frmCalibracion = new FrmAjustes();
             frmCalibracion.ShowDialog();
         }
 
@@ -564,5 +571,9 @@ namespace ECGViewer
             }
         }
 
+        private void timerGrafico_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

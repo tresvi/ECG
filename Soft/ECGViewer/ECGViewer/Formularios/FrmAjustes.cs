@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace ECGViewer.Formularios
 {
-    public partial class FrmCalibracion : Form
+    public partial class FrmAjustes : Form
     {
         public decimal ValorYMin { get { return Settings.Default.nudValorYMin; }  }
         public decimal ValorYMax { get { return Settings.Default.nudValorYMax; } }
@@ -12,7 +12,7 @@ namespace ECGViewer.Formularios
         public decimal Span { get { return (ValorYMax - ValorYMin) / (1023 - 0); }}
         public decimal Zero { get { return ValorYMin; }}
 
-        public FrmCalibracion()
+        public FrmAjustes()
         {
             InitializeComponent();
 
