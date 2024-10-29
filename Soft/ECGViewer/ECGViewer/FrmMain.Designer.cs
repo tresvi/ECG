@@ -34,10 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.chartSenal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BtnCargarSenal = new System.Windows.Forms.Button();
-            this.btnEspectro = new System.Windows.Forms.Button();
-            this.btnFiltrosAvanzados = new System.Windows.Forms.Button();
             this.gbSenal = new System.Windows.Forms.GroupBox();
-            this.btnFiltrarSenal = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,6 +72,9 @@
             this.tsbExportarATablaC = new System.Windows.Forms.ToolStripButton();
             this.tsbExportarProteus = new System.Windows.Forms.ToolStripButton();
             this.tsbMetricas = new System.Windows.Forms.ToolStripButton();
+            this.btnFiltrarSenal = new System.Windows.Forms.Button();
+            this.btnEspectro = new System.Windows.Forms.Button();
+            this.btnFiltrosAvanzados = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -125,27 +125,8 @@
             this.BtnCargarSenal.TabIndex = 2;
             this.BtnCargarSenal.Text = "Cargar Señal";
             this.BtnCargarSenal.UseVisualStyleBackColor = true;
+            this.BtnCargarSenal.Visible = false;
             this.BtnCargarSenal.Click += new System.EventHandler(this.BtnCargarSenal_Click);
-            // 
-            // btnEspectro
-            // 
-            this.btnEspectro.Location = new System.Drawing.Point(276, 24);
-            this.btnEspectro.Name = "btnEspectro";
-            this.btnEspectro.Size = new System.Drawing.Size(99, 78);
-            this.btnEspectro.TabIndex = 12;
-            this.btnEspectro.Text = "Ver Espectro";
-            this.btnEspectro.UseVisualStyleBackColor = true;
-            this.btnEspectro.Click += new System.EventHandler(this.btnEspectro_Click);
-            // 
-            // btnFiltrosAvanzados
-            // 
-            this.btnFiltrosAvanzados.Location = new System.Drawing.Point(144, 24);
-            this.btnFiltrosAvanzados.Name = "btnFiltrosAvanzados";
-            this.btnFiltrosAvanzados.Size = new System.Drawing.Size(114, 78);
-            this.btnFiltrosAvanzados.TabIndex = 13;
-            this.btnFiltrosAvanzados.Text = "Filtros Avanzados";
-            this.btnFiltrosAvanzados.UseVisualStyleBackColor = true;
-            this.btnFiltrosAvanzados.Click += new System.EventHandler(this.BtnFiltroAvanzados_Click);
             // 
             // gbSenal
             // 
@@ -157,20 +138,10 @@
             this.gbSenal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbSenal.Location = new System.Drawing.Point(639, 556);
             this.gbSenal.Name = "gbSenal";
-            this.gbSenal.Size = new System.Drawing.Size(395, 118);
+            this.gbSenal.Size = new System.Drawing.Size(387, 118);
             this.gbSenal.TabIndex = 14;
             this.gbSenal.TabStop = false;
             this.gbSenal.Text = "Señal";
-            // 
-            // btnFiltrarSenal
-            // 
-            this.btnFiltrarSenal.Location = new System.Drawing.Point(20, 24);
-            this.btnFiltrarSenal.Name = "btnFiltrarSenal";
-            this.btnFiltrarSenal.Size = new System.Drawing.Size(101, 78);
-            this.btnFiltrarSenal.TabIndex = 12;
-            this.btnFiltrarSenal.Text = "Aplicar Filtro P.Bajo 50Hz";
-            this.btnFiltrarSenal.UseVisualStyleBackColor = true;
-            this.btnFiltrarSenal.Click += new System.EventHandler(this.BtnFiltrarSenal_Click);
             // 
             // toolStrip1
             // 
@@ -259,7 +230,7 @@
             this.groupBox3.Size = new System.Drawing.Size(604, 118);
             this.groupBox3.TabIndex = 44;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Conexión Serie";
+            this.groupBox3.Text = "Captura por puerto COM";
             // 
             // label3
             // 
@@ -570,6 +541,52 @@
             this.tsbMetricas.Text = "Continuity test";
             this.tsbMetricas.Visible = false;
             this.tsbMetricas.Click += new System.EventHandler(this.tsbMetricas_Click);
+            // 
+            // btnFiltrarSenal
+            // 
+            this.btnFiltrarSenal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnFiltrarSenal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFiltrarSenal.Image = global::ECGViewer.Properties.Resources.LowPass48x48;
+            this.btnFiltrarSenal.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnFiltrarSenal.Location = new System.Drawing.Point(20, 24);
+            this.btnFiltrarSenal.Name = "btnFiltrarSenal";
+            this.btnFiltrarSenal.Size = new System.Drawing.Size(108, 85);
+            this.btnFiltrarSenal.TabIndex = 12;
+            this.btnFiltrarSenal.Text = "Filtro PB 50Hz";
+            this.btnFiltrarSenal.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnFiltrarSenal.UseVisualStyleBackColor = true;
+            this.btnFiltrarSenal.Click += new System.EventHandler(this.BtnFiltrarSenal_Click);
+            // 
+            // btnEspectro
+            // 
+            this.btnEspectro.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnEspectro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEspectro.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnEspectro.Image = global::ECGViewer.Properties.Resources.spectrum48x48;
+            this.btnEspectro.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEspectro.Location = new System.Drawing.Point(262, 24);
+            this.btnEspectro.Name = "btnEspectro";
+            this.btnEspectro.Size = new System.Drawing.Size(105, 85);
+            this.btnEspectro.TabIndex = 12;
+            this.btnEspectro.Text = "Espectro";
+            this.btnEspectro.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnEspectro.UseVisualStyleBackColor = true;
+            this.btnEspectro.Click += new System.EventHandler(this.btnEspectro_Click);
+            // 
+            // btnFiltrosAvanzados
+            // 
+            this.btnFiltrosAvanzados.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnFiltrosAvanzados.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFiltrosAvanzados.Image = global::ECGViewer.Properties.Resources.spectrum_2_48x48;
+            this.btnFiltrosAvanzados.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnFiltrosAvanzados.Location = new System.Drawing.Point(138, 24);
+            this.btnFiltrosAvanzados.Name = "btnFiltrosAvanzados";
+            this.btnFiltrosAvanzados.Size = new System.Drawing.Size(114, 85);
+            this.btnFiltrosAvanzados.TabIndex = 13;
+            this.btnFiltrosAvanzados.Text = "Filtros Avanzados";
+            this.btnFiltrosAvanzados.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnFiltrosAvanzados.UseVisualStyleBackColor = true;
+            this.btnFiltrosAvanzados.Click += new System.EventHandler(this.BtnFiltroAvanzados_Click);
             // 
             // FrmMain
             // 

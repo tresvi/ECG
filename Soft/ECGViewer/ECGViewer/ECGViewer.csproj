@@ -376,6 +376,7 @@
     <None Include="Recursos\accept.png" />
     <None Include="Recursos\accept_48x48.png" />
     <None Include="Recursos\BandPass.png" />
+    <None Include="Recursos\BandPass64X64.png" />
     <Content Include="Recursos\boton-de-play.png" />
     <None Include="Recursos\cancel.png" />
     <None Include="Recursos\cancel_48x48.png" />
@@ -402,6 +403,9 @@
     <None Include="Recursos\marker.png" />
     <None Include="Recursos\measureX.png" />
     <None Include="Recursos\measureY.png" />
+    <None Include="Recursos\measurement_BN_64x64.png" />
+    <None Include="Recursos\LowPass48x48.png" />
+    <None Include="Recursos\measurement_BN_48x40.png" />
     <Content Include="Recursos\new-document.png" />
     <Content Include="Recursos\new_file.png" />
     <None Include="Recursos\PWM_Picture.PNG" />
@@ -416,6 +420,9 @@
     <None Include="Recursos\scisors.png" />
     <None Include="Recursos\xlsx.png" />
     <None Include="Recursos\stop.png" />
+    <None Include="Recursos\spectrum.png" />
+    <None Include="Recursos\spectrum48x48.png" />
+    <None Include="Recursos\spectrum_2_48x48.png" />
     <Content Include="Recursos\Zoom-reset-01.png" />
     <None Include="Recursos\Zoom-reset-01_48x48.png" />
     <Content Include="Recursos\•Saveasfile_file_sav_10243.png" />

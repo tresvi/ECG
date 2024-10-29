@@ -123,6 +123,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BandPass64X64 {
+            get {
+                object obj = ResourceManager.GetObject("BandPass64X64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_play {
             get {
                 object obj = ResourceManager.GetObject("boton-de-play", resourceCulture);
@@ -343,6 +353,16 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LowPass48x48 {
+            get {
+                object obj = ResourceManager.GetObject("LowPass48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap marker {
             get {
                 object obj = ResourceManager.GetObject("marker", resourceCulture);
@@ -356,6 +376,26 @@ namespace ECGViewer.Properties {
         internal static System.Drawing.Bitmap measurement {
             get {
                 object obj = ResourceManager.GetObject("measurement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap measurement_BN_48x40 {
+            get {
+                object obj = ResourceManager.GetObject("measurement_BN_48x40", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap measurement_BN_64x64 {
+            get {
+                object obj = ResourceManager.GetObject("measurement_BN_64x64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -506,6 +546,36 @@ namespace ECGViewer.Properties {
         internal static System.Drawing.Bitmap scisors {
             get {
                 object obj = ResourceManager.GetObject("scisors", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap spectrum {
+            get {
+                object obj = ResourceManager.GetObject("spectrum", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap spectrum_2_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("spectrum_2_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap spectrum48x48 {
+            get {
+                object obj = ResourceManager.GetObject("spectrum48x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
