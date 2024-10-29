@@ -92,7 +92,7 @@ namespace ECGViewer
                 double diferenciaX = Math.Abs(finSeleccionX - inicioSeleccionX);
                 double diferenciaY = Math.Abs(finSeleccionY - inicioSeleccionY);
 
-                lblRegla.Text = $"X: {diferenciaX.ToString("0.00")} Seg. \nY: {diferenciaY.ToString("0.00")} mV";
+                lblRegla.Text = $"X: {diferenciaX.ToString("0.000")} Seg. \nY: {diferenciaY.ToString("0.000")} mV";
             }
         }
     
