@@ -33,7 +33,7 @@ namespace ECGViewer
             //chart.ChartAreas[0].AxisX.ScaleView.Size = 50;                 // Cantidad de puntos visibles inicialmente
 
             // Habilitar el desplazamiento
-            chart.ChartAreas[0].AxisX.ScaleView.MinSize = 1;                 // Mínima vista permitida (1 punto)
+            chart.ChartAreas[0].AxisX.ScaleView.MinSize = 0.5;                 // Mínima vista permitida (1 punto)
             chart.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
 
             // Configura el comportamiento del scroll
