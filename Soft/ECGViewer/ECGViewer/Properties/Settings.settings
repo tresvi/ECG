@@ -23,5 +23,14 @@
     <Setting Name="MuestrasPorGrafico" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4000</Value>
     </Setting>
+    <Setting Name="CalibValorBitsMin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CalibValorBitsMax" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1023</Value>
+    </Setting>
+    <Setting Name="UsarValoresCrudosADC" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

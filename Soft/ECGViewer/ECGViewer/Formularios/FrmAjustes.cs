@@ -14,21 +14,26 @@ namespace ECGViewer.Formularios
             InitializeComponent();
 
             Configuracion config = new Configuracion();
-
+            lblZero.Text = $"ZERO: {config.Zero.ToString(CALIB_NUMBER_FORMAT)}";
+            lblSpan.Text = $"SPAN: {config.Span.ToString(CALIB_NUMBER_FORMAT)}";
             nudMuestrasPorGrafico.Value = config.MuestrasPorGrafico;
+            nudCalibBitsMin.Value = config.CalibracionBitsMin;
+            nudCalibBitsMax.Value = config.CalibracionBitsMax;
             nudValorYMin.Value = config.CalibracionValorYMin;
             nudValorYMax.Value = config.CalibracionValorYMax;
             txtUnidad.Text = config.Unidad;
-            lblZero.Text = $"ZERO: {config.Zero.ToString(CALIB_NUMBER_FORMAT)}";
-            lblSpan.Text = $"SPAN: {config.Span.ToString(CALIB_NUMBER_FORMAT)}";
+            chkMuestrasADC.Checked = config.UsarValoresCrudosADC;
         }
 
         private void BtnAplicar_Click(object sender, EventArgs e)
         {
+            Settings.Default.CalibValorBitsMin = (int) nudCalibBitsMin.Value;
+            Settings.Default.CalibValorBitsMax = (int) nudCalibBitsMax.Value;
             Settings.Default.CalibValorYMin = nudValorYMin.Value;
             Settings.Default.CalibValorYMax = nudValorYMax.Value;
             Settings.Default.Unidad = txtUnidad.Text;
             Settings.Default.MuestrasPorGrafico = (int) nudMuestrasPorGrafico.Value;
+            Settings.Default.UsarValoresCrudosADC = chkMuestrasADC.Checked;
             Settings.Default.Save();
         }
 
@@ -51,5 +56,16 @@ namespace ECGViewer.Formularios
             BtnAplicar_Click(sender, e);
             this.Close();
         }
+
+        private void chkMuestrasADC_CheckedChanged(object sender, EventArgs e)
+        {
+            nudCalibBitsMin.Enabled = !chkMuestrasADC.Checked;
+            nudCalibBitsMax.Enabled = !chkMuestrasADC.Checked;
+            nudValorYMin.Enabled = !chkMuestrasADC.Checked;
+            nudValorYMax.Enabled = !chkMuestrasADC.Checked;
+            lblZero.Text = "Zero: 0";
+            lblSpan.Text = "Span: 1";
+        }
+
     }
 }

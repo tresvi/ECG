@@ -43,21 +43,22 @@
             this.lblSpan = new System.Windows.Forms.Label();
             this.lblZero = new System.Windows.Forms.Label();
             this.btnAceptar = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.nudCalibBitsMin = new System.Windows.Forms.NumericUpDown();
+            this.nudCalibBitsMax = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtUnidad = new System.Windows.Forms.TextBox();
+            this.chkMuestrasADC = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMin)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMuestrasPorGrafico)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCalibBitsMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCalibBitsMax)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAplicar
@@ -85,14 +86,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtUnidad);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.nudCalibBitsMax);
+            this.groupBox1.Controls.Add(this.nudCalibBitsMin);
             this.groupBox1.Controls.Add(this.lblZero);
             this.groupBox1.Controls.Add(this.lblSpan);
             this.groupBox1.Controls.Add(this.btnResetECGValues);
@@ -101,17 +100,17 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 172);
+            this.groupBox1.Location = new System.Drawing.Point(12, 194);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(371, 293);
+            this.groupBox1.Size = new System.Drawing.Size(371, 244);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Calibración - Mapeo de Valores";
+            this.groupBox1.Text = "Calibración - Mapeo de Valores ";
             // 
             // btnResetECGValues
             // 
             this.btnResetECGValues.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetECGValues.Location = new System.Drawing.Point(86, 252);
+            this.btnResetECGValues.Location = new System.Drawing.Point(86, 195);
             this.btnResetECGValues.Name = "btnResetECGValues";
             this.btnResetECGValues.Size = new System.Drawing.Size(207, 35);
             this.btnResetECGValues.TabIndex = 7;
@@ -122,7 +121,7 @@
             // 
             this.nudValorYMax.DecimalPlaces = 3;
             this.nudValorYMax.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudValorYMax.Location = new System.Drawing.Point(224, 114);
+            this.nudValorYMax.Location = new System.Drawing.Point(224, 108);
             this.nudValorYMax.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -169,7 +168,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 93);
+            this.label2.Location = new System.Drawing.Point(12, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(115, 18);
             this.label2.TabIndex = 3;
@@ -193,14 +192,14 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 10);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(371, 144);
+            this.groupBox2.Size = new System.Drawing.Size(371, 129);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gráfico";
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(22, 59);
+            this.label5.Location = new System.Drawing.Point(22, 55);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(322, 62);
             this.label5.TabIndex = 10;
@@ -246,7 +245,7 @@
             // 
             this.lblSpan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblSpan.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSpan.Location = new System.Drawing.Point(193, 170);
+            this.lblSpan.Location = new System.Drawing.Point(193, 159);
             this.lblSpan.Name = "lblSpan";
             this.lblSpan.Size = new System.Drawing.Size(161, 20);
             this.lblSpan.TabIndex = 8;
@@ -256,7 +255,7 @@
             // 
             this.lblZero.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblZero.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblZero.Location = new System.Drawing.Point(11, 170);
+            this.lblZero.Location = new System.Drawing.Point(15, 160);
             this.lblZero.Name = "lblZero";
             this.lblZero.Size = new System.Drawing.Size(161, 20);
             this.lblZero.TabIndex = 9;
@@ -274,49 +273,49 @@
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // numericUpDown1
+            // nudCalibBitsMin
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.nudCalibBitsMin.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudCalibBitsMin.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.numericUpDown1.Location = new System.Drawing.Point(15, 51);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nudCalibBitsMin.Location = new System.Drawing.Point(15, 51);
+            this.nudCalibBitsMin.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(103, 26);
-            this.numericUpDown1.TabIndex = 10;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudCalibBitsMin.Name = "nudCalibBitsMin";
+            this.nudCalibBitsMin.Size = new System.Drawing.Size(103, 26);
+            this.nudCalibBitsMin.TabIndex = 10;
+            this.nudCalibBitsMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // numericUpDown2
+            // nudCalibBitsMax
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Increment = new decimal(new int[] {
+            this.nudCalibBitsMax.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudCalibBitsMax.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.numericUpDown2.Location = new System.Drawing.Point(15, 114);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.nudCalibBitsMax.Location = new System.Drawing.Point(15, 108);
+            this.nudCalibBitsMax.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.nudCalibBitsMax.Minimum = new decimal(new int[] {
             10000000,
             0,
             0,
             -2147483648});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(103, 26);
-            this.numericUpDown2.TabIndex = 11;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.nudCalibBitsMax.Name = "nudCalibBitsMax";
+            this.nudCalibBitsMax.Size = new System.Drawing.Size(103, 26);
+            this.nudCalibBitsMax.TabIndex = 11;
+            this.nudCalibBitsMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudCalibBitsMax.Value = new decimal(new int[] {
             1023,
             0,
             0,
@@ -336,7 +335,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(221, 93);
+            this.label7.Location = new System.Drawing.Point(221, 87);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(133, 18);
             this.label7.TabIndex = 13;
@@ -356,7 +355,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(127, 118);
+            this.label9.Location = new System.Drawing.Point(127, 111);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 19);
             this.label9.TabIndex = 15;
@@ -366,20 +365,32 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(8, 213);
+            this.label3.Location = new System.Drawing.Point(34, 447);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 18);
-            this.label3.TabIndex = 17;
+            this.label3.TabIndex = 19;
             this.label3.Text = "Unidad";
             // 
             // txtUnidad
             // 
             this.txtUnidad.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUnidad.Location = new System.Drawing.Point(86, 210);
+            this.txtUnidad.Location = new System.Drawing.Point(112, 444);
             this.txtUnidad.Name = "txtUnidad";
             this.txtUnidad.Size = new System.Drawing.Size(86, 26);
-            this.txtUnidad.TabIndex = 16;
+            this.txtUnidad.TabIndex = 18;
             this.txtUnidad.Text = "mV";
+            // 
+            // chkMuestrasADC
+            // 
+            this.chkMuestrasADC.AutoSize = true;
+            this.chkMuestrasADC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkMuestrasADC.Location = new System.Drawing.Point(12, 156);
+            this.chkMuestrasADC.Name = "chkMuestrasADC";
+            this.chkMuestrasADC.Size = new System.Drawing.Size(256, 22);
+            this.chkMuestrasADC.TabIndex = 16;
+            this.chkMuestrasADC.Text = "Usar valores en crudo de ADC";
+            this.chkMuestrasADC.UseVisualStyleBackColor = true;
+            this.chkMuestrasADC.CheckedChanged += new System.EventHandler(this.chkMuestrasADC_CheckedChanged);
             // 
             // FrmAjustes
             // 
@@ -389,6 +400,9 @@
             this.CancelButton = this.btnCancelar;
             this.ClientSize = new System.Drawing.Size(397, 546);
             this.ControlBox = false;
+            this.Controls.Add(this.chkMuestrasADC);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtUnidad);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -398,7 +412,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmAjustes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Ajustes";
+            this.Text = "Ajustes para captura";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudValorYMax)).EndInit();
@@ -406,9 +420,10 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMuestrasPorGrafico)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCalibBitsMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCalibBitsMax)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -429,13 +444,14 @@
         private System.Windows.Forms.Label lblZero;
         private System.Windows.Forms.Label lblSpan;
         private System.Windows.Forms.Button btnAceptar;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nudCalibBitsMax;
+        private System.Windows.Forms.NumericUpDown nudCalibBitsMin;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtUnidad;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chkMuestrasADC;
     }
 }
