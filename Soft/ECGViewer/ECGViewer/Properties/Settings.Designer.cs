@@ -106,5 +106,41 @@ namespace ECGViewer.Properties {
                 this["MuestrasPorGrafico"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CalibValorBitsMin {
+            get {
+                return ((int)(this["CalibValorBitsMin"]));
+            }
+            set {
+                this["CalibValorBitsMin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1023")]
+        public int CalibValorBitsMax {
+            get {
+                return ((int)(this["CalibValorBitsMax"]));
+            }
+            set {
+                this["CalibValorBitsMax"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsarValoresCrudosADC {
+            get {
+                return ((bool)(this["UsarValoresCrudosADC"]));
+            }
+            set {
+                this["UsarValoresCrudosADC"] = value;
+            }
+        }
     }
 }

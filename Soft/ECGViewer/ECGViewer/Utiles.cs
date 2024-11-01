@@ -156,11 +156,26 @@ namespace ECGViewer
         }
 
 
-        public static (double zero, double span) GetSpan(int x0, int x1, double y0, double y1)
+        public static double MapValues(int valor, int x0, int x, double y0, double y)
         {
-            double m = (y0 - y1) / (x0 - x1);
-            return (y0, m);
+            double m = (y - y0) / (x - x0);
+            return m*(valor-x0) + y0;
         }
 
+
+        public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
+        {
+            List<Muestra> derivada = new List<Muestra>();
+
+            for (int i = 0; i < muestras.Count - 1; i++)
+            {
+                Muestra derivadaAprox = new Muestra();
+                derivadaAprox.Canal[nroCanal] = (muestras[i + 1].Canal[nroCanal] - muestras[i].Canal[nroCanal]) / h;
+                derivadaAprox.Tiempo = muestras[i].Tiempo;
+                derivada.Add(derivadaAprox);
+            }
+
+            return derivada;
+        }
     }
 }
