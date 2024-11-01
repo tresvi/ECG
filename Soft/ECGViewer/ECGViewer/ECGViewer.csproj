@@ -256,6 +256,12 @@
     <Compile Include="Formularios\FrmAjustes.Designer.cs">
       <DependentUpon>FrmAjustes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmConfiguracionEjes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmConfiguracionEjes.Designer.cs">
+      <DependentUpon>FrmConfiguracionEjes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmEditorTextoMarcadores.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +323,9 @@
     <EmbeddedResource Include="Formularios\FrmAjustes.resx">
       <DependentUpon>FrmAjustes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmConfiguracionEjes.resx">
+      <DependentUpon>FrmConfiguracionEjes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmEditorTextoMarcadores.resx">
       <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
     </EmbeddedResource>
@@ -377,6 +386,7 @@
     <None Include="Recursos\accept_48x48.png" />
     <None Include="Recursos\BandPass.png" />
     <None Include="Recursos\BandPass64X64.png" />
+    <None Include="Recursos\axis.png" />
     <Content Include="Recursos\boton-de-play.png" />
     <None Include="Recursos\cancel.png" />
     <None Include="Recursos\cancel_48x48.png" />

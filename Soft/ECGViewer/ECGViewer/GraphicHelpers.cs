@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using ECGViewer.Properties;
 
 namespace ECGViewer
 {
@@ -175,6 +176,7 @@ namespace ECGViewer
                 Muestra muestra = senal[i];
                 serie.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
+
             _stopwatch.Restart();
             chart.ResumeLayout();
             chart.Invalidate();
