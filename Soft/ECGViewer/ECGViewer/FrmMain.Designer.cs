@@ -75,6 +75,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.timerGraficar = new System.Windows.Forms.Timer(this.components);
             this.lblRegla = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -94,7 +95,7 @@
             chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.AxisY.Maximum = 250D;
             chartArea1.AxisY.Title = "mV";
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.Name = "ChartArea1";
             this.chartSenal.ChartAreas.Add(chartArea1);
             this.chartSenal.Location = new System.Drawing.Point(0, 75);
@@ -589,11 +590,23 @@
             this.lblRegla.Text = "label4";
             this.lblRegla.Visible = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(1012, 13);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 44);
+            this.label4.TabIndex = 47;
+            this.label4.Text = "X:0.000\r\nY:-0.000";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1230, 682);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lblRegla);
             this.Controls.Add(this.BtnCargarSenal);
             this.Controls.Add(this.button1);
@@ -664,6 +677,7 @@
         private System.Windows.Forms.Timer timerGraficar;
         private System.Windows.Forms.ToolStripButton tsbReglaX;
         private System.Windows.Forms.Label lblRegla;
+        private System.Windows.Forms.Label label4;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using ECGViewer.Controles;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
@@ -67,18 +68,6 @@ namespace ECGViewer
         {
             if (e.Button == MouseButtons.Right)
                 GraphicHelpers.InsertarMarcador(chartSenal, e.X, e.Y);
-            
-            if (e.Button == MouseButtons.Left)
-            {
-                HitTestResult result = chartSenal.HitTest(e.X, e.Y);
-
-                if (result.ChartElementType == ChartElementType.DataPoint)
-                {
-                    Series serie = chartSenal.Series["Muestras"]; 
-                    DataPoint clickedPoint = serie.Points[result.PointIndex];
-                    MessageBox.Show($"¡Hiciste clic en el punto (X={clickedPoint.XValue}, Y={clickedPoint.YValues[0]})!");
-                }
-            }
         }
 
 
@@ -107,8 +96,20 @@ namespace ECGViewer
 
                 lblRegla.Text = $"X: {diferenciaX.ToString("0.000")} Seg. \nY: {diferenciaY.ToString("0.000")} mV";
             }
+            else
+            {
+                if (e.Y % 2 != 0) return;   //Para reducir cantidad de procesamiento
+                //Try debido a un bug que hace que explote esta funcionalidad solo durante la carga del grafico
+                try
+                {
+                    double xValue = chartSenal.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                    double yValue = chartSenal.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
+                    label4.Text = $"X:{xValue.ToString(" 0.000")}\nY:{yValue.ToString(" 0.000")}";
+                }
+                catch{ }
+            }
         }
-    
+
 
         private void chartSenal_MouseUp(object sender, MouseEventArgs e)
         {
@@ -226,6 +227,7 @@ namespace ECGViewer
                 }
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
+                //_senalECG = Utiles.CalcularDerivada(_senalECG, 0, 0.001);
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
 
                 this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";

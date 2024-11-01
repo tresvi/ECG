@@ -162,5 +162,20 @@ namespace ECGViewer
             return (y0, m);
         }
 
+
+        public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
+        {
+            List<Muestra> derivada = new List<Muestra>();
+
+            for (int i = 0; i < muestras.Count - 1; i++)
+            {
+                Muestra derivadaAprox = new Muestra();
+                derivadaAprox.Canal[nroCanal] = (muestras[i + 1].Canal[nroCanal] - muestras[i].Canal[nroCanal]) / h;
+                derivadaAprox.Tiempo = muestras[i].Tiempo;
+                derivada.Add(derivadaAprox);
+            }
+
+            return derivada;
+        }
     }
 }
