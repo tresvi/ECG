@@ -222,7 +222,6 @@ namespace ECGViewer
                 }
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-                //_senalECG = Utiles.CalcularDerivada(_senalECG, 0, 0.001);
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
 
                 this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
@@ -256,6 +255,7 @@ namespace ECGViewer
             btnIniciarLectura.Enabled = false;
             btnFinalizarLectura.Enabled = true;
             tsbAbrir.Enabled = false;
+            tsbTijera.Enabled = false;
 
             try
             {
@@ -317,6 +317,7 @@ namespace ECGViewer
             btnIniciarLectura.Enabled = true;
             btnFinalizarLectura.Enabled = false;
             tsbAbrir.Enabled = true;
+            tsbTijera.Enabled = true;
             cmbPuertos.Enabled = true;
             cmbBaudRate.Enabled = true;
             timerPuerto.Enabled = false;
@@ -409,14 +410,14 @@ namespace ECGViewer
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
 
-                    double cuenta = double.Parse(data);
+                    int cuenta = int.Parse(data);
                     if (cuenta > _cuentaMax) _cuentaMax = cuenta;
                     if (cuenta < _cuentaMin) _cuentaMin = cuenta;
 
                     if (config.UsarValoresCrudosADC)
                         muestra.Canal[0] = cuenta;
                     else
-                        muestra.Canal[0] = (cuenta + (double)config.Zero) * (double)config.Span;
+                        muestra.Canal[0] = Utiles.MapValues(cuenta, config.CalibracionBitsMin, config.CalibracionBitsMax, (double) config.CalibracionValorYMin, (double) config.CalibracionValorYMax);
 
                     _senalECG.Add(muestra);
 
@@ -522,10 +523,12 @@ namespace ECGViewer
             }
         }
 
+        FrmAjustes _frmAjustes;
         private void tsbCalibracion_Click(object sender, EventArgs e)
         {
-            FrmAjustes frmCalibracion = new FrmAjustes();
-            frmCalibracion.Show(this);
+            if (_frmAjustes != null && !_frmAjustes.IsDisposed) return;
+            _frmAjustes = new FrmAjustes();
+            _frmAjustes.Show(this);
         }
 
 

@@ -14,13 +14,11 @@ namespace ECGViewer.Formularios
             InitializeComponent();
 
             Configuracion config = new Configuracion();
-            lblZero.Text = $"ZERO: {config.Zero.ToString(CALIB_NUMBER_FORMAT)}";
-            lblSpan.Text = $"SPAN: {config.Span.ToString(CALIB_NUMBER_FORMAT)}";
             nudMuestrasPorGrafico.Value = config.MuestrasPorGrafico;
             nudCalibBitsMin.Value = config.CalibracionBitsMin;
             nudCalibBitsMax.Value = config.CalibracionBitsMax;
-            nudValorYMin.Value = config.CalibracionValorYMin;
-            nudValorYMax.Value = config.CalibracionValorYMax;
+            nudCalibValorYMin.Value = config.CalibracionValorYMin;
+            nudCalibValorYMax.Value = config.CalibracionValorYMax;
             txtUnidad.Text = config.Unidad;
             chkMuestrasADC.Checked = config.UsarValoresCrudosADC;
         }
@@ -29,21 +27,34 @@ namespace ECGViewer.Formularios
         {
             Settings.Default.CalibValorBitsMin = (int) nudCalibBitsMin.Value;
             Settings.Default.CalibValorBitsMax = (int) nudCalibBitsMax.Value;
-            Settings.Default.CalibValorYMin = nudValorYMin.Value;
-            Settings.Default.CalibValorYMax = nudValorYMax.Value;
+            Settings.Default.CalibValorYMin = nudCalibValorYMin.Value;
+            Settings.Default.CalibValorYMax = nudCalibValorYMax.Value;
             Settings.Default.Unidad = txtUnidad.Text;
             Settings.Default.MuestrasPorGrafico = (int) nudMuestrasPorGrafico.Value;
             Settings.Default.UsarValoresCrudosADC = chkMuestrasADC.Checked;
             Settings.Default.Save();
+            this.Close();
         }
+
+
+        private void chkMuestrasADC_CheckedChanged(object sender, EventArgs e)
+        {
+            nudCalibBitsMin.Enabled = !chkMuestrasADC.Checked;
+            nudCalibBitsMax.Enabled = !chkMuestrasADC.Checked;
+            nudCalibValorYMin.Enabled = !chkMuestrasADC.Checked;
+            nudCalibValorYMax.Enabled = !chkMuestrasADC.Checked;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
 
         private void nudValorYMin_ValueChanged(object sender, EventArgs e)
         {
-            Configuracion config = new Configuracion();
-            decimal zero = nudValorYMin.Value;
-            decimal span = (nudValorYMax.Value - nudValorYMin.Value) / (1023 - 0); 
-            lblZero.Text = $"ZERO: {zero.ToString(CALIB_NUMBER_FORMAT)}";
-            lblSpan.Text = $"SPAN: {span.ToString(CALIB_NUMBER_FORMAT)}";
+            decimal zero = nudCalibValorYMin.Value;
+            decimal span = (nudCalibValorYMax.Value - nudCalibValorYMin.Value) / (nudCalibBitsMax.Value - nudCalibBitsMin.Value);
         }
 
         private void nudValorYMax_ValueChanged(object sender, EventArgs e)
@@ -51,21 +62,22 @@ namespace ECGViewer.Formularios
             nudValorYMin_ValueChanged(sender, e);
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void nudCalibBitsMin_ValueChanged(object sender, EventArgs e)
         {
-            BtnAplicar_Click(sender, e);
-            this.Close();
+            nudValorYMin_ValueChanged(sender, e);
         }
 
-        private void chkMuestrasADC_CheckedChanged(object sender, EventArgs e)
+        private void nudCalibBitsMax_ValueChanged(object sender, EventArgs e)
         {
-            nudCalibBitsMin.Enabled = !chkMuestrasADC.Checked;
-            nudCalibBitsMax.Enabled = !chkMuestrasADC.Checked;
-            nudValorYMin.Enabled = !chkMuestrasADC.Checked;
-            nudValorYMax.Enabled = !chkMuestrasADC.Checked;
-            lblZero.Text = "Zero: 0";
-            lblSpan.Text = "Span: 1";
+            nudValorYMin_ValueChanged(sender, e);
         }
 
+        private void btnResetECGValues_Click(object sender, EventArgs e)
+        {
+            nudCalibBitsMin.Value = 51;
+            nudCalibBitsMax.Value = 969;
+            nudCalibValorYMin.Value = -3;
+            nudCalibValorYMax.Value = 3;
+        }
     }
 }

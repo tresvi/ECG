@@ -148,7 +148,7 @@
             // 
             this.BtnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BtnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnCancelar.Location = new System.Drawing.Point(185, 129);
+            this.BtnCancelar.Location = new System.Drawing.Point(185, 132);
             this.BtnCancelar.Name = "BtnCancelar";
             this.BtnCancelar.Size = new System.Drawing.Size(103, 35);
             this.BtnCancelar.TabIndex = 3;
@@ -160,7 +160,7 @@
             // 
             this.BtnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BtnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnAplicar.Location = new System.Drawing.Point(47, 129);
+            this.BtnAplicar.Location = new System.Drawing.Point(47, 132);
             this.BtnAplicar.Name = "BtnAplicar";
             this.BtnAplicar.Size = new System.Drawing.Size(103, 35);
             this.BtnAplicar.TabIndex = 2;
