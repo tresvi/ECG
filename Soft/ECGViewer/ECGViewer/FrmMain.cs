@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using ECGViewer.Controles;
 using ECGViewer.Formularios;
 using ECGViewer.Modelos;
 using ECGViewer.Properties;
@@ -36,7 +35,7 @@ namespace ECGViewer
         private decimal _tMuestreo;
         private int _fMuestreo;
         private string _archivoActual;
-
+        
 
         public FrmMain()
         {
@@ -122,7 +121,8 @@ namespace ECGViewer
         private void BtnCargarSenal_Click(object sender, EventArgs e)
         {
             string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
-            _senalECG = Utiles.LoadCsvData(filePath);
+            string unidad;
+            _senalECG = Utiles.LoadCsvData(filePath, out unidad);
 
             for (int i = 0; i < _senalECG.Count; i++)
             {
@@ -211,7 +211,8 @@ namespace ECGViewer
             {
                 if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-                _senalECG = Utiles.LoadCsvData(openFileDialog.FileName);
+                string unidad;
+                _senalECG = Utiles.LoadCsvData(openFileDialog.FileName, out unidad);
                 _archivoActual = openFileDialog.FileName;
 
                 if (_senalECG.Count <= 1)
@@ -223,6 +224,7 @@ namespace ECGViewer
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+                chartSenal.ChartAreas[0].AxisY.Title = unidad;
 
                 this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
             }
@@ -356,6 +358,7 @@ namespace ECGViewer
             {
                 using (StreamWriter writer = new StreamWriter(rutaArchivo))
                 {
+                    writer.WriteLine($"tiempo, {chartSenal.ChartAreas[0].AxisY.Title}");
                     foreach (Muestra muestra in _senalECG)
                     {
                         string linea = string.Format(CultureInfo.InvariantCulture, "{0},{1}", muestra.Tiempo, muestra.Canal[0]);
@@ -523,8 +526,9 @@ namespace ECGViewer
             }
         }
 
+
         FrmAjustes _frmAjustes;
-        private void tsbCalibracion_Click(object sender, EventArgs e)
+        private void tsbAjustesCaptura_Click(object sender, EventArgs e)
         {
             if (_frmAjustes != null && !_frmAjustes.IsDisposed) return;
             _frmAjustes = new FrmAjustes();
@@ -574,7 +578,7 @@ namespace ECGViewer
                 return;
             }
 
-            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG);
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG, chartSenal.ChartAreas[0].AxisY.Title);
             frmImpresion.ShowDialog();
         }
 
@@ -629,6 +633,7 @@ namespace ECGViewer
             GraphicHelpers.ModoECG(chartSenal, tsbGridECG.Checked);
         }
 
+
         private void tsbImportarDesdeXLSX_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -675,7 +680,14 @@ namespace ECGViewer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            chartSenal.ChartAreas[0].CursorY.LineWidth = 0;
+        }
+
+        private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
+        {
+            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(chartSenal.ChartAreas[0].AxisY.Title);
+            if (frmConfiguracionEjes.ShowDialog() == DialogResult.Cancel) return;
+
+            chartSenal.ChartAreas[0].AxisY.Title = frmConfiguracionEjes.Unidad;
         }
     }
 }

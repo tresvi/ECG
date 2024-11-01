@@ -29,9 +29,10 @@ namespace ECGViewer
         }
 
 
-        public static List<Muestra> LoadCsvData(string filePath)
+        public static List<Muestra> LoadCsvData(string filePath, out string unidad)
         {
             List<Muestra> dataList = new List<Muestra>();
+            unidad = "";
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("El archivo CSV no se encontró.", filePath);
@@ -50,6 +51,9 @@ namespace ECGViewer
                 }
                 else
                 {
+                    parts = line.Split(',');
+                    if (parts.Length < 2) continue;
+                    if (parts[0].ToUpper() == "TIEMPO") unidad = parts[1];
                     //TODO: Decidir si se van a tolerar filas mal formadas en los archivos
                     //throw new Exception($"No se pudieron convertir los valores: {line}");
                 }
