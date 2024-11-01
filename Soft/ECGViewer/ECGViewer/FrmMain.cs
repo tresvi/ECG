@@ -68,6 +68,13 @@ namespace ECGViewer
         {
             if (e.Button == MouseButtons.Right)
                 GraphicHelpers.InsertarMarcador(chartSenal, e.X, e.Y);
+            if (e.Button == MouseButtons.Left && tsbReglaX.Checked)
+            {
+                var chartArea = chartSenal.ChartAreas[0];
+                double xValue = chartArea.AxisX.PixelPositionToValue(e.X);
+                double yValue = chartArea.AxisY.PixelPositionToValue(e.Y);
+                lblPuntoCursor.Text = $"X:{xValue.ToString(" 0.000")}\nY:{yValue.ToString(" 0.000")}";
+            }
         }
 
 
@@ -95,18 +102,6 @@ namespace ECGViewer
                 double diferenciaY = Math.Abs(finSeleccionY - inicioSeleccionY);
 
                 lblRegla.Text = $"X: {diferenciaX.ToString("0.000")} Seg. \nY: {diferenciaY.ToString("0.000")} mV";
-            }
-            else
-            {
-                if (e.Y % 2 != 0) return;   //Para reducir cantidad de procesamiento
-                //Try debido a un bug que hace que explote esta funcionalidad solo durante la carga del grafico
-                try
-                {
-                    double xValue = chartSenal.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
-                    double yValue = chartSenal.ChartAreas[0].AxisY.PixelPositionToValue(e.Y);
-                    label4.Text = $"X:{xValue.ToString(" 0.000")}\nY:{yValue.ToString(" 0.000")}";
-                }
-                catch{ }
             }
         }
 
@@ -530,7 +525,7 @@ namespace ECGViewer
         private void tsbCalibracion_Click(object sender, EventArgs e)
         {
             FrmAjustes frmCalibracion = new FrmAjustes();
-            frmCalibracion.ShowDialog();
+            frmCalibracion.Show(this);
         }
 
 
@@ -669,13 +664,15 @@ namespace ECGViewer
         {
             chartSenal.ChartAreas[0].AxisX.ScaleView.Zoomable = !tsbReglaX.Checked;
             chartSenal.ChartAreas[0].AxisY.ScaleView.Zoomable = !tsbReglaX.Checked;
-            //chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
-            //chart1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-
+            
             chartSenal.ChartAreas[0].CursorY.IsUserEnabled = tsbReglaX.Checked;
             chartSenal.ChartAreas[0].CursorY.IsUserSelectionEnabled = tsbReglaX.Checked;
+            chartSenal.ChartAreas[0].CursorY.LineWidth = tsbReglaX.Checked ? 2 : 0;
         }
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chartSenal.ChartAreas[0].CursorY.LineWidth = 0;
+        }
     }
 }

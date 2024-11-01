@@ -75,7 +75,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.timerGraficar = new System.Windows.Forms.Timer(this.components);
             this.lblRegla = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblPuntoCursor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenal)).BeginInit();
             this.gbSenal.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -570,6 +570,7 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // timerGraficar
             // 
@@ -590,23 +591,23 @@
             this.lblRegla.Text = "label4";
             this.lblRegla.Visible = false;
             // 
-            // label4
+            // lblPuntoCursor
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.label4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(1012, 13);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 44);
-            this.label4.TabIndex = 47;
-            this.label4.Text = "X:0.000\r\nY:-0.000";
+            this.lblPuntoCursor.AutoSize = true;
+            this.lblPuntoCursor.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblPuntoCursor.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPuntoCursor.Location = new System.Drawing.Point(1012, 13);
+            this.lblPuntoCursor.Name = "lblPuntoCursor";
+            this.lblPuntoCursor.Size = new System.Drawing.Size(84, 44);
+            this.lblPuntoCursor.TabIndex = 47;
+            this.lblPuntoCursor.Text = "X:0.000\r\nY:-0.000";
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1230, 682);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblPuntoCursor);
             this.Controls.Add(this.lblRegla);
             this.Controls.Add(this.BtnCargarSenal);
             this.Controls.Add(this.button1);
@@ -677,7 +678,7 @@
         private System.Windows.Forms.Timer timerGraficar;
         private System.Windows.Forms.ToolStripButton tsbReglaX;
         private System.Windows.Forms.Label lblRegla;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblPuntoCursor;
     }
 }
 

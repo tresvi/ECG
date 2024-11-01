@@ -24,31 +24,39 @@ namespace ECGViewer
 
         internal static void InicializarGrafico(Chart chart)
         {
+            ChartArea chartArea = chart.ChartAreas[0];
+
             // Configura el gráfico
-            chart.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
-            chart.ChartAreas[0].AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
+            chartArea.AxisX.ScrollBar.Size = 15;                  // Tamaño de la barra de desplazamiento
+            chartArea.AxisX.ScrollBar.IsPositionedInside = true;  // Mostrar barra de desplazamiento
 
             // Define el tamaño de la vista y habilita el desplazamiento
-            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
-            //chart.ChartAreas[0].AxisX.ScaleView.Size = 50;                 // Cantidad de puntos visibles inicialmente
+            chartArea.AxisX.ScaleView.Zoomable = true;             // Habilitar zoom
+            //chartArea.AxisX.ScaleView.Size = 50;                 // Cantidad de puntos visibles inicialmente
 
             // Habilitar el desplazamiento
-            chart.ChartAreas[0].AxisX.ScaleView.MinSize = 0.5;                 // Mínima vista permitida (1 punto)
-            chart.ChartAreas[0].AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
+            chartArea.AxisX.ScaleView.MinSize = 0.5;                 // Mínima vista permitida (1 punto)
+            chartArea.AxisX.ScaleView.Position = 0;                // Posición inicial de la vista
 
             // Configura el comportamiento del scroll
-            chart.ChartAreas[0].AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
-            chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
+            chartArea.AxisX.ScaleView.SmallScrollSize = 5;         // Tamaño del desplazamiento pequeño (5 puntos)
+            chartArea.AxisX.ScaleView.SmallScrollMinSize = 1;      // Tamaño mínimo de desplazamiento
 
             // Opcional: Configurar los intervalos del eje X para hacer la navegación más clara
-            chart.ChartAreas[0].AxisX.Interval = 0.5;
-            chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+            chartArea.AxisX.Interval = 0.5;
+            chartArea.AxisX.LabelStyle.Format = "0.00";
 
             //Autoescalas
-            chart.ChartAreas[0].AxisX.Minimum = 0;
-            chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
-            chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
-            chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            chartArea.AxisX.Minimum = 0;
+            chartArea.AxisX.Maximum = Double.NaN;
+            chartArea.AxisY.Minimum = Double.NaN;
+            chartArea.AxisY.Maximum = Double.NaN;
+
+            // Configurar las líneas de cursor
+            chartArea.CursorX.LineColor = System.Drawing.Color.Red;
+            chartArea.CursorX.LineWidth = 2; // Cambia el grosor aquí
+            chartArea.CursorY.LineColor = System.Drawing.Color.Red;
+            chartArea.CursorY.LineWidth = 2; // Cambia el grosor aquí
 
             chart.PostPaint += chartSenal_PostPaint;
 
