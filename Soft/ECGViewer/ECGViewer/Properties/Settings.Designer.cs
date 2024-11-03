@@ -146,12 +146,12 @@ namespace ECGViewer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int BitsParaEscalado {
+        public int BitsParaEscaladoIndex {
             get {
-                return ((int)(this["BitsParaEscalado"]));
+                return ((int)(this["BitsParaEscaladoIndex"]));
             }
             set {
-                this["BitsParaEscalado"] = value;
+                this["BitsParaEscaladoIndex"] = value;
             }
         }
     }

@@ -32,7 +32,7 @@
     <Setting Name="UsarValoresCrudosADC" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="BitsParaEscalado" Type="System.Int32" Scope="User">
+    <Setting Name="BitsParaEscaladoIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>

@@ -2,15 +2,10 @@
 using ECGViewer.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace ECGViewer.Formularios
 {
@@ -28,7 +23,7 @@ namespace ECGViewer.Formularios
             _indiceMaximo = indiceMaximo;
             if (cmbSaltoLinea.SelectedIndex == -1) cmbSaltoLinea.SelectedIndex = 1;
             
-            int bitsSeleccionadosIndex = Settings.Default.BitsParaEscalado;
+            int bitsSeleccionadosIndex = ECGViewer.Properties.Settings.Default.BitsParaEscaladoIndex;
             if (bitsSeleccionadosIndex < cmbBitsEscalado.Items.Count)
                 cmbBitsEscalado.SelectedIndex = bitsSeleccionadosIndex;
             else
@@ -37,7 +32,7 @@ namespace ECGViewer.Formularios
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            if (_senalECG == null)
+            if (_senalECG == null || _senalECG.Count <1)
             {
                 MessageBox.Show("Debe abrir un archivo para poder exportar una tabla");
                 return;
@@ -112,11 +107,11 @@ namespace ECGViewer.Formularios
             long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
-            double x0 = 0;
-            double x = Math.Pow(2, 8) - 1;
-            (double y0, double y) = Utiles.GetMinimoMaximo(in _senalECG);
+            double y0 = 0;
+            double y = Math.Pow(2, 8) - 1;
+            (double x0, double x) = Utiles.GetMinimoMaximo(in _senalECG);
             double zero = Utiles.GetZero(x0, x, y0, y);
-            double span = Utiles.GetZero(x0, x, y0, y);
+            double span = Utiles.GetSpan(x0, x, y0, y);
 
             if (longTabla % 2 == 1) 
                 MessageBox.Show(this, "Atención: La cantidad de valores a exportar en la tabla es impar!"
@@ -124,7 +119,7 @@ namespace ECGViewer.Formularios
 
             sw.Write("TABLA:\t.DB    ");
 
-            for (int i = 0; i < longTabla; i++)
+            for (int i = _indiceMinimo; i < longTabla; i++)
             {
                 if (!primerValor)   //Evito poner la primer coma
                 {
@@ -143,9 +138,9 @@ namespace ECGViewer.Formularios
 
         private void EscribirTablaC(StreamWriter sw, bool insertarSaltoLinea, int valoresParaSalto)
         {
-            Boolean primerValor = true;
+            bool primerValor = true;
             long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
-            int valorMuestra = 0;
+            UInt32 valorMuestra = 0;
 
             int bitsEscalado = GetBitsEscalado();
             double y0 = 0;
@@ -156,7 +151,7 @@ namespace ECGViewer.Formularios
 
             sw.Write($"const {GetDataType()} tabla[" + longTabla + "] = {");
 
-            for (int i = 0; i < longTabla; i++)
+            for (int i = _indiceMinimo; i < longTabla; i++)
             {
                 if (!primerValor)   //Evita poner la primer coma
                 {
@@ -167,7 +162,7 @@ namespace ECGViewer.Formularios
                     sw.Write(" ,");
                 }
                 primerValor = false;
-                valorMuestra = (int) ((_senalECG[i].Canal[0] * span) + zero);
+                valorMuestra = (UInt32) ((_senalECG[i].Canal[0] * span) + zero);
                 sw.Write(valorMuestra.ToString());
             }
             sw.Write("\r\n};");
