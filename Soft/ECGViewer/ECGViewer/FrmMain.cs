@@ -23,10 +23,6 @@ namespace ECGViewer
         //private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
-        //public const double SPAN = 0.000671;
-        //public const double ZERO = -248;
-        public const double SPAN = 1;
-        public const double ZERO = 0;
         private const string DESCRIPCION_APLICACION = "ECG Viewer 1 Canal";
 
         private bool _lecturaEnCurso = false;
@@ -420,7 +416,7 @@ namespace ECGViewer
                     if (config.UsarValoresCrudosADC)
                         muestra.Canal[0] = cuenta;
                     else
-                        muestra.Canal[0] = Utiles.MapValues(cuenta, config.CalibracionBitsMin, config.CalibracionBitsMax, (double) config.CalibracionValorYMin, (double) config.CalibracionValorYMax);
+                        muestra.Canal[0] = cuenta * config.Span + config.Zero; //Utiles.MapValues(cuenta, config.CalibracionBitsMin, config.CalibracionBitsMax, (double) config.CalibracionValorYMin, (double) config.CalibracionValorYMax);
 
                     _senalECG.Add(muestra);
 
@@ -527,11 +523,11 @@ namespace ECGViewer
         }
 
 
-        FrmAjustes _frmAjustes;
+        FrmAjustesDeCaptura _frmAjustes;
         private void tsbAjustesCaptura_Click(object sender, EventArgs e)
         {
             if (_frmAjustes != null && !_frmAjustes.IsDisposed) return;
-            _frmAjustes = new FrmAjustes();
+            _frmAjustes = new FrmAjustesDeCaptura();
             _frmAjustes.Show(this);
         }
 

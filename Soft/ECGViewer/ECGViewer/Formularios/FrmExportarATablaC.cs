@@ -1,4 +1,5 @@
 ﻿using ECGViewer.Modelos;
+using ECGViewer.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,12 @@ namespace ECGViewer.Formularios
             _indiceMinimo = indiceMinimo;
             _indiceMaximo = indiceMaximo;
             if (cmbSaltoLinea.SelectedIndex == -1) cmbSaltoLinea.SelectedIndex = 1;
+            
+            int bitsSeleccionadosIndex = Settings.Default.BitsParaEscalado;
+            if (bitsSeleccionadosIndex < cmbBitsEscalado.Items.Count)
+                cmbBitsEscalado.SelectedIndex = bitsSeleccionadosIndex;
+            else
+                cmbBitsEscalado.SelectedIndex = -1;
         }
 
         private void btnExportar_Click(object sender, EventArgs e)
@@ -33,6 +40,12 @@ namespace ECGViewer.Formularios
             if (_senalECG == null)
             {
                 MessageBox.Show("Debe abrir un archivo para poder exportar una tabla");
+                return;
+            }
+
+            if (cmbBitsEscalado.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe seleccionar La cantidad de Bits a escalar");
                 return;
             }
 
@@ -66,15 +79,16 @@ namespace ECGViewer.Formularios
                 int valoresParaSalto = cmbSaltoLinea.SelectedIndex * 10;
 
                 if (rbEstiloC.Checked)
+                {
                     EscribirTablaC(sw, insertarSaltoLinea, valoresParaSalto);
+                    MessageBox.Show($"El archivo fué creado satisfactoriamente con {longTabla} valores reescalados {cmbBitsEscalado.Text} bits");
+                }
                 else if (rbEstiloAssembler.Checked)
                 {
-                    MessageBox.Show("Los valores serán reescalados de 10 a 8 bits");
+                    MessageBox.Show("Las exportaciones a assembler solo se reescalan a 8 bits");
                     EscribirTablaAssembler(sw, insertarSaltoLinea, valoresParaSalto);
+                    MessageBox.Show($"El archivo fué creado satisfactoriamente con {longTabla} valores reescalados 8 bits");
                 }
-                    
-
-                MessageBox.Show("El archivo fué creado satisfactoriamente con " + longTabla + " valores");
             }
             catch (Exception ex)
             {
@@ -98,6 +112,12 @@ namespace ECGViewer.Formularios
             long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
+            double x0 = 0;
+            double x = Math.Pow(2, 8) - 1;
+            (double y0, double y) = Utiles.GetMinimoMaximo(in _senalECG);
+            double zero = Utiles.GetZero(x0, x, y0, y);
+            double span = Utiles.GetZero(x0, x, y0, y);
+
             if (longTabla % 2 == 1) 
                 MessageBox.Show(this, "Atención: La cantidad de valores a exportar en la tabla es impar!"
                     , "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -115,7 +135,7 @@ namespace ECGViewer.Formularios
                         sw.Write(" ,");
                 }
                 primerValor = false;
-                valorMuestra = (int)((_senalECG[i].Canal[0] / FrmMain.SPAN) - FrmMain.ZERO) >> 2;
+                valorMuestra = (int)((_senalECG[i].Canal[0] * span) + zero);
                 sw.Write(valorMuestra.ToString());
             }
         }
@@ -127,7 +147,14 @@ namespace ECGViewer.Formularios
             long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
             int valorMuestra = 0;
 
-            sw.Write("const short tabla[" + longTabla + "] = {");
+            int bitsEscalado = GetBitsEscalado();
+            double y0 = 0;
+            double y = Math.Pow(2, bitsEscalado) - 1;
+            (double x0, double x) = Utiles.GetMinimoMaximo(in _senalECG);
+            double zero = Utiles.GetZero(x0, x, y0, y);
+            double span = Utiles.GetSpan(x0, x, y0, y);
+
+            sw.Write($"const {GetDataType()} tabla[" + longTabla + "] = {");
 
             for (int i = 0; i < longTabla; i++)
             {
@@ -140,7 +167,7 @@ namespace ECGViewer.Formularios
                     sw.Write(" ,");
                 }
                 primerValor = false;
-                valorMuestra = (int) ((_senalECG[i].Canal[0] / FrmMain.SPAN) - FrmMain.ZERO);
+                valorMuestra = (int) ((_senalECG[i].Canal[0] * span) + zero);
                 sw.Write(valorMuestra.ToString());
             }
             sw.Write("\r\n};");
@@ -188,6 +215,22 @@ namespace ECGViewer.Formularios
                 gpbSaltoLinea.Visible = true;
         }
 
+
+        private int GetBitsEscalado()
+        { 
+            string bitText = cmbBitsEscalado.Text;
+            return int.Parse(bitText);
+        }
+
+        private string GetDataType()
+        {
+            int bitsEscalado = GetBitsEscalado();
+            if (bitsEscalado <= 8)
+                return "unsigned char";
+            else if (bitsEscalado <= 16)
+                return "unsigned short";
+            else return "unsigned long";
+        }
 
     }
 }

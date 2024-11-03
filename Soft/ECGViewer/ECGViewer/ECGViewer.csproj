@@ -250,11 +250,11 @@
     <Compile Include="Formularios\FrmAdministrarMarcadores.Designer.cs">
       <DependentUpon>FrmAdministrarMarcadores.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\FrmAjustes.cs">
+    <Compile Include="Formularios\FrmAjustesDeCaptura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmAjustes.Designer.cs">
-      <DependentUpon>FrmAjustes.cs</DependentUpon>
+    <Compile Include="Formularios\FrmAjustesDeCaptura.Designer.cs">
+      <DependentUpon>FrmAjustesDeCaptura.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\FrmConfiguracionEjes.cs">
       <SubType>Form</SubType>
@@ -320,8 +320,8 @@
     <EmbeddedResource Include="Formularios\FrmAdministrarMarcadores.resx">
       <DependentUpon>FrmAdministrarMarcadores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmAjustes.resx">
-      <DependentUpon>FrmAjustes.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmAjustesDeCaptura.resx">
+      <DependentUpon>FrmAjustesDeCaptura.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmConfiguracionEjes.resx">
       <DependentUpon>FrmConfiguracionEjes.cs</DependentUpon>

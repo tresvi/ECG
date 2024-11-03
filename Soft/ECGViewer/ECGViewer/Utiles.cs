@@ -167,6 +167,21 @@ namespace ECGViewer
         }
 
 
+        public static double GetZero(double x0, double x, double y0, double y)
+        {
+            double m = (y - y0) / (x - x0);
+            double zero = -1*(m * x0) + y0;
+            return zero;
+        }
+
+
+        public static double GetSpan(double x0, double x, double y0, double y)
+        {
+            double m = (y - y0) / (x - x0);
+            return  m;
+        }
+
+
         public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
         {
             List<Muestra> derivada = new List<Muestra>();
@@ -180,6 +195,40 @@ namespace ECGViewer
             }
 
             return derivada;
+        }
+
+
+        public static (double minimo, double maximo) GetMinimoMaximo(in List<Muestra> senal)
+        {
+            if (senal.Count == 0) return (0, 0);
+
+            double minimo = senal[0].Canal[0];
+            double maximo = senal[0].Canal[0];
+
+            foreach (Muestra muestra in senal)
+            {
+                if (muestra.Canal[0] > maximo) maximo = muestra.Canal[0];
+                if (muestra.Canal[0] < minimo) minimo = muestra.Canal[0];
+            }
+
+            return (minimo, maximo);
+        }
+
+
+        private static (double zero, double span) GetZeroSpan(ref List<Muestra> senal)
+        {
+            if (senal.Count == 0) return (0, 0);
+
+            double minimo = senal[0].Canal[0];
+            double maximo = senal[0].Canal[0];
+
+            foreach (Muestra muestra in senal)
+            {
+                if (muestra.Canal[0] > maximo) maximo = muestra.Canal[0];
+                if (muestra.Canal[0] < minimo) minimo = muestra.Canal[0];
+            }
+
+            return (minimo, maximo);
         }
     }
 }
