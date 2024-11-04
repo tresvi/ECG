@@ -680,10 +680,8 @@ namespace ECGViewer
 
         private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
         {
-            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(chartSenal.ChartAreas[0].AxisY.Title);
+            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal);
             if (frmConfiguracionEjes.ShowDialog() == DialogResult.Cancel) return;
-
-            chartSenal.ChartAreas[0].AxisY.Title = frmConfiguracionEjes.Unidad;
         }
     }
 }

@@ -41,8 +41,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.gbEscaladoBits = new System.Windows.Forms.GroupBox();
-            this.cmbBitsEscalado = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cmbBitsEscalado = new System.Windows.Forms.ComboBox();
             this.gpbSaltoLinea.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -54,7 +54,7 @@
             // 
             this.gpbSaltoLinea.Controls.Add(this.cmbSaltoLinea);
             this.gpbSaltoLinea.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
-            this.gpbSaltoLinea.Location = new System.Drawing.Point(10, 137);
+            this.gpbSaltoLinea.Location = new System.Drawing.Point(10, 140);
             this.gpbSaltoLinea.Margin = new System.Windows.Forms.Padding(1);
             this.gpbSaltoLinea.Name = "gpbSaltoLinea";
             this.gpbSaltoLinea.Padding = new System.Windows.Forms.Padding(1);
@@ -88,7 +88,7 @@
             // btnExportar
             // 
             this.btnExportar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportar.Location = new System.Drawing.Point(382, 298);
+            this.btnExportar.Location = new System.Drawing.Point(383, 300);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(106, 34);
             this.btnExportar.TabIndex = 20;
@@ -167,13 +167,13 @@
             // 
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(229, 10);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(662, 276);
+            this.groupBox2.Size = new System.Drawing.Size(663, 276);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Esquema/Programa ejemplo";
+            this.groupBox2.Text = "Esquema / Programa ejemplo para Arduino";
             // 
             // textBox1
             // 
@@ -182,7 +182,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(318, 249);
+            this.textBox1.Size = new System.Drawing.Size(314, 249);
             this.textBox1.TabIndex = 25;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
@@ -191,7 +191,7 @@
             this.gbEscaladoBits.Controls.Add(this.label1);
             this.gbEscaladoBits.Controls.Add(this.cmbBitsEscalado);
             this.gbEscaladoBits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
-            this.gbEscaladoBits.Location = new System.Drawing.Point(10, 213);
+            this.gbEscaladoBits.Location = new System.Drawing.Point(10, 216);
             this.gbEscaladoBits.Margin = new System.Windows.Forms.Padding(1);
             this.gbEscaladoBits.Name = "gbEscaladoBits";
             this.gbEscaladoBits.Padding = new System.Windows.Forms.Padding(1);
@@ -199,6 +199,16 @@
             this.gbEscaladoBits.TabIndex = 25;
             this.gbEscaladoBits.TabStop = false;
             this.gbEscaladoBits.Text = "Escalar para:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(141, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 18);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Bits";
             // 
             // cmbBitsEscalado
             // 
@@ -216,16 +226,6 @@
             this.cmbBitsEscalado.Name = "cmbBitsEscalado";
             this.cmbBitsEscalado.Size = new System.Drawing.Size(114, 24);
             this.cmbBitsEscalado.TabIndex = 17;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(141, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 18);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Bits";
             // 
             // FrmExportarATablaC
             // 

@@ -21,7 +21,6 @@ namespace ECGViewer.Modelos
                 return CalibYMax;
             }
         }
-        public string Unidad { get { return Settings.Default.Unidad; } }
         public int MuestrasPorGrafico 
         { 
             get 

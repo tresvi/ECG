@@ -17,9 +17,6 @@
     <Setting Name="CalibValorYMax" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.012</Value>
     </Setting>
-    <Setting Name="Unidad" Type="System.String" Scope="User">
-      <Value Profile="(Default)">V</Value>
-    </Setting>
     <Setting Name="MuestrasPorGrafico" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4000</Value>
     </Setting>
@@ -34,6 +31,9 @@
     </Setting>
     <Setting Name="BitsParaEscaladoIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="AutoEscalaY" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
