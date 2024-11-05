@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace ECGViewer.Formularios
 {
-    public partial class FrmAjustes : Form
+    public partial class FrmAjustesDeCaptura : Form
     {
         private const string CALIB_NUMBER_FORMAT = "0.00000";
 
-        public FrmAjustes()
+        public FrmAjustesDeCaptura()
         {
             InitializeComponent();
 
@@ -19,7 +19,6 @@ namespace ECGViewer.Formularios
             nudCalibBitsMax.Value = config.CalibracionBitsMax;
             nudCalibValorYMin.Value = config.CalibracionValorYMin;
             nudCalibValorYMax.Value = config.CalibracionValorYMax;
-            txtUnidad.Text = config.Unidad;
             chkMuestrasADC.Checked = config.UsarValoresCrudosADC;
         }
 
@@ -29,11 +28,15 @@ namespace ECGViewer.Formularios
             Settings.Default.CalibValorBitsMax = (int) nudCalibBitsMax.Value;
             Settings.Default.CalibValorYMin = nudCalibValorYMin.Value;
             Settings.Default.CalibValorYMax = nudCalibValorYMax.Value;
-            Settings.Default.Unidad = txtUnidad.Text;
             Settings.Default.MuestrasPorGrafico = (int) nudMuestrasPorGrafico.Value;
             Settings.Default.UsarValoresCrudosADC = chkMuestrasADC.Checked;
+            
+            double zero = Utiles.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
+            double span = Utiles.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
+            lblZero.Text = $"Zero: {zero.ToString("0.00000")}";
+            lblSpan.Text = $"Span: {span.ToString("0.00000")}";
+
             Settings.Default.Save();
-            this.Close();
         }
 
 
@@ -53,8 +56,10 @@ namespace ECGViewer.Formularios
 
         private void nudValorYMin_ValueChanged(object sender, EventArgs e)
         {
-            decimal zero = nudCalibValorYMin.Value;
-            decimal span = (nudCalibValorYMax.Value - nudCalibValorYMin.Value) / (nudCalibBitsMax.Value - nudCalibBitsMin.Value);
+            double zero = Utiles.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
+            double span = Utiles.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
+            lblZero.Text = $"Zero: {zero.ToString("0.00000")}";
+            lblSpan.Text = $"Span: {span.ToString("0.00000")}";
         }
 
         private void nudValorYMax_ValueChanged(object sender, EventArgs e)

@@ -21,7 +21,6 @@ namespace ECGViewer.Modelos
                 return CalibYMax;
             }
         }
-        public string Unidad { get { return Settings.Default.Unidad; } }
         public int MuestrasPorGrafico 
         { 
             get 
@@ -30,7 +29,24 @@ namespace ECGViewer.Modelos
                 return muestrasPorGrafico <= 1000 ? MUESTRAS_POR_GRAFICO_MIN : muestrasPorGrafico; 
             }
         }
-        public decimal Pendiente { get { return (CalibracionValorYMax - CalibracionValorYMin) / (CalibracionBitsMax - CalibracionBitsMin); } }
         public bool UsarValoresCrudosADC { get { return Settings.Default.UsarValoresCrudosADC; } }
+
+        public double Zero
+        {
+            get
+            {
+                return Utiles.GetZero(CalibracionBitsMin, CalibracionBitsMax, (double) CalibracionValorYMin, (double) CalibracionValorYMax);
+            }
+        }
+
+        public double Span 
+        {
+            get 
+            {
+                return Utiles.GetSpan(CalibracionBitsMin, CalibracionBitsMax, (double)CalibracionValorYMin, (double)CalibracionValorYMax);
+            } 
+        }
+        
+
     }
 }

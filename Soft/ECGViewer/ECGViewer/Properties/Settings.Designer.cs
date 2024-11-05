@@ -85,18 +85,6 @@ namespace ECGViewer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("V")]
-        public string Unidad {
-            get {
-                return ((string)(this["Unidad"]));
-            }
-            set {
-                this["Unidad"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4000")]
         public int MuestrasPorGrafico {
             get {
@@ -140,6 +128,30 @@ namespace ECGViewer.Properties {
             }
             set {
                 this["UsarValoresCrudosADC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int BitsParaEscaladoIndex {
+            get {
+                return ((int)(this["BitsParaEscaladoIndex"]));
+            }
+            set {
+                this["BitsParaEscaladoIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoEscalaY {
+            get {
+                return ((bool)(this["AutoEscalaY"]));
+            }
+            set {
+                this["AutoEscalaY"] = value;
             }
         }
     }

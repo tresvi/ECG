@@ -39,18 +39,22 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtEjemploCodigo = new System.Windows.Forms.TextBox();
+            this.gbEscaladoBits = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBitsEscalado = new System.Windows.Forms.ComboBox();
             this.gpbSaltoLinea.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.gbEscaladoBits.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpbSaltoLinea
             // 
             this.gpbSaltoLinea.Controls.Add(this.cmbSaltoLinea);
             this.gpbSaltoLinea.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
-            this.gpbSaltoLinea.Location = new System.Drawing.Point(10, 142);
+            this.gpbSaltoLinea.Location = new System.Drawing.Point(10, 140);
             this.gpbSaltoLinea.Margin = new System.Windows.Forms.Padding(1);
             this.gpbSaltoLinea.Name = "gpbSaltoLinea";
             this.gpbSaltoLinea.Padding = new System.Windows.Forms.Padding(1);
@@ -84,7 +88,7 @@
             // btnExportar
             // 
             this.btnExportar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportar.Location = new System.Drawing.Point(59, 223);
+            this.btnExportar.Location = new System.Drawing.Point(386, 300);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(106, 34);
             this.btnExportar.TabIndex = 20;
@@ -97,7 +101,7 @@
             this.groupBox1.Controls.Add(this.rbBinario);
             this.groupBox1.Controls.Add(this.rbEstiloAssembler);
             this.groupBox1.Controls.Add(this.rbEstiloC);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(10, 10);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
@@ -113,7 +117,7 @@
             this.rbBinario.Enabled = false;
             this.rbBinario.Font = new System.Drawing.Font("Arial", 11.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbBinario.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.rbBinario.Location = new System.Drawing.Point(7, 90);
+            this.rbBinario.Location = new System.Drawing.Point(7, 87);
             this.rbBinario.Margin = new System.Windows.Forms.Padding(1);
             this.rbBinario.Name = "rbBinario";
             this.rbBinario.Size = new System.Drawing.Size(180, 22);
@@ -125,7 +129,7 @@
             // rbEstiloAssembler
             // 
             this.rbEstiloAssembler.AutoSize = true;
-            this.rbEstiloAssembler.Font = new System.Drawing.Font("Arial", 11.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbEstiloAssembler.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbEstiloAssembler.Location = new System.Drawing.Point(7, 57);
             this.rbEstiloAssembler.Margin = new System.Windows.Forms.Padding(1);
             this.rbEstiloAssembler.Name = "rbEstiloAssembler";
@@ -140,7 +144,7 @@
             this.rbEstiloC.AutoSize = true;
             this.rbEstiloC.Checked = true;
             this.rbEstiloC.Font = new System.Drawing.Font("Arial", 11.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbEstiloC.Location = new System.Drawing.Point(7, 26);
+            this.rbEstiloC.Location = new System.Drawing.Point(7, 30);
             this.rbEstiloC.Margin = new System.Windows.Forms.Padding(1);
             this.rbEstiloC.Name = "rbEstiloC";
             this.rbEstiloC.Size = new System.Drawing.Size(114, 22);
@@ -154,39 +158,81 @@
             this.pictureBox1.Image = global::ECGViewer.Properties.Resources.PWM_Picture;
             this.pictureBox1.Location = new System.Drawing.Point(6, 21);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(326, 227);
+            this.pictureBox1.Size = new System.Drawing.Size(326, 249);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtEjemploCodigo);
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(229, 10);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(662, 254);
+            this.groupBox2.Size = new System.Drawing.Size(663, 276);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Esquema/Programa ejemplo";
+            this.groupBox2.Text = "Esquema / Programa ejemplo para Arduino";
             // 
-            // textBox1
+            // txtEjemploCodigo
             // 
-            this.textBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(338, 21);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(318, 228);
-            this.textBox1.TabIndex = 25;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.txtEjemploCodigo.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEjemploCodigo.Location = new System.Drawing.Point(338, 21);
+            this.txtEjemploCodigo.Multiline = true;
+            this.txtEjemploCodigo.Name = "txtEjemploCodigo";
+            this.txtEjemploCodigo.ReadOnly = true;
+            this.txtEjemploCodigo.Size = new System.Drawing.Size(314, 249);
+            this.txtEjemploCodigo.TabIndex = 25;
+            this.txtEjemploCodigo.Text = resources.GetString("txtEjemploCodigo.Text");
+            // 
+            // gbEscaladoBits
+            // 
+            this.gbEscaladoBits.Controls.Add(this.label1);
+            this.gbEscaladoBits.Controls.Add(this.cmbBitsEscalado);
+            this.gbEscaladoBits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
+            this.gbEscaladoBits.Location = new System.Drawing.Point(10, 216);
+            this.gbEscaladoBits.Margin = new System.Windows.Forms.Padding(1);
+            this.gbEscaladoBits.Name = "gbEscaladoBits";
+            this.gbEscaladoBits.Padding = new System.Windows.Forms.Padding(1);
+            this.gbEscaladoBits.Size = new System.Drawing.Size(205, 69);
+            this.gbEscaladoBits.TabIndex = 25;
+            this.gbEscaladoBits.TabStop = false;
+            this.gbEscaladoBits.Text = "Escalar para:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(141, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 18);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Bits";
+            // 
+            // cmbBitsEscalado
+            // 
+            this.cmbBitsEscalado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBitsEscalado.FormattingEnabled = true;
+            this.cmbBitsEscalado.Items.AddRange(new object[] {
+            "8",
+            "10",
+            "12",
+            "16",
+            "24",
+            "32"});
+            this.cmbBitsEscalado.Location = new System.Drawing.Point(7, 29);
+            this.cmbBitsEscalado.Margin = new System.Windows.Forms.Padding(1);
+            this.cmbBitsEscalado.Name = "cmbBitsEscalado";
+            this.cmbBitsEscalado.Size = new System.Drawing.Size(114, 24);
+            this.cmbBitsEscalado.TabIndex = 17;
             // 
             // FrmExportarATablaC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 272);
+            this.ClientSize = new System.Drawing.Size(903, 351);
+            this.Controls.Add(this.gbEscaladoBits);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gpbSaltoLinea);
             this.Controls.Add(this.btnExportar);
@@ -197,12 +243,15 @@
             this.Name = "FrmExportarATablaC";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Exportar a tabla";
+            this.Load += new System.EventHandler(this.FrmExportarATablaC_Load);
             this.gpbSaltoLinea.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.gbEscaladoBits.ResumeLayout(false);
+            this.gbEscaladoBits.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -219,6 +268,9 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtEjemploCodigo;
+        private System.Windows.Forms.GroupBox gbEscaladoBits;
+        private System.Windows.Forms.ComboBox cmbBitsEscalado;
+        private System.Windows.Forms.Label label1;
     }
 }

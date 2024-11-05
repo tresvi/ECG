@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer.Formularios
 {
-    partial class FrmAjustes
+    partial class FrmAjustesDeCaptura
     {
         /// <summary>
         /// Required designer variable.
@@ -48,8 +48,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.nudMuestrasPorGrafico = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtUnidad = new System.Windows.Forms.TextBox();
             this.chkMuestrasADC = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudCalibBitsMax)).BeginInit();
@@ -64,7 +62,7 @@
             // 
             this.btnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAplicar.Location = new System.Drawing.Point(69, 490);
+            this.btnAplicar.Location = new System.Drawing.Point(69, 467);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(103, 37);
             this.btnAplicar.TabIndex = 2;
@@ -76,7 +74,7 @@
             // 
             this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancelar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(226, 490);
+            this.btnCancelar.Location = new System.Drawing.Point(226, 467);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(103, 37);
             this.btnCancelar.TabIndex = 3;
@@ -100,7 +98,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 192);
+            this.groupBox1.Location = new System.Drawing.Point(12, 204);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(371, 244);
             this.groupBox1.TabIndex = 4;
@@ -199,23 +197,25 @@
             // 
             // lblZero
             // 
-            this.lblZero.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblZero.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblZero.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblZero.Location = new System.Drawing.Point(15, 160);
             this.lblZero.Name = "lblZero";
             this.lblZero.Size = new System.Drawing.Size(161, 20);
             this.lblZero.TabIndex = 9;
             this.lblZero.Text = "ZERO: XX";
+            this.lblZero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSpan
             // 
-            this.lblSpan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblSpan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblSpan.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSpan.Location = new System.Drawing.Point(193, 159);
             this.lblSpan.Name = "lblSpan";
             this.lblSpan.Size = new System.Drawing.Size(161, 20);
             this.lblSpan.TabIndex = 8;
             this.lblSpan.Text = "SPAN: XX";
+            this.lblSpan.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnResetECGValues
             // 
@@ -352,31 +352,11 @@
             0,
             0});
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(18, 447);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 18);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Unidad";
-            // 
-            // txtUnidad
-            // 
-            this.txtUnidad.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUnidad.Location = new System.Drawing.Point(82, 444);
-            this.txtUnidad.MaxLength = 10;
-            this.txtUnidad.Name = "txtUnidad";
-            this.txtUnidad.Size = new System.Drawing.Size(86, 26);
-            this.txtUnidad.TabIndex = 18;
-            this.txtUnidad.Text = "mV";
-            // 
             // chkMuestrasADC
             // 
             this.chkMuestrasADC.AutoSize = true;
             this.chkMuestrasADC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkMuestrasADC.Location = new System.Drawing.Point(12, 156);
+            this.chkMuestrasADC.Location = new System.Drawing.Point(12, 171);
             this.chkMuestrasADC.Name = "chkMuestrasADC";
             this.chkMuestrasADC.Size = new System.Drawing.Size(256, 22);
             this.chkMuestrasADC.TabIndex = 16;
@@ -384,23 +364,21 @@
             this.chkMuestrasADC.UseVisualStyleBackColor = true;
             this.chkMuestrasADC.CheckedChanged += new System.EventHandler(this.chkMuestrasADC_CheckedChanged);
             // 
-            // FrmAjustes
+            // FrmAjustesDeCaptura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancelar;
-            this.ClientSize = new System.Drawing.Size(397, 546);
+            this.ClientSize = new System.Drawing.Size(397, 527);
             this.ControlBox = false;
             this.Controls.Add(this.chkMuestrasADC);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtUnidad);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAplicar);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FrmAjustes";
+            this.Name = "FrmAjustesDeCaptura";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Ajustes para captura";
             this.groupBox1.ResumeLayout(false);
@@ -439,8 +417,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtUnidad;
         private System.Windows.Forms.CheckBox chkMuestrasADC;
     }
 }
