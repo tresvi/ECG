@@ -39,7 +39,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtEjemploCodigo = new System.Windows.Forms.TextBox();
             this.gbEscaladoBits = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbBitsEscalado = new System.Windows.Forms.ComboBox();
@@ -88,7 +88,7 @@
             // btnExportar
             // 
             this.btnExportar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportar.Location = new System.Drawing.Point(383, 300);
+            this.btnExportar.Location = new System.Drawing.Point(386, 300);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(106, 34);
             this.btnExportar.TabIndex = 20;
@@ -165,7 +165,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtEjemploCodigo);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(229, 10);
@@ -175,16 +175,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Esquema / Programa ejemplo para Arduino";
             // 
-            // textBox1
+            // txtEjemploCodigo
             // 
-            this.textBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(338, 21);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(314, 249);
-            this.textBox1.TabIndex = 25;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.txtEjemploCodigo.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEjemploCodigo.Location = new System.Drawing.Point(338, 21);
+            this.txtEjemploCodigo.Multiline = true;
+            this.txtEjemploCodigo.Name = "txtEjemploCodigo";
+            this.txtEjemploCodigo.ReadOnly = true;
+            this.txtEjemploCodigo.Size = new System.Drawing.Size(314, 249);
+            this.txtEjemploCodigo.TabIndex = 25;
+            this.txtEjemploCodigo.Text = resources.GetString("txtEjemploCodigo.Text");
             // 
             // gbEscaladoBits
             // 
@@ -243,6 +243,7 @@
             this.Name = "FrmExportarATablaC";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Exportar a tabla";
+            this.Load += new System.EventHandler(this.FrmExportarATablaC_Load);
             this.gpbSaltoLinea.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -267,7 +268,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtEjemploCodigo;
         private System.Windows.Forms.GroupBox gbEscaladoBits;
         private System.Windows.Forms.ComboBox cmbBitsEscalado;
         private System.Windows.Forms.Label label1;

@@ -1,5 +1,4 @@
 ﻿using ECGViewer.Modelos;
-using ECGViewer.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,18 +10,46 @@ namespace ECGViewer.Formularios
 {
     public partial class FrmExportarATablaC : Form
     {
-        public readonly List<Muestra> _senalECG;
-        public readonly int _indiceMinimo;
-        public readonly int _indiceMaximo;
+        private readonly List<Muestra> _senalECG;
+        private readonly int _indiceMinimo;
+        private readonly int _indiceMaximo;
 
         public FrmExportarATablaC(in List<Muestra> senalECG, int indiceMinimo, int indiceMaximo)
         {
-            InitializeComponent();
             _senalECG = senalECG;
             _indiceMinimo = indiceMinimo;
             _indiceMaximo = indiceMaximo;
+
+            InitializeComponent();
+        }
+
+
+        private void FrmExportarATablaC_Load(object sender, EventArgs e)
+        {
+            if (_senalECG.Count > 2)
+            {
+                string funcion;
+                long delay;
+                double tMuestroEnmS = (_senalECG[1].Tiempo - _senalECG[0].Tiempo)*1000;
+
+                //delayMicroseconds() como maximo puede recibir como parametro, como maximo 65.536 us, es decir aprox, 65mS
+                //Mas de 65mS, se debe usar delay()
+                if (tMuestroEnmS < 65)
+                {
+                    funcion = "delayMicroseconds";
+                    delay = (int) (tMuestroEnmS * 1000);
+                }
+                else
+                {
+                    funcion = "delay";
+                    delay = (int)(tMuestroEnmS);
+                }
+                txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%FUNCION%", funcion.ToString());
+                txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%DELAY%", delay.ToString());
+            }
+
             if (cmbSaltoLinea.SelectedIndex == -1) cmbSaltoLinea.SelectedIndex = 1;
-            
+
             int bitsSeleccionadosIndex = ECGViewer.Properties.Settings.Default.BitsParaEscaladoIndex;
             if (bitsSeleccionadosIndex < cmbBitsEscalado.Items.Count)
                 cmbBitsEscalado.SelectedIndex = bitsSeleccionadosIndex;
@@ -30,9 +57,10 @@ namespace ECGViewer.Formularios
                 cmbBitsEscalado.SelectedIndex = -1;
         }
 
+
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            if (_senalECG == null || _senalECG.Count <1)
+            if (_senalECG == null || _senalECG.Count < 1)
             {
                 MessageBox.Show("Debe abrir un archivo para poder exportar una tabla");
                 return;
@@ -65,38 +93,33 @@ namespace ECGViewer.Formularios
                 return;
             }
 
-            StreamWriter sw = null;
-            long longTabla = _indiceMaximo - _indiceMinimo + 1; //_senalECG.Count;
+            long longTabla = _indiceMaximo - _indiceMinimo + 1;
+
             try
             {
-                sw = new StreamWriter(saveFileDialog.FileName);
-                bool insertarSaltoLinea = (cmbSaltoLinea.SelectedIndex != 0);
-                int valoresParaSalto = cmbSaltoLinea.SelectedIndex * 10;
+                using (var sw = new StreamWriter(saveFileDialog.FileName))
+                {
+                    bool insertarSaltoLinea = (cmbSaltoLinea.SelectedIndex != 0);
+                    int valoresParaSalto = cmbSaltoLinea.SelectedIndex * 10;
 
-                if (rbEstiloC.Checked)
-                {
-                    EscribirTablaC(sw, insertarSaltoLinea, valoresParaSalto);
-                    MessageBox.Show($"El archivo fué creado satisfactoriamente con {longTabla} valores reescalados {cmbBitsEscalado.Text} bits");
-                }
-                else if (rbEstiloAssembler.Checked)
-                {
-                    MessageBox.Show("Las exportaciones a assembler solo se reescalan a 8 bits");
-                    EscribirTablaAssembler(sw, insertarSaltoLinea, valoresParaSalto);
-                    MessageBox.Show($"El archivo fué creado satisfactoriamente con {longTabla} valores reescalados 8 bits");
+                    if (rbEstiloC.Checked)
+                    {
+                        EscribirTablaC(sw, insertarSaltoLinea, valoresParaSalto);
+                        MessageBox.Show($"El archivo fue creado satisfactoriamente con {longTabla} valores reescalados {cmbBitsEscalado.Text} bits");
+                    }
+                    else if (rbEstiloAssembler.Checked)
+                    {
+                        MessageBox.Show("Las exportaciones a assembler solo se reescalan a 8 bits");
+                        EscribirTablaAssembler(sw, insertarSaltoLinea, valoresParaSalto);
+                        MessageBox.Show($"El archivo fue creado satisfactoriamente con {longTabla} valores reescalados 8 bits");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar el archivo. Detalles:" + ex.Message);
+                MessageBox.Show("Error al guardar el archivo. Detalles: " + ex.Message);
             }
-            finally
-            {
-                if (sw != null)
-                {
-                    sw.Flush();
-                    sw.Close();
-                }
-            }
+
             this.Close();
         }
 
@@ -171,33 +194,26 @@ namespace ECGViewer.Formularios
 
         private void EscribirBinario8Bits(string fileName)
         {
-            FileStream stream = null;
-            BinaryWriter writer = null;
             try
             {
                 fileName = Regex.Replace(fileName, "txt", "bin", RegexOptions.IgnoreCase);
                 if (File.Exists(fileName)) File.Delete(fileName);
-                stream = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write);
-                writer = new BinaryWriter(stream);
 
-                for (int i = 0; i < _senalECG.Count; i++)
+                using (var stream = new FileStream(fileName, FileMode.CreateNew, FileAccess.Write))
+                using (var writer = new BinaryWriter(stream))
                 {
-                    writer.Write((byte)_senalECG[i].Canal[0]);
+                    for (int i = 0; i < _senalECG.Count; i++)
+                    {
+                        writer.Write((byte)_senalECG[i].Canal[0]);
+                    }
+                    writer.Write((byte)0x00);  // Escribo un 0 para indicar el fin del archivo
                 }
-                writer.Write((byte)0x00);      //Escribo un 0 para indicar el fin del arhivo
-                MessageBox.Show("El archivo fué creado satisfactoriamente con " + _senalECG.Count + " valores");
+
+                MessageBox.Show("El archivo fue creado satisfactoriamente con " + _senalECG.Count + " valores");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar el archivo. Detalles:" + ex.Message);
-            }
-            finally
-            {
-                if (writer != null)
-                {
-                    writer.Close();
-                    stream.Close();
-                }
+                MessageBox.Show("Error al guardar el archivo. Detalles: " + ex.Message);
             }
         }
 
