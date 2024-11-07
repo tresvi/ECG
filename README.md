@@ -38,7 +38,7 @@ De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella
 
 ### Cursor
 Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas.  
-![image](https://github.com/user-attachments/assets/e7457c12-a91b-4943-9cb8-7bd7139031aa)  
+![image](https://github.com/user-attachments/assets/b27b44ab-0ae7-4568-bc5f-778d09837732)  
 
 ### Marcadores
 Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.  
