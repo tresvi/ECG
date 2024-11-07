@@ -37,6 +37,8 @@ Para activar la regla, deberá presionar el boton "Regla" en la barra de herrami
 De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella se visualizará un recuadro en donde se detallará con presición los valores del segmento de tiempo (horizontal) y de amplitud (vertical) encuadrada. Esta herramienta permitirá medir con mucha mayor precisión y rapidez estas variables que si se tratara de usar la escala del gráfico.
 ![image](https://github.com/user-attachments/assets/0bcbce39-1190-45cf-b2bc-47c223f85105)  
 
+
+## Herramientas Gráficas
 ### Cursor
 Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas.  
 ![image](https://github.com/user-attachments/assets/e7457c12-a91b-4943-9cb8-7bd7139031aa)  
