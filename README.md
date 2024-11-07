@@ -38,8 +38,9 @@ De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella
 ![image](https://github.com/user-attachments/assets/0bcbce39-1190-45cf-b2bc-47c223f85105)  
 
 ### Cursor
-Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas. 
-![image](https://github.com/user-attachments/assets/8076676e-cf4a-4fda-906f-574356e582d0)
+Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas.  
+![image](https://github.com/user-attachments/assets/e7457c12-a91b-4943-9cb8-7bd7139031aa)  
+
 
 ### Marcadores
 Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.  
@@ -53,9 +54,22 @@ Para editar/eliminar estos puntos, utilizar la función "Administrar Marcadores"
 La herramienta tijera sirve para recortar el gráfico en caso de querer conservar solo algun segmento de él. El recorte se hará en la porción visualizada del mismo, es decir, se deberá hacer zoom sobre la parte que se desee conservar, luego presionar el boton de la tijera para solo conservar dicha parte y descartar el resto. Al recortarlo, se preguntará si se desea reiniciar el tiempo a 0 en el comienzo del gráfico.
 
 ### Configuración de Ejes
-![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
-Permite configurar si la escala en Y se configurará de manera automática, o bien, que estcala se desea utilizar.  
-![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)
+![image](https://github.com/user-attachments/assets/be533484-1124-46a1-b46a-e31bfe62a9ad)  
+Permite configurar si la escala en Y se configurará de manera automática, o bien, que escala se desea utilizar.  
+![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)  
+
+
+## Importación y Exportación de datos
+### Importación de XLSX  
+![image](https://github.com/user-attachments/assets/c1932d71-c1e0-42d6-996e-a317d133be1d)  
+Permite importar datos desde archivos de Excel formato XLSX. Para que los archivos sean compatibles deben tener un formato determinado. 
+* En la 1er columna de la izquierda, se deberán encontrar los valores de tiempo, con intervalos regulares entre celda y celda para que sea correctamente interpretado (es decir por ejemplo 1, 2, 3 o 0.5, 1.0, 1.5, etc).
+* En la 2da columna se deberán encontrar los valores del eje Y. No se requiere nada en particular sobre estos valores.
+A continuación se muestra un ejemplo.
+![image](https://github.com/user-attachments/assets/70e78bb9-0cd0-4d60-9787-7eca33d306e7)
+Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Porteus para simularla, o bien a una tabla estilo C++ o assembler para sintetizarla.
+
+  
 
 
 
