@@ -73,11 +73,12 @@ namespace ECGViewer
             using (var workbook = new XLWorkbook(filePath))
             {
                 IXLWorksheet worksheet = workbook.Worksheet(1);
-                int row = 2;
+                int row = 0;
                 double tiempo, lectura;
 
                 while (true)
                 {
+                    row++;
                     string celda1 = worksheet.Cell(row, 1).GetValue<string>();
                     string celda2 = worksheet.Cell(row, 2).GetValue<string>();
 
@@ -85,13 +86,17 @@ namespace ECGViewer
                         break;
 
                     if (!double.TryParse(celda1, out tiempo) || !double.TryParse(celda2, out lectura))
-                        throw new Exception($"Error al leer los datos {celda1} / {celda2}");
-
+                    {
+                        if (row == 1)
+                            continue;
+                        else
+                            throw new Exception($"Error al leer los datos {celda1} / {celda2}");
+                    }    
+                    
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = tiempo;
                     muestra.Canal[0] = lectura;
                     dataList.Add(muestra);
-                    row++;
                 }
             }
             return dataList;

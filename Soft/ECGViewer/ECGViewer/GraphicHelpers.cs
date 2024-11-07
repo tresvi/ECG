@@ -122,12 +122,8 @@ namespace ECGViewer
 
         internal static void ResetZoom(Chart chart, List<Muestra> senal)
         {
-            //double maximo = this.chartEspectro.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-            //chartEspectro.ChartAreas[0].AxisX.Interval = (int) maximo / 10;
-            //ChartUtils.InicializarChart(chartEspectro);
             chart.ChartAreas[0].AxisX.ScaleView.ZoomReset(0);
-            chart.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
-            CargarGrafico(chart, senal);
+            //chart.ChartAreas[0].AxisY.ScaleView.ZoomReset(0);
         }
 
 

@@ -646,8 +646,8 @@ namespace ECGViewer
                 _senalECG = Utiles.LoadXlsxData(openFileDialog.FileName);
                 if (_senalECG.Count <= 1)
                 {
-                    MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
-                      , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Archivo invalido. El mismo no contiene muestras interpretables"
+                      , "Abrir Archivo xlsx", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 

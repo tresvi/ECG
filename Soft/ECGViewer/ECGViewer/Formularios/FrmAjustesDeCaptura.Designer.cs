@@ -358,9 +358,9 @@
             this.chkMuestrasADC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkMuestrasADC.Location = new System.Drawing.Point(12, 171);
             this.chkMuestrasADC.Name = "chkMuestrasADC";
-            this.chkMuestrasADC.Size = new System.Drawing.Size(256, 22);
+            this.chkMuestrasADC.Size = new System.Drawing.Size(369, 22);
             this.chkMuestrasADC.TabIndex = 16;
-            this.chkMuestrasADC.Text = "Usar valores en crudo de ADC";
+            this.chkMuestrasADC.Text = "Usar valores en crudo recibidos por el puerto";
             this.chkMuestrasADC.UseVisualStyleBackColor = true;
             this.chkMuestrasADC.CheckedChanged += new System.EventHandler(this.chkMuestrasADC_CheckedChanged);
             // 
