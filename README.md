@@ -28,17 +28,29 @@ El sistema cuenta unicamente con zoom horizontal y se encuentra habilitado por d
 ![image](https://github.com/user-attachments/assets/bf3bea98-9ce1-4428-b23b-9896dc4e26d2)
 
 ### Regla
-Para activar la regla, deberá presionar el boton "Regla" en la barra de herramientas. El botón quedará presionado y mientras esté presionado, **la funcionalidad de Zoom permanecerá desactivada** para dejar paso a la de la regla.  
 ![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
+Para activar la regla, deberá presionar el boton "Regla" en la barra de herramientas. El botón quedará presionado y mientras esté presionado, **la funcionalidad de Zoom permanecerá desactivada** para dejar paso a la de la regla.  
 De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella se visualizará un recuadro en donde se detallará con presición los valores del segmento de tiempo (horizontal) y de amplitud (vertical) encuadrada. Esta herramienta permitirá medir con mucha mayor precisión y rapidez estas variables que si se tratara de usar la escala del gráfico.
 ![image](https://github.com/user-attachments/assets/0bcbce39-1190-45cf-b2bc-47c223f85105)  
+
 ### Cursor
 Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas. 
 ![image](https://github.com/user-attachments/assets/8076676e-cf4a-4fda-906f-574356e582d0)
 
+### Marcadores
+Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.
+![image](https://github.com/user-attachments/assets/906d074d-7580-42e3-8ed8-9c37d2185527)
+Dichos puntos quedarán fijos a la gráfica en la coordenada en la cual se creó.
+Para editar/eliminar estos puntos, utilizar la función "Administrar Marcadores" de la barra de herramientas.  
+![image](https://github.com/user-attachments/assets/b3f1c0f0-c44a-46ff-8d69-23f382bf49f2)
+
+
+### Administrar Marcadores  
+![image](https://github.com/user-attachments/assets/704f59e7-a998-429b-9e9b-17cffc0a450c)  
 
 
 
-
+### Configuración de Ejes
+![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
 
 
