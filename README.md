@@ -24,8 +24,12 @@ Para finalizar la captura, presionar el botón "Finalizar Lectura".
 Son las herramientas de mayor utilidad a la hora de analizar la gráfica. 
 
 ### Zoom horizontal
-El sistema cuenta unicamente con zoom horizontal y se encuentra habilitado por default. Para realizar zoom sobre una señal, alcanza sigtuarse sobre el lugar donde se quiere empezar a hacer zoom, presionar el boton izquierdo del mouse y sin soltar, desplazar hasta el final de la seccion a hacer zoom y soltar. Para deshacer el zoom, puede presionar el botón "Reset Zoom".  
-![image](https://github.com/user-attachments/assets/bf3bea98-9ce1-4428-b23b-9896dc4e26d2)
+El sistema cuenta unicamente con zoom horizontal y se encuentra habilitado por default. Para realizar zoom sobre una señal, alcanza sigtuarse sobre el lugar donde se quiere empezar a hacer zoom, presionar el boton izquierdo del mouse y sin soltar, desplazar hasta el final de la seccion a hacer zoom y soltar. 
+
+### Reset Zoom
+![image](https://github.com/user-attachments/assets/bf3bea98-9ce1-4428-b23b-9896dc4e26d2)  
+Para deshacer el zoom, puede presionar el botón "Reset Zoom".  Permite deshacer el zoom, y mostrar toda la gráfica en una pantalla.
+
 
 ### Regla
 ![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
