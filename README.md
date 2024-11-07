@@ -41,7 +41,6 @@ De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella
 Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas.  
 ![image](https://github.com/user-attachments/assets/e7457c12-a91b-4943-9cb8-7bd7139031aa)  
 
-
 ### Marcadores
 Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.  
 ![image](https://github.com/user-attachments/assets/ad59da51-0a16-465e-859c-da38e1c15b4f)  
@@ -65,9 +64,16 @@ Permite configurar si la escala en Y se configurará de manera automática, o bi
 Permite importar datos desde archivos de Excel formato XLSX. Para que los archivos sean compatibles deben tener un formato determinado. 
 * En la 1er columna de la izquierda, se deberán encontrar los valores de tiempo, con intervalos regulares entre celda y celda para que sea correctamente interpretado (es decir por ejemplo 1, 2, 3 o 0.5, 1.0, 1.5, etc).
 * En la 2da columna se deberán encontrar los valores del eje Y. No se requiere nada en particular sobre estos valores.
-A continuación se muestra un ejemplo.
+A continuación se muestra un ejemplo.  
 ![image](https://github.com/user-attachments/assets/70e78bb9-0cd0-4d60-9787-7eca33d306e7)
-Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Porteus para simularla, o bien a una tabla estilo C++ o assembler para sintetizarla.
+* Adicionalmente de forma opcional si se desea, se puede poner **solo en cada celda de la primera fila** un titulo en la primer fila de cada columna, como por ejemplo "Tiempo" y "Valores". El programa simplemente los ignorará y cargará el resto de los datos normalmente.
+Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Proteus para simularla, o bien a una tabla estilo C++ o assembler para sintetizarla.
+
+### Exportacion a Excel
+![image](https://github.com/user-attachments/assets/c75d57a5-2904-493b-8404-668baab3d2e4)  
+Permite exportar los datos capturados a formato excel para utilizarlo en otras aplicaciones. El formato de exportación es identico al solicitado en la "Importación de XLSX"
+
+
 
   
 
