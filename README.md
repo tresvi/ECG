@@ -38,19 +38,20 @@ Con la función de regla, también se activa la función de Cursor. Si en lugar 
 ![image](https://github.com/user-attachments/assets/8076676e-cf4a-4fda-906f-574356e582d0)
 
 ### Marcadores
-Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.
-![image](https://github.com/user-attachments/assets/906d074d-7580-42e3-8ed8-9c37d2185527)
+Para colocar marcas en el gráfico, dar **clic derecho** en la gráfica sobre el punto deseado. Esto colocará una linea punteada vertical marcando el lugar, y habilitará la posibilidad de ingresar un texto descriptivo sobre la marca.  
+![image](https://github.com/user-attachments/assets/ad59da51-0a16-465e-859c-da38e1c15b4f)  
 Dichos puntos quedarán fijos a la gráfica en la coordenada en la cual se creó.
 Para editar/eliminar estos puntos, utilizar la función "Administrar Marcadores" de la barra de herramientas.  
 ![image](https://github.com/user-attachments/assets/b3f1c0f0-c44a-46ff-8d69-23f382bf49f2)
 
-
-### Administrar Marcadores  
-![image](https://github.com/user-attachments/assets/704f59e7-a998-429b-9e9b-17cffc0a450c)  
-
-
+### Tijera
+![image](https://github.com/user-attachments/assets/b8373be0-32d0-4e00-b460-7ec58e348629)  
+La herramienta tijera sirve para recortar el gráfico en caso de querer conservar solo algun segmento de él. El recorte se hará en la porción visualizada del mismo, es decir, se deberá hacer zoom sobre la parte que se desee conservar, luego presionar el boton de la tijera para solo conservar dicha parte y descartar el resto. Al recortarlo, se preguntará si se desea reiniciar el tiempo a 0 en el comienzo del gráfico.
 
 ### Configuración de Ejes
 ![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
+Permite configurar si la escala en Y se configurará de manera automática, o bien, que estcala se desea utilizar.  
+![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)
+
 
 
