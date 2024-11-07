@@ -20,8 +20,8 @@ La visualizacion durante la captura solo mostrará un numero fijo maximo de mues
 Para finalizar la captura, presionar el botón "Finalizar Lectura".
 
 
-## Herramientas Zoom horizontal y Regla
-Son las herramientas de mayor utilidad a la hora de analizar la gráfica. 
+## Herramientas de visualización
+Son las herramientas de mayor utilidad a la hora de analizar y modificar la gráfica.
 
 ### Zoom horizontal
 El sistema cuenta unicamente con zoom horizontal y se encuentra habilitado por default. Para realizar zoom sobre una señal, alcanza sigtuarse sobre el lugar donde se quiere empezar a hacer zoom, presionar el boton izquierdo del mouse y sin soltar, desplazar hasta el final de la seccion a hacer zoom y soltar. 
@@ -30,15 +30,12 @@ El sistema cuenta unicamente con zoom horizontal y se encuentra habilitado por d
 ![image](https://github.com/user-attachments/assets/bf3bea98-9ce1-4428-b23b-9896dc4e26d2)  
 Para deshacer el zoom, puede presionar el botón "Reset Zoom".  Permite deshacer el zoom, y mostrar toda la gráfica en una pantalla.
 
-
 ### Regla
 ![image](https://github.com/user-attachments/assets/5ef58ba3-0131-4918-b11e-10278c740235)  
 Para activar la regla, deberá presionar el boton "Regla" en la barra de herramientas. El botón quedará presionado y mientras esté presionado, **la funcionalidad de Zoom permanecerá desactivada** para dejar paso a la de la regla.  
 De manera similar al zoom, podrá seleccionar un area sobre el gráfico, en ella se visualizará un recuadro en donde se detallará con presición los valores del segmento de tiempo (horizontal) y de amplitud (vertical) encuadrada. Esta herramienta permitirá medir con mucha mayor precisión y rapidez estas variables que si se tratara de usar la escala del gráfico.
 ![image](https://github.com/user-attachments/assets/0bcbce39-1190-45cf-b2bc-47c223f85105)  
 
-
-## Herramientas Gráficas
 ### Cursor
 Con la función de regla, también se activa la función de Cursor. Si en lugar de seleccionar un area con el mouse, simplemente se hace clic en un punto de la gráfica, dicho punto de marcará con una interseccion de líneas y el valor exacto de dicho punto (tiempo y amplitud) se mostrará en la barra de herramientas.  
 ![image](https://github.com/user-attachments/assets/e7457c12-a91b-4943-9cb8-7bd7139031aa)  
@@ -60,7 +57,7 @@ Permite configurar si la escala en Y se configurará de manera automática, o bi
 ![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)  
 
 
-## Importación y Exportación de datos
+## Herramientas de Importación y Exportación de datos
 ### Importación de XLSX  
 ![image](https://github.com/user-attachments/assets/c1932d71-c1e0-42d6-996e-a317d133be1d)  
 Permite importar datos desde archivos de Excel formato XLSX. Para que los archivos sean compatibles deben tener un formato determinado. 
