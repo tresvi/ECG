@@ -66,7 +66,7 @@ Permite importar datos desde archivos de Excel formato XLSX. Para que los archiv
 A continuación se muestra un ejemplo.  
 ![image](https://github.com/user-attachments/assets/70e78bb9-0cd0-4d60-9787-7eca33d306e7)
 * Adicionalmente de forma opcional si se desea, se puede poner **solo en cada celda de la primera fila** un titulo en la primer fila de cada columna, como por ejemplo "Tiempo" y "Valores". El programa simplemente los ignorará y cargará el resto de los datos normalmente.
-Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Proteus para simularla, o bien a una tabla estilo C++ o assembler para sintetizarla.
+Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Proteus para simularla, o bien a una tabla estilo C/C++ o assembler para sintetizarla.
 
 ### Exportacion a Excel
 ![image](https://github.com/user-attachments/assets/c75d57a5-2904-493b-8404-668baab3d2e4)  
