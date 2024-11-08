@@ -60,8 +60,12 @@ Permite configurar si la escala en Y se configurará de manera automática, o bi
 ![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)  
 
 
-## Herramientas de Importación y Exportación de datos
-### Importación desde archivo XLSX  
+## Herramientas de Importación y Exportación de datos 
+El programa permite una serie de acciones de importación y exportación que se detallarán a continuación.  
+![image](https://github.com/user-attachments/assets/d52e4166-11ff-4610-9b74-a109bb3ee0cd)  
+
+
+### 1-Importación desde archivo XLSX  
 ![image](https://github.com/user-attachments/assets/c1932d71-c1e0-42d6-996e-a317d133be1d)  
 Permite importar datos desde archivos de Excel formato XLSX. Para que los archivos sean compatibles deben tener un formato determinado. 
 * En la 1er columna de la izquierda, se deberán encontrar los valores de tiempo, con intervalos regulares entre celda y celda para que sea correctamente interpretado (es decir por ejemplo 1, 2, 3 o 0.5, 1.0, 1.5, etc).
@@ -71,7 +75,7 @@ A continuación se muestra un ejemplo.
 * Adicionalmente de forma opcional si se desea, se puede poner **solo en cada celda de la primera fila** un titulo en la primer fila de cada columna, como por ejemplo "Tiempo" y "Valores". El programa simplemente los ignorará y cargará el resto de los datos normalmente.
 Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Proteus para simularla, o bien a una tabla estilo C/C++ o assembler para sintetizarla.
 
-### Exportación a Excel formato XLSX
+### 2-Exportación a Excel formato XLSX
 ![image](https://github.com/user-attachments/assets/c75d57a5-2904-493b-8404-668baab3d2e4)  
 Permite exportar los datos capturados a formato excel para utilizarlo en otras aplicaciones. El formato de exportación es identico al solicitado en la "Importación de XLSX"
 
