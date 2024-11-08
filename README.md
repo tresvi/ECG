@@ -117,8 +117,11 @@ En la barra de herramientas se encuentran todas las herramientas disponibles en 
 
 ## Ejemplo de filtrado
 En la siguiente imagen puede apreciarse la limpieza de la señal de ECG al notar la disminución del ruido en la señal filtrada. A la señal original se le aplicó un filtro pasabajos con frecuencia de corte de 49.5Hz y un pasa altos de 0.8Hz. Esta combinación permitió eliminar totalmente los ruidos de linea (arriba de 49.5Hz) y la ondulación de baja frecuencia (se observa como una ondulacion en el dibujo total de la señal) relacionada al movimiento del paciente (variación del potencial de hemipila sobre los electrodos).  
+
 ![image](https://github.com/user-attachments/assets/f026bac2-9567-42b3-a0e4-02a989daee6e)  
+
 En la siguiente imagen pueden verse el espectro de dichas señales y apreciar el corte espectral que realizaron los filtros.  
+
 ![image](https://github.com/user-attachments/assets/af513284-c84c-488d-8c0d-c80dfddd1d0b)  
 
 
