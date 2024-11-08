@@ -92,7 +92,27 @@ Permite visualizar el espectro de la señal, lo cual es de una gran utilidad par
 
 # Consola de Filtros Avanzados
 Como se mencionó en la sección [Filtros Avanzados](#Filtros Avanzados), la consola de filtros permite aplicar cualquier filtro que se necesite sobre la señal, permitiendo previsualizar sus resultados.  
-![image](https://github.com/user-attachments/assets/9ad68768-e846-4fd6-b44d-1c3fad920005)  
+![image](https://github.com/user-attachments/assets/a17fc2c9-6916-4ebe-86d6-2570afe26595)  
+
+### Estructura de la ventana
+En la parte superior de la ventana puede verse la señal original sin filtrar tal como se tomó de la ventana principal del programa. En la inferior se podrá ver como va quedando la señal luego de aplicarsele los filtros.
+### Zoom
+El zoom está siempre presente en el gráfico superior ("señal original"). Al aplicarse zoom sobre él, el grafico inferior ("señal filtrada") seguirá los mismos cambios de visualización y desplazamiento punto a punto para poder hacer una comparación exacta de los cambios.
+
+### Barra de herramientas
+En la barra de herramientas se encuentran todas las herramientas disponibles en esta versión
+![image](https://github.com/user-attachments/assets/bc56fc0a-dea7-46f5-b35e-e74068647afa)  
+1. Reset Zoom: Permite reestablecer el zoom para ver la señal completa en una sola pantalla.
+2. Filtro Pasa Bajo: Permite aplicar un filtro pasa bajos a la señal, especificando la frecuencia de corte superior.
+3. Filtro Pasa Alto: Permite aplicar un filtro pasa altos a la señal, especificando la frecuencia de corte inferior.
+4. Filtro Pasa Banda: Permite aplicar un filtro pasa banda a la señal, especificando la frecuencia de corte inferior y superior.
+5. Filtro Notch: Permite aplicar un filtro Notch a la señal, especificando la frecuencia de corte inferior y superior.
+6. Reset Filtros: Permite deshacer los filtros aplicados y reestablecer la señal filtrada a como estaba originalmente cuando se abrió la consola.
+7. Vista Tiempo/Frecuencia: Cambia las señales tanto original como filtrada por su espectro. Esta vista es de mucha utilidad para ver el resultado de los filtros y detectar anomalias a filtrar.
+8. Aplicar: Permite aceptar todos los cambios realizados a la señal filtrada y aplicarla en la ventana principal del programa. Una vez aplicados los cambios, los mismos no tienen vuelta atras (excepto volviendo a capturar o a cargar nuevamente el archivo de la señal).
+9. Cancelar: Permite abandonar la consola de filtros sin aplicar ningun cambio.
+
+
 
 
 
