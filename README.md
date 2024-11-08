@@ -80,7 +80,7 @@ Dicho archivo se interpretará como una señal capturada, lo cual después permi
 Permite exportar los datos capturados a formato excel para utilizarlo en otras aplicaciones. El formato de exportación es identico al solicitado en la "Importación de XLSX"
 ### 3-Exportación a tabla de C/C++
 Esta función permite la sintesis de la señal en microcontroladores con compiladores escritos en C/C++ generando una tabla para incluir en el codigo fuente. La amplia mayoria de los microcontroladores comerciales poseen algun compilador en estos lenguajes. Mas adelante se dedicará una sección especial para esta herramienta.
-### 3-Exportación a File generator de Proteus
+### 4-Exportación a File generator de Proteus
 Exporta la señal a un archivo compatible con el generador del tipo file de Proteus para poder incluirla en una simulación. Mas adleante se dedicará una sección epsecial a esta funcionalidad.
 
 ## Herramientas de Señal
