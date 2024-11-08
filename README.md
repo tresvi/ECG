@@ -60,10 +60,12 @@ Permite configurar si la escala en Y se configurará de manera automática, o bi
 ![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)  
 
 
-## Herramientas de Importación y Exportación de datos 
-El programa permite una serie de acciones de importación y exportación que se detallarán a continuación.  
+## Herramientas de Importación y Exportación de datos  
+En la barra de herramientas se encuentra la sección de herramientas de Importación y exportación de datos.  
+
 ![image](https://github.com/user-attachments/assets/d52e4166-11ff-4610-9b74-a109bb3ee0cd)  
 
+Dichas herramientas se detallan a continuación
 
 ### 1-Importación desde archivo XLSX  
 ![image](https://github.com/user-attachments/assets/c1932d71-c1e0-42d6-996e-a317d133be1d)  
