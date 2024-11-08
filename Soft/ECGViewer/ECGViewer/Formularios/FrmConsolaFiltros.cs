@@ -27,7 +27,6 @@ namespace ECGViewer
             _senalOriginal = senal;
             _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
             _frecuenciaMuestreo = frecuenciaMuestreo;
-
             chartSenalOriginal.PostPaint += chartSenalOriginal_PostPaint;
         }
 

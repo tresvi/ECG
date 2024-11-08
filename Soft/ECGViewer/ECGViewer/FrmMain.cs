@@ -173,6 +173,11 @@ namespace ECGViewer
 
         private void BtnFiltrarSenal_Click(object sender, EventArgs e)
         {
+            DialogResult respuesta = MessageBox.Show("Desea aplicar el filtro de 50Hz a la señal? Esta acción no se podrá deshacer",
+                "Filtro 50Hz", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (respuesta == DialogResult.Cancel) return;
+
             double axisYMinimum = chartSenal.ChartAreas[0].AxisY.Minimum;
             double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
             double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;

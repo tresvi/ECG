@@ -143,7 +143,7 @@
             this.gbSenal.Size = new System.Drawing.Size(387, 118);
             this.gbSenal.TabIndex = 14;
             this.gbSenal.TabStop = false;
-            this.gbSenal.Text = "Señal";
+            this.gbSenal.Text = "Análisis y filtrado de señal";
             // 
             // btnFiltrarSenal
             // 
