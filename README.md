@@ -73,8 +73,32 @@ Dicho archivo se interpretará como una señal capturada, lo cual después permi
 Permite exportar los datos capturados a formato excel para utilizarlo en otras aplicaciones. El formato de exportación es identico al solicitado en la "Importación de XLSX"
 
 
+## Herramientas de Señal
+En la parte inferior de la pantalla se encuentra la barra de procesamiento de señal. En ellas se encuentran las herramientas para análisis y filtrado.  
+![image](https://github.com/user-attachments/assets/87f229b1-5f28-4edd-9ca0-ecbbced318b5)  
 
-  
+### Filtro Pasabajo de 50Hz
+![image](https://github.com/user-attachments/assets/9a5645d2-2bcd-45dc-b77f-893523b8e836)  
+Dado que las frecuencias que mayor interferencias causan son las de red, las cuales normalmente suelen ser de 50Hz o 60Hz según el país, se dejan un acceso directo a un filtro pasa bajo de 49Hz, el cual descartará las frecuencias mayores a 49Hz, incluidas las mencionadas frecuencias.
+
+### Filtros Avanzados
+![image](https://github.com/user-attachments/assets/84db9460-2de0-49cb-a822-53cf61829dba)  
+Permite acceder a la consola de filtros personalizados que se verá mas adelante.
+
+### Vista de espectro
+![image](https://github.com/user-attachments/assets/58efc593-cadb-4729-9af2-7d309107cfca)  
+Permite visualizar el espectro de la señal, lo cual es de una gran utilidad para identificar señales de ruido que contaminan la señal original a analizar. A continuación se muestra el espectro de una señal ECG en la cual se observa una componente de 50Hz la cual es un claro ruido sobre la misma.
+![image](https://github.com/user-attachments/assets/a70626df-9218-434a-adb7-cd47caf80782)  
+
+
+# Consola de Filtros 
+
+
+
+
+
+
+
 
 
 
