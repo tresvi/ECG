@@ -1,6 +1,7 @@
 # ECG Viewer
 
 ECG Viewer es un software de captura, manipulación, visualizacion, filtrado y sintesis de señales inicialmente pensado para señales electrocardiográficas, pero posteriormente adaptado a para aceptar todo tipo de señales, brindando herramientas para el desarrollo electrónico y la simulación en Proteus.  
+
 ![image](https://github.com/user-attachments/assets/08d9ec57-3848-43e0-8204-3f5dec5c4f16)  
 
 
