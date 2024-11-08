@@ -74,8 +74,7 @@ Permite exportar los datos capturados a formato excel para utilizarlo en otras a
 
 
 ## Herramientas de Señal
-En la parte inferior de la pantalla se encuentra la barra de procesamiento de señal. En ellas se encuentran las herramientas para análisis y filtrado.  
-![image](https://github.com/user-attachments/assets/87f229b1-5f28-4edd-9ca0-ecbbced318b5)  
+En la parte inferior de la pantalla se encuentra la sección de "Análisis y filtrado de señal". En ellas se encuentran las herramientas fundamental para el estudio y el acondicionamiento de las mismas.  
 
 ### Filtro Pasabajo de 50Hz
 ![image](https://github.com/user-attachments/assets/9a5645d2-2bcd-45dc-b77f-893523b8e836)  
@@ -91,7 +90,12 @@ Permite visualizar el espectro de la señal, lo cual es de una gran utilidad par
 ![image](https://github.com/user-attachments/assets/a70626df-9218-434a-adb7-cd47caf80782)  
 
 
-# Consola de Filtros 
+# Consola de Filtros Avanzados
+Como se mencionó en la sección [Filtros Avanzados](#Filtros Avanzados), la consola de filtros permite aplicar cualquier filtro que se necesite sobre la señal, permitiendo previsualizar sus resultados.  
+![image](https://github.com/user-attachments/assets/9ad68768-e846-4fd6-b44d-1c3fad920005)  
+
+
+
 
 
 
