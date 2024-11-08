@@ -68,7 +68,6 @@ En la barra de herramientas se encuentra la sección de herramientas de Importac
 Dichas herramientas se detallan a continuación
 
 ### 1-Importación desde archivo XLSX  
-![image](https://github.com/user-attachments/assets/c1932d71-c1e0-42d6-996e-a317d133be1d)  
 Permite importar datos desde archivos de Excel formato XLSX. Para que los archivos sean compatibles deben tener un formato determinado. 
 * En la 1er columna de la izquierda, se deberán encontrar los valores de tiempo, con intervalos regulares entre celda y celda para que sea correctamente interpretado (es decir por ejemplo 1, 2, 3 o 0.5, 1.0, 1.5, etc).
 * En la 2da columna se deberán encontrar los valores del eje Y. No se requiere nada en particular sobre estos valores.
@@ -76,11 +75,12 @@ A continuación se muestra un ejemplo.
 ![image](https://github.com/user-attachments/assets/70e78bb9-0cd0-4d60-9787-7eca33d306e7)
 * Adicionalmente de forma opcional si se desea, se puede poner **solo en cada celda de la primera fila** un titulo en la primer fila de cada columna, como por ejemplo "Tiempo" y "Valores". El programa simplemente los ignorará y cargará el resto de los datos normalmente.
 Dicho archivo se interpretará como una señal capturada, lo cual después permitirá exportarla a Proteus para simularla, o bien a una tabla estilo C/C++ o assembler para sintetizarla.
-
 ### 2-Exportación a Excel formato XLSX
-![image](https://github.com/user-attachments/assets/c75d57a5-2904-493b-8404-668baab3d2e4)  
 Permite exportar los datos capturados a formato excel para utilizarlo en otras aplicaciones. El formato de exportación es identico al solicitado en la "Importación de XLSX"
-
+### 3-Exportación a tabla de C/C++
+Esta función permite la sintesis de la señal en microcontroladores con compiladores escritos en C/C++ generando una tabla para incluir en el codigo fuente. La amplia mayoria de los microcontroladores comerciales poseen algun compilador en estos lenguajes. Mas adelante se dedicará una sección especial para esta herramienta.
+### 3-Exportación a File generator de Proteus
+Exporta la señal a un archivo compatible con el generador del tipo file de Proteus para poder incluirla en una simulación. Mas adleante se dedicará una sección epsecial a esta funcionalidad.
 
 ## Herramientas de Señal
 En la parte inferior de la pantalla se encuentra la sección de "Análisis y filtrado de señal". En ellas se encuentran las herramientas fundamental para el estudio y el acondicionamiento de las mismas.  
