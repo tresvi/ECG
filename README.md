@@ -56,6 +56,7 @@ La herramienta tijera sirve para recortar el gráfico en caso de querer conserva
 ### Configuración de Ejes
 ![image](https://github.com/user-attachments/assets/be533484-1124-46a1-b46a-e31bfe62a9ad)  
 Permite configurar si la escala en Y se configurará de manera automática, o bien, que escala se desea utilizar.  
+
 ![image](https://github.com/user-attachments/assets/bbddad3f-95af-430a-9fc0-cb6c06f2693b)  
 
 
@@ -93,15 +94,15 @@ Permite visualizar el espectro de la señal, lo cual es de una gran utilidad par
 
 
 # Consola de Filtros Avanzados
-Como se mencionó en la sección [Filtros Avanzados](#Filtros Avanzados), la consola de filtros permite aplicar cualquier filtro que se necesite sobre la señal, permitiendo previsualizar sus resultados.  
+Como se mencionó en la sección [Filtros Avanzados](#Filtros Avanzados), la consola de filtros permite aplicar cualquier filtro que se necesite sobre la señal, permitiendo previsualizar sus resultados. El gran potencial de estos filtros radican en que se tratan de filtros digitales los cuales poseen una selectividad casi infinita, lo cual es imposible lograr con filtros analógicos (implementados a través del algoritmo de transformada rápida de Fourier).
 ![image](https://github.com/user-attachments/assets/a17fc2c9-6916-4ebe-86d6-2570afe26595)  
 
-### Estructura de la ventana
+## Estructura de la ventana
 En la parte superior de la ventana puede verse la señal original sin filtrar tal como se tomó de la ventana principal del programa. En la inferior se podrá ver como va quedando la señal luego de aplicarsele los filtros.
-### Zoom
+## Zoom
 El zoom está siempre presente en el gráfico superior ("señal original"). Al aplicarse zoom sobre él, el grafico inferior ("señal filtrada") seguirá los mismos cambios de visualización y desplazamiento punto a punto para poder hacer una comparación exacta de los cambios.
 
-### Barra de herramientas
+## Barra de herramientas
 En la barra de herramientas se encuentran todas las herramientas disponibles en esta versión
 ![image](https://github.com/user-attachments/assets/bc56fc0a-dea7-46f5-b35e-e74068647afa)  
 1. Reset Zoom: Permite reestablecer el zoom para ver la señal completa en una sola pantalla.
@@ -114,17 +115,10 @@ En la barra de herramientas se encuentran todas las herramientas disponibles en 
 8. Aplicar: Permite aceptar todos los cambios realizados a la señal filtrada y aplicarla en la ventana principal del programa. Una vez aplicados los cambios, los mismos no tienen vuelta atras (excepto volviendo a capturar o a cargar nuevamente el archivo de la señal).
 9. Cancelar: Permite abandonar la consola de filtros sin aplicar ningun cambio.
 
-
-
-
-
-
-
-
-
-
-
-
-
+## Ejemplo de filtrado
+En la siguiente imagen puede apreciarse la limpieza de la señal de ECG al notar la disminución del ruido en la señal filtrada. A la señal original se le aplicó un filtro pasabajos con frecuencia de corte de 49.5Hz y un pasa altos de 0.8Hz. Esta combinación permitió eliminar totalmente los ruidos de linea (arriba de 49.5Hz) y la ondulación de baja frecuencia (se observa como una ondulacion en el dibujo total de la señal) relacionada al movimiento del paciente (variación del potencial de hemipila sobre los electrodos).  
+![image](https://github.com/user-attachments/assets/f026bac2-9567-42b3-a0e4-02a989daee6e)  
+En la siguiente imagen pueden verse el espectro de dichas señales y apreciar el corte espectral que realizaron los filtros.  
+![image](https://github.com/user-attachments/assets/af513284-c84c-488d-8c0d-c80dfddd1d0b)  
 
 
