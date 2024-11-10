@@ -688,5 +688,13 @@ namespace ECGViewer
             FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal);
             if (frmConfiguracionEjes.ShowDialog() == DialogResult.Cancel) return;
         }
+
+        private void tsbAcercaDe_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Este software se distribuye gratuitamente con fines educativos y de investigación. La venta de este software está estrictamente prohibida, asegurando que siga siendo una herramienta de libre acceso." +
+                "\nPara ver la ultima versión dirijase a https://github.com/tresvi/ECG_Viewer/releases" +
+                "\nSoftware diseñado y escrito por Raúl Palavecino - raulpalav@gmail.com",
+                "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

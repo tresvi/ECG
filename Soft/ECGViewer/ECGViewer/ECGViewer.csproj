@@ -381,6 +381,7 @@
     <None Include="Archivos_CSV\ECG_20Seg_NoFiltrado.csv" />
     <Content Include="Codigo desechado.txt" />
     <Content Include="heart.ico" />
+    <None Include="Recursos\about.png" />
     <Content Include="Recursos\abrir-documento.png" />
     <None Include="Recursos\accept.png" />
     <None Include="Recursos\accept_48x48.png" />
@@ -407,6 +408,7 @@
     <None Include="Recursos\export_to_xlsx_2.png" />
     <None Include="Recursos\Import_From_xlsx.png" />
     <Content Include="Recursos\indicador.png" />
+    <None Include="Recursos\information.png" />
     <Content Include="Recursos\kpi.png" />
     <None Include="Recursos\measurement.png" />
     <None Include="Recursos\LowPass.png" />

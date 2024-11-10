@@ -121,6 +121,9 @@
   <data name="new-document" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\new-document.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="evaluacion-comparativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\evaluacion-comparativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -220,6 +223,9 @@
   <data name="ruler" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\ruler.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="axis" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\axis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Import_From_xlsx" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Import_From_xlsx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -286,7 +292,7 @@
   <data name="Zoom-reset-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Zoom-reset-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="axis" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\axis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
