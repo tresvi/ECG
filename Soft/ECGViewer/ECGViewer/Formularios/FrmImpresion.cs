@@ -14,11 +14,13 @@ namespace ECGViewer.Formularios
         private PrintDocument printDocument;
         private List<Muestra> _senal;
         private string _unidad;
+        private bool _autoEscalaY;
 
-        public FrmImpresion(Chart chart, in List<Muestra> senal, string unidad)
+        public FrmImpresion(Chart chart, in List<Muestra> senal, string unidad, bool autoEscalaY)
         {
             chartSenal = chart;
             _senal = senal;
+            _autoEscalaY = autoEscalaY;
             InitializeComponent();
         }
 
@@ -213,7 +215,7 @@ namespace ECGViewer.Formularios
                 MessageBox.Show($"Error al imprimir. Detalles: {ex}", "Impresion", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             
-            GraphicHelpers.CargarGrafico(chartSenal, _senal );
+            GraphicHelpers.CargarGrafico(chartSenal, _senal, _autoEscalaY );
         }
 
 
@@ -289,7 +291,7 @@ namespace ECGViewer.Formularios
                 MessageBox.Show($"Error al imprimir. Detalles: {ex}", "Impresion", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
  
-            GraphicHelpers.CargarGrafico(chartSenal, _senal);
+            GraphicHelpers.CargarGrafico(chartSenal, _senal, _autoEscalaY);
         }
 
 

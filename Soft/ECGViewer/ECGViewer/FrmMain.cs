@@ -31,6 +31,7 @@ namespace ECGViewer
         private decimal _tMuestreo;
         private int _fMuestreo;
         private string _archivoActual;
+        private bool _autoEscalaY = false;
         
 
         public FrmMain()
@@ -51,6 +52,7 @@ namespace ECGViewer
                 cmbBaudRate.SelectedIndex = config.BaudRate;
                 cmbPuertos.Text = config.PuertoCOM;
                 nudTMuestreo.Value = config.TiempoMuestreo;
+                _autoEscalaY = true;
             }
             catch (Exception ex)
             {
@@ -133,7 +135,7 @@ namespace ECGViewer
 
             _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
 
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
 
             gbSenal.Enabled = true;
             tsbResetZoom_Click(sender, e);
@@ -165,7 +167,7 @@ namespace ECGViewer
             if (resultado != DialogResult.OK) return;
 
             _senalECG = frmAplicarFiltro.SenalFiltrada;
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
 
             chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
             chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
@@ -227,7 +229,8 @@ namespace ECGViewer
                 }
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-                GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+                _autoEscalaY = true;
+                GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
                 GraphicHelpers.CargarAnotaciones(chartSenal, anotaciones);
                 chartSenal.ChartAreas[0].AxisY.Title = unidad;
 
@@ -379,7 +382,7 @@ namespace ECGViewer
             timerPuerto.Stop();
             timerGraficar.Enabled = false;
             timerGraficar.Stop();
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
         }
 
 
@@ -567,7 +570,7 @@ namespace ECGViewer
             , "Recortar gráfico", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             Utiles.ResetearTiempo(ref _senalECG);
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
             tsbResetZoom_Click(sender, e);
         }
 
@@ -591,7 +594,7 @@ namespace ECGViewer
                 return;
             }
 
-            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG, chartSenal.ChartAreas[0].AxisY.Title);
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG, chartSenal.ChartAreas[0].AxisY.Title, _autoEscalaY);
             frmImpresion.ShowDialog();
         }
 
@@ -669,7 +672,8 @@ namespace ECGViewer
                 }
 
                 _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-                GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+                _autoEscalaY = true;
+                GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
 
                 MessageBox.Show($"Archivo importado correctamente. Se importaron {_senalECG.Count} muestras"
                     , "Error al importar" , MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -694,9 +698,11 @@ namespace ECGViewer
 
         private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
         {
-            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal);
+            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal, _autoEscalaY);
             frmConfiguracionEjes.ShowDialog();
+            _autoEscalaY = frmConfiguracionEjes.AutoEscalaY;
         }
+
 
         private void tsbAcercaDe_Click(object sender, EventArgs e)
         {

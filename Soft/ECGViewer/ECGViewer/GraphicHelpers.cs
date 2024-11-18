@@ -127,7 +127,7 @@ namespace ECGViewer
         }
 
 
-        internal static void CargarGrafico(Chart chart, in List<Muestra> senal)
+        internal static void CargarGrafico(Chart chart, in List<Muestra> senal,  bool usarAutoescala)
         {
             ChartArea chartArea = chart.ChartAreas[0];
             Series serie = chart.Series["Muestras"];
@@ -147,9 +147,12 @@ namespace ECGViewer
 
             //Autoescalas
             chart.ChartAreas[0].AxisX.Minimum = 0;
-            chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
-            chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
-            chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            if (usarAutoescala)
+            {
+                chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
+                chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+                chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            }
         }
 
 

@@ -9,17 +9,19 @@ namespace ECGViewer.Formularios
     {
 
         private Chart _chart;
+        public bool AutoEscalaY {get; set;}
 
-        public FrmConfiguracionEjes(ref Chart chart)
+        public FrmConfiguracionEjes(ref Chart chart, bool autoEscalaY)
         {
             InitializeComponent();
             _chart = chart;
+            AutoEscalaY = autoEscalaY;
         }
 
 
         private void FrmConfiguracionEjes_Load(object sender, EventArgs e)
         {
-            chkEscalaAutomatica.Checked = Settings.Default.AutoEscalaY;
+            chkEscalaAutomatica.Checked = AutoEscalaY;
             chkEscalaAutomatica_CheckedChanged(sender, e);
 
             txtUnidad.Text = _chart.ChartAreas[0].AxisY.Title;
@@ -55,8 +57,7 @@ namespace ECGViewer.Formularios
                 _chart.ChartAreas[0].AxisY.Maximum = (double)nudYMax.Value;
             }
 
-            Settings.Default.AutoEscalaY = chkEscalaAutomatica.Checked;
-            Settings.Default.Save();
+            AutoEscalaY = chkEscalaAutomatica.Checked;
         }
 
 

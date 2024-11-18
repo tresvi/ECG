@@ -12,7 +12,7 @@ namespace ECGViewer
         {
             InitializeComponent();
 
-            Series series = chartSenal.Series["Muestras"];
+            Series series = chartEspectro.Series["Muestras"];
 
             Complex[] spectrum = FftSharp.FFT.Forward(signal);
             double[] psd = FftSharp.FFT.Magnitude(spectrum);
@@ -23,12 +23,12 @@ namespace ECGViewer
                 series.Points.AddXY(freq[i], psd[i]);
             }
 
-            chartSenal.ChartAreas[0].AxisX.Interval = 2;
-            chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
-            chartSenal.ChartAreas[0].AxisX.Minimum = 0;
-            chartSenal.ChartAreas[0].AxisX.Maximum = 100;
-            chartSenal.ChartAreas[0].AxisY.Minimum = Double.NaN;
-            chartSenal.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            chartEspectro.ChartAreas[0].AxisX.Interval = 2;
+            chartEspectro.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
+            chartEspectro.ChartAreas[0].AxisX.Minimum = 0;
+            chartEspectro.ChartAreas[0].AxisX.Maximum = 100;
+            chartEspectro.ChartAreas[0].AxisY.Minimum = Double.NaN;
+            chartEspectro.ChartAreas[0].AxisY.Maximum = Double.NaN;
         }
     }
 }
