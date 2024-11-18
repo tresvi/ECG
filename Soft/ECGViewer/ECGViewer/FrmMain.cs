@@ -691,9 +691,6 @@ namespace ECGViewer
             chartSenal.ChartAreas[0].CursorY.LineWidth = tsbReglaX.Checked ? 2 : 0;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
 
         private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
         {

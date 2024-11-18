@@ -156,9 +156,9 @@ namespace ECGViewer
         public static void CargarAnotaciones(Chart chart, in List<StripLineWithComment> anotaciones)
         {
             foreach (StripLineWithComment anotacion in anotaciones)
-            { 
+            {
                 chart.ChartAreas[0].AxisX.StripLines.Add(anotacion);
-                //anotacion.Annotation.AnchorDataPoint = chart.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");
+                anotacion.Annotation.AnchorDataPoint = chart.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");
                 chart.Annotations.Add(anotacion.Annotation);
             }
         }

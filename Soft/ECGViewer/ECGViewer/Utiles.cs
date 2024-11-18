@@ -64,7 +64,7 @@ namespace ECGViewer
                     if (double.TryParse(anotacionArray[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double posX) &&
                         double.TryParse(anotacionArray[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double posY))
                     {
-                        StripLineWithComment anotacion = new StripLineWithComment(posX, posY, anotacionArray[2], 10,10);
+                        StripLineWithComment anotacion = new StripLineWithComment(posX, posY, anotacionArray[2], 12,10);
                         anotaciones.Add(anotacion);
                     }
                 }
