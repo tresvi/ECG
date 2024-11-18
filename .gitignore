@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Proteus
+Project Backups/
+*.workspace
+*.pdsbak
+Hard/diseño ecg simplificado.pdsprj.I7-8VA.Basilio.workspace
+Hard/diseño ecg simplificado.pdsprj.I7-8VA.Basilio.workspace

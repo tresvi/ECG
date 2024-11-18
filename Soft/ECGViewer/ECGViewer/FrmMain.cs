@@ -75,6 +75,7 @@ namespace ECGViewer
 
         private void chartSenal_MouseDown(object sender, MouseEventArgs e)
         {
+            //Funcionalidad de Regla
             if (tsbReglaX.Checked && e.Button == MouseButtons.Left)
             {
                 double valorX = chartSenal.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
@@ -118,7 +119,8 @@ namespace ECGViewer
         {
             string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
             string unidad;
-            _senalECG = Utiles.LoadCsvData(filePath, out unidad);
+            List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
+            _senalECG = Utiles.LoadCsvData(filePath, out unidad, out anotaciones);
 
             for (int i = 0; i < _senalECG.Count; i++)
             {
@@ -213,7 +215,8 @@ namespace ECGViewer
                 if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 
                 string unidad;
-                _senalECG = Utiles.LoadCsvData(openFileDialog.FileName, out unidad);
+                List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
+                _senalECG = Utiles.LoadCsvData(openFileDialog.FileName, out unidad, out anotaciones);
                 _archivoActual = openFileDialog.FileName;
 
                 if (_senalECG.Count <= 1)
@@ -225,6 +228,7 @@ namespace ECGViewer
 
                 _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
+                GraphicHelpers.CargarAnotaciones(chartSenal, anotaciones);
                 chartSenal.ChartAreas[0].AxisY.Title = unidad;
 
                 this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
@@ -237,6 +241,55 @@ namespace ECGViewer
 
             gbSenal.Enabled = true;
             tsbResetZoom_Click(sender, e);
+        }
+
+
+        private void tsbGuardar_Click(object sender, EventArgs e)
+        {
+            if (_senalECG.Count == 0)
+            {
+                MessageBox.Show("No hay datos para guardar");
+                return;
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_archivoActual);
+            saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            saveFileDialog.Title = "Guardar archivo CSV";
+            saveFileDialog.DefaultExt = "csv";
+            saveFileDialog.AddExtension = true;
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+
+            string rutaArchivo = saveFileDialog.FileName;
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(rutaArchivo))
+                {
+                    writer.WriteLine($"tiempo, {chartSenal.ChartAreas[0].AxisY.Title}");
+                    foreach (Muestra muestra in _senalECG)
+                    {
+                        string linea = string.Format(CultureInfo.InvariantCulture, "{0},{1}", muestra.Tiempo, muestra.Canal[0]);
+                        writer.WriteLine(linea);
+                    }
+
+                    StripLinesCollection anotaciones = chartSenal.ChartAreas[0].AxisX.StripLines;
+                    foreach (StripLineWithComment anotacion in anotaciones)
+                    {
+                        string linea = string.Format(CultureInfo.InvariantCulture, "{0}{1}{4}{2}{4}{3}"
+                            , Utiles.CABECERA_ANOTACIONES, anotacion.PosicionX, anotacion.PosicionY, anotacion.Descripcion, Utiles.SEPARADOR_ANOTACIONES);
+                        writer.WriteLine(linea);
+                    }
+                }
+
+                this.Text = $"{DESCRIPCION_APLICACION} | {saveFileDialog.FileName}";
+                MessageBox.Show("Archivo guardado correctamente.", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el archivo: {ex.Message}", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -279,7 +332,6 @@ namespace ECGViewer
                 _fMuestreo = (int)Math.Round(1000 / _tMuestreo);
                 _contadorMuestras = 0;
                 _primerMuestra = true;
-                chartSenal.ChartAreas[0].AxisX.Minimum = double.NaN;    //!! TODO: Ver si esto queda
             }
             catch (Exception ex)
             {
@@ -327,53 +379,13 @@ namespace ECGViewer
             timerPuerto.Stop();
             timerGraficar.Enabled = false;
             timerGraficar.Stop();
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG);
         }
 
 
         private void tsbNuevoArchivo_Click(object sender, EventArgs e)
         {
 
-        }
-
-
-        private void tsbGuardar_Click(object sender, EventArgs e)
-        {
-            if (_senalECG.Count == 0)
-            {
-                MessageBox.Show("No hay datos para guardar");
-                return;
-            } 
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_archivoActual); 
-            saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
-            saveFileDialog.Title = "Guardar archivo CSV";
-            saveFileDialog.DefaultExt = "csv";
-            saveFileDialog.AddExtension = true;
-
-            if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
-            
-            string rutaArchivo = saveFileDialog.FileName;
-
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(rutaArchivo))
-                {
-                    writer.WriteLine($"tiempo, {chartSenal.ChartAreas[0].AxisY.Title}");
-                    foreach (Muestra muestra in _senalECG)
-                    {
-                        string linea = string.Format(CultureInfo.InvariantCulture, "{0},{1}", muestra.Tiempo, muestra.Canal[0]);
-                        writer.WriteLine(linea);
-                    }
-                }
-
-                this.Text = $"{DESCRIPCION_APLICACION} | {saveFileDialog.FileName}";
-                MessageBox.Show("Archivo guardado correctamente.", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al guardar el archivo: {ex.Message}", "Guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
 
@@ -686,7 +698,7 @@ namespace ECGViewer
         private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
         {
             FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal);
-            if (frmConfiguracionEjes.ShowDialog() == DialogResult.Cancel) return;
+            frmConfiguracionEjes.ShowDialog();
         }
 
         private void tsbAcercaDe_Click(object sender, EventArgs e)

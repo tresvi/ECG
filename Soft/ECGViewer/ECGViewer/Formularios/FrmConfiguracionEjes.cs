@@ -30,9 +30,9 @@ namespace ECGViewer.Formularios
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
 
         private void btnAplicar_Click(object sender, EventArgs e)
         {
@@ -45,16 +45,20 @@ namespace ECGViewer.Formularios
             }
             else
             {
-                _chart.ChartAreas[0].AxisY.Minimum = (double) nudYMin.Value;
-                _chart.ChartAreas[0].AxisY.Maximum = (double) nudYMax.Value;
+                if (nudYMin.Value >= nudYMax.Value)
+                {
+                    MessageBox.Show("El valor minimo del eje, no puede ser mayor que el máximo", "Error de valores", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                _chart.ChartAreas[0].AxisY.Minimum = (double)nudYMin.Value;
+                _chart.ChartAreas[0].AxisY.Maximum = (double)nudYMax.Value;
             }
 
             Settings.Default.AutoEscalaY = chkEscalaAutomatica.Checked;
             Settings.Default.Save();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
+
 
         private void chkEscalaAutomatica_CheckedChanged(object sender, EventArgs e)
         {

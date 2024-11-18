@@ -130,11 +130,13 @@ namespace ECGViewer
         internal static void CargarGrafico(Chart chart, in List<Muestra> senal)
         {
             ChartArea chartArea = chart.ChartAreas[0];
-
             Series serie = chart.Series["Muestras"];
             //serie.Color = Color.Red;
 
+            chartArea.AxisX.StripLines.Clear();
+            chart.Annotations.Clear();
             serie.Points.Clear();
+
             foreach (var muestra in senal)
             {
                 serie.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
@@ -148,6 +150,17 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisX.Maximum = Double.NaN;
             chart.ChartAreas[0].AxisY.Minimum = Double.NaN;
             chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+        }
+
+
+        public static void CargarAnotaciones(Chart chart, in List<StripLineWithComment> anotaciones)
+        {
+            foreach (StripLineWithComment anotacion in anotaciones)
+            { 
+                chart.ChartAreas[0].AxisX.StripLines.Add(anotacion);
+                //anotacion.Annotation.AnchorDataPoint = chart.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");
+                chart.Annotations.Add(anotacion.Annotation);
+            }
         }
 
 
@@ -188,6 +201,7 @@ namespace ECGViewer
             chart.ChartAreas[0].AxisY.Maximum = Double.NaN;
             */
         }
+
 
         internal static void ModoECG(Chart chart, bool activar)
         {

@@ -37,7 +37,7 @@
             this.txtUnidad = new System.Windows.Forms.TextBox();
             this.chkEscalaAutomatica = new System.Windows.Forms.CheckBox();
             this.btnSalir = new System.Windows.Forms.Button();
-            this.btnAplicar = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudYMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudYMin)).BeginInit();
@@ -176,28 +176,26 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
-            // btnAplicar
+            // button1
             // 
-            this.btnAplicar.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnAplicar.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAplicar.Location = new System.Drawing.Point(57, 192);
-            this.btnAplicar.Name = "btnAplicar";
-            this.btnAplicar.Size = new System.Drawing.Size(103, 37);
-            this.btnAplicar.TabIndex = 25;
-            this.btnAplicar.Text = "&Aplicar";
-            this.btnAplicar.UseVisualStyleBackColor = true;
-            this.btnAplicar.Click += new System.EventHandler(this.btnAplicar_Click);
+            this.button1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(57, 192);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 37);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "&Aplicar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnAplicar_Click);
             // 
             // FrmConfiguracionEjes
             // 
-            this.AcceptButton = this.btnAplicar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnSalir;
             this.ClientSize = new System.Drawing.Size(381, 260);
             this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.btnAplicar);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -221,8 +219,8 @@
         private System.Windows.Forms.TextBox txtUnidad;
         private System.Windows.Forms.CheckBox chkEscalaAutomatica;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.Button btnAplicar;
         private System.Windows.Forms.NumericUpDown nudYMax;
         private System.Windows.Forms.NumericUpDown nudYMin;
+        private System.Windows.Forms.Button button1;
     }
 }

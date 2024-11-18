@@ -46,6 +46,8 @@ namespace ECGViewer.Formularios
             nudCalibBitsMax.Enabled = !chkMuestrasADC.Checked;
             nudCalibValorYMin.Enabled = !chkMuestrasADC.Checked;
             nudCalibValorYMax.Enabled = !chkMuestrasADC.Checked;
+            lblZero.Enabled = !chkMuestrasADC.Checked;
+            lblSpan.Enabled = !chkMuestrasADC.Checked;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

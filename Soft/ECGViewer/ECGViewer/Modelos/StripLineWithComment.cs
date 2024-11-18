@@ -36,6 +36,7 @@ namespace ECGViewer.Modelos
         {
             _fontSize = fontSize;
             _longTextoResumen = longTextoResumen;
+            _descripcion = text;
             /*
             TextAlignment = StringAlignment.Far;
             TextLineAlignment = StringAlignment.Near;

@@ -2,13 +2,17 @@
 using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ECGViewer
 {
     static internal class Utiles
     {
+        public const string CABECERA_ANOTACIONES = "## ";
+        public const string SEPARADOR_ANOTACIONES = "#|#";
 
         static internal double[] ClonarVectorParaFFT(in List<Muestra> senalOriginal)
         {
@@ -29,10 +33,12 @@ namespace ECGViewer
         }
 
 
-        public static List<Muestra> LoadCsvData(string filePath, out string unidad)
+        public static List<Muestra> LoadCsvData(string filePath, out string unidad, out List<StripLineWithComment> anotaciones)
         {
+            string[] separadorAnotaciones = new string[] { SEPARADOR_ANOTACIONES };
             List<Muestra> dataList = new List<Muestra>();
             unidad = "";
+            anotaciones = new List<StripLineWithComment>();
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("El archivo CSV no se encontró.", filePath);
@@ -40,7 +46,7 @@ namespace ECGViewer
             foreach (string line in File.ReadLines(filePath))
             {
                 string[] parts = line.Split(',');
-                
+
                 if (double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double value1) &&
                     double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double value2))
                 {
@@ -48,6 +54,19 @@ namespace ECGViewer
                     muestra.Tiempo = value1;
                     muestra.Canal[0] = value2;
                     dataList.Add(muestra);
+                }
+                else if (line.StartsWith(CABECERA_ANOTACIONES))
+                {
+                    string lineaAux = line.Substring(CABECERA_ANOTACIONES.Length);
+                    string[] anotacionArray = lineaAux.Split(separadorAnotaciones, StringSplitOptions.None);
+                    if (anotacionArray.Length < 3) continue;
+
+                    if (double.TryParse(anotacionArray[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double posX) &&
+                        double.TryParse(anotacionArray[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double posY))
+                    {
+                        StripLineWithComment anotacion = new StripLineWithComment(posX, posY, anotacionArray[2], 10,10);
+                        anotaciones.Add(anotacion);
+                    }
                 }
                 else
                 {
