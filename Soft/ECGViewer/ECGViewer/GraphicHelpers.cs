@@ -11,17 +11,6 @@ namespace ECGViewer
 {
     internal static class GraphicHelpers
     {
-        /*
-                     //Creo la nueva serie de datos.
-            _graphSerie = new Series("Muestras");
-            _graphSerie.Color = System.Drawing.Color.AliceBlue;
-            _graphSerie.ChartType = SeriesChartType.Line;
-            _graphSerie.BorderWidth = 1; //2;
-            _graphSerie.XValueType = ChartValueType.Single;
-            _graphSerie.YValueType = ChartValueType.Single;
-                    //chartEspectro.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //chartEspectro.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-         */
 
         internal static void InicializarGrafico(Chart chart)
         {
