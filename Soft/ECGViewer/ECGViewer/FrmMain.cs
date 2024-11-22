@@ -98,8 +98,9 @@ namespace ECGViewer
                 double finSeleccionY = chartSenal.ChartAreas[0].CursorY.SelectionEnd;
                 double diferenciaX = Math.Abs(finSeleccionX - inicioSeleccionX);
                 double diferenciaY = Math.Abs(finSeleccionY - inicioSeleccionY);
+                string unidad = chartSenal.ChartAreas[0].AxisY.Title;
 
-                lblRegla.Text = $"X: {diferenciaX.ToString("0.000")} Seg. \nY: {diferenciaY.ToString("0.000")} mV";
+                lblRegla.Text = $"X: {diferenciaX.ToString("0.000")} Seg. \nY: {diferenciaY.ToString("0.000")} {unidad}";
             }
         }
 
