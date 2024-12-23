@@ -429,7 +429,10 @@ namespace ECGViewer
                     Configuracion config = new Configuracion();
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
-
+                    
+                    if (!int.TryParse(data, out int nro))  
+                        continue;
+                    
                     int cuenta = int.Parse(data);
                     if (cuenta > _cuentaMax) _cuentaMax = cuenta;
                     if (cuenta < _cuentaMin) _cuentaMin = cuenta;
