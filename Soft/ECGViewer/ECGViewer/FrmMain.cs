@@ -430,8 +430,10 @@ namespace ECGViewer
                     Muestra muestra = new Muestra();
                     muestra.Tiempo = _contadorMuestras++ * (double)(_tMuestreo / 1000);
                     
-                    if (!int.TryParse(data, out int nro))  
-                        continue;
+                    //Necesario para evitar retardos excesivos provocados por el manejador de excepciones
+                    //en los casos que lleguen datos invalidos. Los retardos provocan que se encolen muchos datos
+                    //en el puerto. El Serial Plotter de Arduino lo maneja asi.
+                    if (!int.TryParse(data, out int nro)) continue;
                     
                     int cuenta = int.Parse(data);
                     if (cuenta > _cuentaMax) _cuentaMax = cuenta;
