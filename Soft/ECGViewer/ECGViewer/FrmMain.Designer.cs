@@ -631,10 +631,11 @@
             // 
             this.lblPuntoCursor.AutoSize = true;
             this.lblPuntoCursor.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.lblPuntoCursor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblPuntoCursor.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPuntoCursor.Location = new System.Drawing.Point(1152, 16);
+            this.lblPuntoCursor.Location = new System.Drawing.Point(1152, 13);
             this.lblPuntoCursor.Name = "lblPuntoCursor";
-            this.lblPuntoCursor.Size = new System.Drawing.Size(84, 44);
+            this.lblPuntoCursor.Size = new System.Drawing.Size(86, 46);
             this.lblPuntoCursor.TabIndex = 47;
             this.lblPuntoCursor.Text = "X:0.000\r\nY:-0.000";
             // 
