@@ -8,7 +8,7 @@ const int d5 = A2;  // Pin D5 del LCD conectado a A2
 const int d6 = A1;  // Pin D6 del LCD conectado a A1
 const int d7 = A0;  // Pin D7 del LCD conectado a A0
 
-
+// Tabla de valores en memoria de programa
 const unsigned short tabla[10000] PROGMEM = {119 ,119 ,114 ,114 ,114 ,114 ,114 ,119 ,119 ,119
    ,124 ,124 ,124 ,124 ,129 ,129 ,129 ,129 ,134 ,134
    ,134 ,134 ,134 ,134 ,134 ,134 ,134 ,139 ,139 ,139
@@ -1010,14 +1010,17 @@ const unsigned short tabla[10000] PROGMEM = {119 ,119 ,114 ,114 ,114 ,114 ,114 ,
    ,218 ,218 ,213 ,208 ,208 ,203 ,203 ,203 ,203 ,203
    ,203 ,203 ,203 ,203 ,203 ,198 ,198 ,198 ,198 ,198
 };
+
 #include <avr/pgmspace.h>
 
-// Tabla de valores en memoria de programa
-//const unsigned short tabla[10] PROGMEM = {241, 266, 289, 289, 267, 264, 251, 254, 263, 1020};
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+const int BOTON_RUN = A5;
+
 
 void setup() {
   // Configurar el pin 9 como salida
   pinMode(9, OUTPUT);
+  pinMode(BOTON_RUN, INPUT);
 
   // Configuración del Timer 1 para Fast PWM con 10 bits
   TCCR1A = 0; // Limpiar registro de control A
@@ -1029,18 +1032,50 @@ void setup() {
 
   // Habilitar salida PWM en el pin 9 (OC1A)
   TCCR1A |= (1 << COM1A1);
+
+  //Inicializar display
+  lcd.begin(16, 2);
+  lcd.setCursor(0, 0); // Posicionar el cursor en la segunda fila
+  lcd.print("*Simulador ECG*");
+    
+   pinMode(BOTON_RUN, INPUT_PULLUP);
+   analogReference(DEFAULT);
 }
 
+
 void loop() {
+
+  int retardo = LeerPotenciometro();
+
   // Recorrer la tabla y emitir valores por PWM
   for (uint16_t i = 0; i < 10000; i++) {
+    
     // Leer el valor de la tabla desde la memoria de programa
     unsigned short valor = pgm_read_word(&tabla[i]);
 
     // Asignar el valor al registro OCR1A (ajusta el duty cycle)
     OCR1A = valor;
+    
+    // Retardo para reconstruir la señal
+    delayMicroseconds(retardo);
 
-    // Esperar un ciclo para emitir el valor con precisión
-    delayMicroseconds(2000); // 1 ciclo a 62.5 kHz dura ~16 µs
+    while (digitalRead(BOTON_RUN) == HIGH)
+    {
+      retardo = LeerPotenciometro();
+      delay(10);
+    }
+    
   }
+}
+
+
+int LeerPotenciometro(){
+  int valorADC = analogRead(A4);    //Leo el potenciometro de Frec. Cardiaca
+  int valorDelay = map(valorADC, 0, 1023, 1000, 3000);
+  int valorPPM = map(valorADC, 0, 1023, 43, 129);
+  lcd.setCursor(0, 1);
+  lcd.print("PPM:            ");
+  lcd.setCursor(5, 1);
+  lcd.print(valorPPM);
+  return valorDelay;
 }
