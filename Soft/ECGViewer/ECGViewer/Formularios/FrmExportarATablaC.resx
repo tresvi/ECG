@@ -121,10 +121,15 @@
     <value>17, 17</value>
   </metadata>
   <data name="txtEjemploCodigo.Text" xml:space="preserve">
-    <value>const int pwmPin = 11;
+    <value>const int pwmPin = 9;
 
 void setup() {
   pinMode(pwmPin, OUTPUT);
+
+  // Seteo Timer1 para tener la
+  // frec. maxima de PWM (62.5 kHz)
+  TCCR1A = _BV(COM1A1) | _BV(WGM11); 
+  TCCR1B = _BV(WGM13) | _BV(CS10);  
 }
 
 void loop() {
@@ -135,4 +140,7 @@ void loop() {
   }
 }</value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>64</value>
+  </metadata>
 </root>
