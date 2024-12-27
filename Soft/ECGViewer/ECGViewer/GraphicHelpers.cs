@@ -116,14 +116,17 @@ namespace ECGViewer
         }
 
 
-        internal static void CargarGrafico(Chart chart, in List<Muestra> senal,  bool usarAutoescala)
+        internal static void CargarGrafico(Chart chart, in List<Muestra> senal,  bool usarAutoescala, bool clearStripYAnnotations = true)
         {
             ChartArea chartArea = chart.ChartAreas[0];
             Series serie = chart.Series["Muestras"];
             //serie.Color = Color.Red;
 
-            chartArea.AxisX.StripLines.Clear();
-            chart.Annotations.Clear();
+            if (clearStripYAnnotations)
+            { 
+                chartArea.AxisX.StripLines.Clear();
+                chart.Annotations.Clear();
+            }
             serie.Points.Clear();
 
             foreach (var muestra in senal)

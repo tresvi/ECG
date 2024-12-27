@@ -12,5 +12,5 @@ void loop() {
  
   //Imprimimos por el monitor serie
   Serial.println(valor);
-  delay(1);
+  delay(1000);
 }

@@ -383,7 +383,7 @@ namespace ECGViewer
             timerPuerto.Stop();
             timerGraficar.Enabled = false;
             timerGraficar.Stop();
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY, false);
         }
 
 
@@ -717,5 +717,6 @@ namespace ECGViewer
                 "\nSoftware diseñado y escrito por Raúl Palavecino - raulpalav@gmail.com",
                 "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }
