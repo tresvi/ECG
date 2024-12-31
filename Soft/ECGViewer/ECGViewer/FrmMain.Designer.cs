@@ -409,8 +409,8 @@
             this.tsbExportarATablaC.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbExportarATablaC.Name = "tsbExportarATablaC";
             this.tsbExportarATablaC.Size = new System.Drawing.Size(68, 68);
-            this.tsbExportarATablaC.Tag = "Exportar a tabla lenguaje C";
-            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje C";
+            this.tsbExportarATablaC.Tag = "Exportar a tabla lenguaje de Prog.";
+            this.tsbExportarATablaC.Text = "Exportar a tabla lenguaje de Prog.";
             this.tsbExportarATablaC.Click += new System.EventHandler(this.tsbExportarATablaC_Click);
             // 
             // tsbExportarProteus

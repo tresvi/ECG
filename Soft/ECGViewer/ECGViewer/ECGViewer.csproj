@@ -361,7 +361,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Archivos_CSV\ECG_Espantoso_20Seg.csv" />
+    <None Include="Archivos_CSV_Ejemplo\ECG_20_Seg_ESPANTOSO.csv" />
+    <None Include="Archivos_CSV_Ejemplo\ECG_20_Seg_FILTRADO.csv" />
+    <None Include="Archivos_CSV_Ejemplo\ECG_20_Seg_NO_FILTRADO.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -378,8 +380,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Archivos_CSV\ECG_20Seg_Filtrado.csv" />
-    <None Include="Archivos_CSV\ECG_20Seg_NoFiltrado.csv" />
     <Content Include="Codigo desechado.txt" />
     <Content Include="heart.ico" />
     <None Include="Recursos\about.png" />

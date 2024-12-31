@@ -1,2 +1,0 @@
-const short tabla[1] = {121
-};
