@@ -26,28 +26,6 @@ namespace ECGViewer.Formularios
 
         private void FrmExportarATablaC_Load(object sender, EventArgs e)
         {
-            if (_senalECG.Count > 2)
-            {
-                string funcion;
-                long delay;
-                double tMuestroEnmS = (_senalECG[1].Tiempo - _senalECG[0].Tiempo)*1000;
-
-                //delayMicroseconds() como maximo puede recibir como parametro, como maximo 65.536 us, es decir aprox, 65mS
-                //Mas de 65mS, se debe usar delay()
-                if (tMuestroEnmS < 65)
-                {
-                    funcion = "delayMicroseconds";
-                    delay = (int) (tMuestroEnmS * 1000);
-                }
-                else
-                {
-                    funcion = "delay";
-                    delay = (int)(tMuestroEnmS);
-                }
-                txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%FUNCION%", funcion.ToString());
-                txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%DELAY%", delay.ToString());
-            }
-
             if (cmbSaltoLinea.SelectedIndex == -1) cmbSaltoLinea.SelectedIndex = 1;
 
             int bitsSeleccionadosIndex = ECGViewer.Properties.Settings.Default.BitsParaEscaladoIndex;
@@ -55,6 +33,29 @@ namespace ECGViewer.Formularios
                 cmbBitsEscalado.SelectedIndex = bitsSeleccionadosIndex;
             else
                 cmbBitsEscalado.SelectedIndex = -1;
+
+            if (_senalECG.Count < 2) return;
+            
+            string funcion;
+            long delay;
+            double tMuestreoEnmS = (_senalECG[1].Tiempo - _senalECG[0].Tiempo)*1000;
+
+            //delayMicroseconds() como maximo puede recibir como parametro, como maximo 65.536 us, es decir aprox, 65mS
+            //Mas de 65mS, se debe usar delay()
+            if (tMuestreoEnmS < 65)
+            {
+                funcion = "delayMicroseconds";
+                delay = (int) (tMuestreoEnmS * 1000);
+            }
+            else
+            {
+                funcion = "delay";
+                delay = (int)(tMuestreoEnmS);
+            }
+            txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%NRO_MUESTRAS%", _senalECG.Count.ToString());
+            txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%FUNCION%", funcion.ToString());
+            txtEjemploCodigo.Text = txtEjemploCodigo.Text.Replace("%DELAY%", delay.ToString());
+
         }
 
 

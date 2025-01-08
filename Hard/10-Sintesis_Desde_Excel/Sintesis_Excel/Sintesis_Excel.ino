@@ -1,9 +1,9 @@
 
 // Tabla de valores exportada desde Excel
-const unsigned char tabla[32] = {0 ,85 ,170 ,255 ,0 ,85 ,170 ,255 ,0 ,8
-   ,17 ,20 ,21 ,21 ,21 ,20 ,17 ,8 ,255 ,255
-   ,255 ,255 ,255 ,255 ,255 ,255 ,255 ,255 ,0 ,0
-   ,0 ,0
+const unsigned char tabla[34] = {0 ,16 ,32 ,49 ,65 ,81 ,98 ,81 ,65 ,49
+   ,32 ,16 ,0 ,15 ,24 ,30 ,33 ,35 ,35 ,33
+   ,30 ,24 ,15 ,0 ,220 ,237 ,247 ,253 ,255 ,253
+   ,247 ,237 ,220 ,0
 };
 
 const int pwmPin = 9;
@@ -11,35 +11,17 @@ const int pwmPin = 9;
 void setup() {
   // Configurar el pin 9 como salida
   pinMode(9, OUTPUT);
-
-TCCR1A = 0b00000001 ; // 8 bits
-TCCR1B = 0b00001001 ; // x1 pwm rápido
-  // Habilitar salida PWM en el pin 9 (OC1A)
-  TCCR1A |= (1 << COM1A1);
-  analogWrite(9, 127);  // 50% de ciclo de trabajo
+  
+  // Configuración del modo PWM rápido de 8 bits
+  TCCR1A = _BV(WGM10) | _BV(COM1A1); // WGM10 = 1 (PWM rápido, 8 bits), COM1A1 =  1(alida en pin 9)
+  TCCR1B = _BV(WGM12) | _BV(CS10);   // WGM12 = 1 (PWM rápido) y CS10 = 1 (sin prescaler)
 }
 
 void loop() {
-  // El pin 9 ya está emitiendo la señal PWM de 62.5 kHz
-  // No es necesario hacer nada en el loop
-}
-
-/*
-void setup() {
-  pinMode(pwmPin, OUTPUT);
-
-  // Seteo Timer1 para tener la
-  // frec. maxima de PWM (62.5 kHz)
-  TCCR1A = _BV(COM1A1) | _BV(WGM11); 
-  TCCR1B = _BV(WGM13) | _BV(CS10);  
-}
-
-void loop() {
-  analogWrite(pwmPin, tabla[i]);
-
-  for (int i = 0; i < 10; i++) {
-    analogWrite(pwmPin, tabla[i]);
+  for (int i = 0; i < 34; i++) {
+    //Asignar a OCR1A es mas eficiente que analogWrite(pwmPin, tabla[i]);
+    OCR1A = tabla[i]; 
     //Delay para tiempo de muestreo
-    delayMicroseconds(10000);
+    delayMicroseconds(100);
   }  
-}*/
+}

@@ -39,22 +39,22 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtEjemploCodigo = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbEscaladoBits = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbBitsEscalado = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gpbSaltoLinea.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gbEscaladoBits.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // gpbSaltoLinea
             // 
             this.gpbSaltoLinea.Controls.Add(this.cmbSaltoLinea);
             this.gpbSaltoLinea.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
-            this.gpbSaltoLinea.Location = new System.Drawing.Point(10, 227);
+            this.gpbSaltoLinea.Location = new System.Drawing.Point(13, 300);
             this.gpbSaltoLinea.Margin = new System.Windows.Forms.Padding(1);
             this.gpbSaltoLinea.Name = "gpbSaltoLinea";
             this.gpbSaltoLinea.Padding = new System.Windows.Forms.Padding(1);
@@ -66,6 +66,7 @@
             // cmbSaltoLinea
             // 
             this.cmbSaltoLinea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSaltoLinea.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSaltoLinea.FormattingEnabled = true;
             this.cmbSaltoLinea.Items.AddRange(new object[] {
             "Sin salto",
@@ -88,7 +89,7 @@
             // btnExportar
             // 
             this.btnExportar.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportar.Location = new System.Drawing.Point(376, 410);
+            this.btnExportar.Location = new System.Drawing.Point(399, 463);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(106, 34);
             this.btnExportar.TabIndex = 20;
@@ -102,11 +103,11 @@
             this.groupBox1.Controls.Add(this.rbEstiloAssembler);
             this.groupBox1.Controls.Add(this.rbEstiloC);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(10, 14);
+            this.groupBox1.Location = new System.Drawing.Point(13, 14);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox1.Size = new System.Drawing.Size(205, 169);
+            this.groupBox1.Size = new System.Drawing.Size(205, 177);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleccionar Estilo de Tabla";
@@ -117,7 +118,7 @@
             this.rbBinario.Enabled = false;
             this.rbBinario.Font = new System.Drawing.Font("Arial", 11.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbBinario.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.rbBinario.Location = new System.Drawing.Point(7, 123);
+            this.rbBinario.Location = new System.Drawing.Point(7, 130);
             this.rbBinario.Margin = new System.Windows.Forms.Padding(1);
             this.rbBinario.Name = "rbBinario";
             this.rbBinario.Size = new System.Drawing.Size(180, 22);
@@ -130,7 +131,7 @@
             // 
             this.rbEstiloAssembler.AutoSize = true;
             this.rbEstiloAssembler.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbEstiloAssembler.Location = new System.Drawing.Point(7, 76);
+            this.rbEstiloAssembler.Location = new System.Drawing.Point(7, 83);
             this.rbEstiloAssembler.Margin = new System.Windows.Forms.Padding(1);
             this.rbEstiloAssembler.Name = "rbEstiloAssembler";
             this.rbEstiloAssembler.Size = new System.Drawing.Size(143, 22);
@@ -144,7 +145,7 @@
             this.rbEstiloC.AutoSize = true;
             this.rbEstiloC.Checked = true;
             this.rbEstiloC.Font = new System.Drawing.Font("Arial", 11.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbEstiloC.Location = new System.Drawing.Point(7, 30);
+            this.rbEstiloC.Location = new System.Drawing.Point(7, 37);
             this.rbEstiloC.Margin = new System.Windows.Forms.Padding(1);
             this.rbEstiloC.Name = "rbEstiloC";
             this.rbEstiloC.Size = new System.Drawing.Size(114, 22);
@@ -158,9 +159,9 @@
             this.groupBox2.Controls.Add(this.txtEjemploCodigo);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(229, 10);
+            this.groupBox2.Location = new System.Drawing.Point(229, 7);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(660, 389);
+            this.groupBox2.Size = new System.Drawing.Size(703, 447);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Esquema y Programa básico de ejemplo para Arduino con escalado en 8 bits y tablas" +
@@ -173,26 +174,16 @@
             this.txtEjemploCodigo.Multiline = true;
             this.txtEjemploCodigo.Name = "txtEjemploCodigo";
             this.txtEjemploCodigo.ReadOnly = true;
-            this.txtEjemploCodigo.Size = new System.Drawing.Size(316, 336);
+            this.txtEjemploCodigo.Size = new System.Drawing.Size(359, 394);
             this.txtEjemploCodigo.TabIndex = 25;
             this.txtEjemploCodigo.Text = resources.GetString("txtEjemploCodigo.Text");
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ECGViewer.Properties.Resources.PWM_Picture1;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 46);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(326, 336);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 22;
-            this.pictureBox1.TabStop = false;
             // 
             // gbEscaladoBits
             // 
             this.gbEscaladoBits.Controls.Add(this.label1);
             this.gbEscaladoBits.Controls.Add(this.cmbBitsEscalado);
             this.gbEscaladoBits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F);
-            this.gbEscaladoBits.Location = new System.Drawing.Point(10, 330);
+            this.gbEscaladoBits.Location = new System.Drawing.Point(13, 210);
             this.gbEscaladoBits.Margin = new System.Windows.Forms.Padding(1);
             this.gbEscaladoBits.Name = "gbEscaladoBits";
             this.gbEscaladoBits.Padding = new System.Windows.Forms.Padding(1);
@@ -214,6 +205,7 @@
             // cmbBitsEscalado
             // 
             this.cmbBitsEscalado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBitsEscalado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbBitsEscalado.FormattingEnabled = true;
             this.cmbBitsEscalado.Items.AddRange(new object[] {
             "8",
@@ -228,11 +220,21 @@
             this.cmbBitsEscalado.Size = new System.Drawing.Size(114, 24);
             this.cmbBitsEscalado.TabIndex = 17;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ECGViewer.Properties.Resources.PWM_Picture1;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 46);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(326, 394);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
             // FrmExportarATablaC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(901, 461);
+            this.ClientSize = new System.Drawing.Size(944, 509);
             this.Controls.Add(this.gbEscaladoBits);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gpbSaltoLinea);
@@ -250,9 +252,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.gbEscaladoBits.ResumeLayout(false);
             this.gbEscaladoBits.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

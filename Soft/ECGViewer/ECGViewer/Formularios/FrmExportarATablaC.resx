@@ -121,20 +121,22 @@
     <value>17, 17</value>
   </metadata>
   <data name="txtEjemploCodigo.Text" xml:space="preserve">
-    <value>const int pwmPin = 9;
+    <value>//--&gt;Insertar aqui tabla generada
+const int pwmPin = 9;
 
 void setup() {
   pinMode(pwmPin, OUTPUT);
 
-  // Seteo Timer1 para tener la
-  // frec. maxima de PWM (62.5 kHz)
-  TCCR1A = _BV(COM1A1) | _BV(WGM11); 
-  TCCR1B = _BV(WGM13) | _BV(CS10);  
+  // Seteo Timer1 para Frec PWM max. en
+  //resol. de 8 bits (62.5Khz) en pin 9
+  TCCR1A = _BV(WGM10) | _BV(COM1A1)
+  TCCR1B = _BV(WGM12) | _BV(CS10);
 }
 
 void loop() {
-  for (int i = 0; i &lt; 10; i++) {
-    analogWrite(pwmPin, tabla[i]);
+  for (int i = 0; i &lt; %NRO_MUESTRAS%; i++) {
+    //Mas eficiente que usar analogRead()
+    OCR1A = tabla[i]; 
     //Delay para tiempo de muestreo
     %FUNCION%(%DELAY%);
   }

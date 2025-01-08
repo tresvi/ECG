@@ -680,6 +680,7 @@ namespace ECGViewer
                 _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
                 _autoEscalaY = true;
                 GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+                chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "";  //Solo para excel permito decimales automaticos
 
                 MessageBox.Show($"Archivo importado correctamente. Se importaron {_senalECG.Count} muestras"
                     , "Error al importar" , MessageBoxButtons.OK, MessageBoxIcon.Information);

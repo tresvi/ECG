@@ -134,7 +134,8 @@ namespace ECGViewer
                 serie.Points.AddXY(muestra.Tiempo, muestra.Canal[0]);
             }
 
-            chart.ChartAreas[0].AxisX.Interval = 0.5;  // Intervalo de labels en X
+            chart.ChartAreas[0].AxisX.Interval = 0;//0.1;//0.5;  // Intervalo de labels en X
+            chart.ChartAreas[0].AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.00";
 
             //Autoescalas
@@ -212,6 +213,7 @@ namespace ECGViewer
                 chart.ChartAreas[0].AxisX.MajorTickMark.Interval = 0.2;
                 chart.ChartAreas[0].AxisX.MajorGrid.Interval = 0.2;
                 chart.ChartAreas[0].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Solid;
+                chart.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.Red;
 
                 // Subdivisiones menores (cada 0.04 segundos)
                 chart.ChartAreas[0].AxisX.MinorGrid.Enabled = true;
@@ -226,7 +228,7 @@ namespace ECGViewer
                 chart.ChartAreas[0].AxisY.MajorGrid.Interval = 0.5;
                 chart.ChartAreas[0].AxisY.MajorTickMark.Interval = 0.5;
                 chart.ChartAreas[0].AxisY.MajorGrid.LineWidth = 2;  // Línea de la cuadrícula mayor
-
+                chart.ChartAreas[0].AxisY.MajorGrid.LineColor = System.Drawing.Color.Red;
             }
             else
             {
