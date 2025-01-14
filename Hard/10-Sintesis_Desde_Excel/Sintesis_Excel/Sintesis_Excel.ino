@@ -13,7 +13,7 @@ void setup() {
   pinMode(9, OUTPUT);
   
   // Configuración del modo PWM rápido de 8 bits
-  TCCR1A = _BV(WGM10) | _BV(COM1A1); // WGM10 = 1 (PWM rápido, 8 bits), COM1A1 =  1(alida en pin 9)
+  TCCR1A = _BV(WGM10) | _BV(COM1A1); // WGM10 = 1 (PWM rápido, 8 bits), COM1A1 =  1(salida en pin 9)
   TCCR1B = _BV(WGM12) | _BV(CS10);   // WGM12 = 1 (PWM rápido) y CS10 = 1 (sin prescaler)
 }
 
