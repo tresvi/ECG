@@ -25,7 +25,6 @@ namespace ECGViewer
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
         private const string DESCRIPCION_APLICACION = "ECG Viewer 1 Canal";
 
-        private bool _lecturaEnCurso = false;
         private SerialPort _serialPort = new SerialPort();
         private List<Muestra> _senalECG = new List<Muestra>();
         private decimal _tMuestreo;

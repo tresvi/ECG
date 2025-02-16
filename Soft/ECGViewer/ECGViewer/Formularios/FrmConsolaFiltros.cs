@@ -1,4 +1,5 @@
-﻿using ECGViewer.Modelos;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using ECGViewer.Modelos;
 using FftSharp;
 using System;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Resize(object sender, EventArgs e)
         {
-            const int MARGEN = 1;
+            //const int MARGEN = 1;
             int mitadFormulario = this.Height / 2;
             //chartSenalOriginal.Top = gbButtons.Top  + gbButtons.Height + MARGEN;
             chartSenalOriginal.Height =  this.Height/2 - (toolStrip1.Top + toolStrip1.Height) + 10;
@@ -277,6 +278,136 @@ namespace ECGViewer
             _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SignalUtils.ElevarAlCuadrado(ref _senalFiltrada, 0);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            _senalFiltrada = Utiles.CalcularDerivada(_senalOriginal, 0, 0.05);
+          //  double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+          //  double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double)frmPBanda.FrecuenciaCorteMax);
+
+          //  for (int i = 0; i < _senalFiltrada.Count; i++)
+          //      _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SignalUtils.RectificarMediaOnda(ref _senalFiltrada, 0);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+        //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
+        //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
+        //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SignalUtils.MultiplicarPorEscalar(ref _senalFiltrada, 0, 100);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double[] muestrasFiltradas = SignalUtils.FiltroMediaMovil(muestras, 5);
+            SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double[] muestrasFiltradas = SignalUtils.FiltroMediana(muestras, 11);
+            SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double valorMedioPicos = SignalUtils.GetValorMedio(muestras);
+            SignalUtils.RecortePorValorBajo(ref _senalFiltrada, 0, valorMedioPicos);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(muestras);
+            SignalUtils.RecortePorValorBajo(ref _senalFiltrada, 0, valorMedioPicos);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
+            List<int> complejosR = SignalUtils.DetectarPicosEntreMenores(muestras, 0.002, true);
+            complejosR.ForEach(x => Debug.WriteLine($"Complejo R en {x * 0.002}"));
+
+            //SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            SignalUtils.SumarRuidoAleatorio(ref _senalFiltrada, 0, -0.05, 0.03);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)

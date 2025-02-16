@@ -13,7 +13,6 @@ namespace ECGViewer.Formularios
         private readonly Chart chartSenal;
         private PrintDocument printDocument;
         private List<Muestra> _senal;
-        private string _unidad;
         private bool _autoEscalaY;
 
         public FrmImpresion(Chart chart, in List<Muestra> senal, string unidad, bool autoEscalaY)

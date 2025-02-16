@@ -316,6 +316,7 @@
     <Compile Include="Modelos\Muestra.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalUtils.cs" />
     <Compile Include="Utiles.cs" />
     <EmbeddedResource Include="Formularios\FrmAdministrarMarcadores.resx">
       <DependentUpon>FrmAdministrarMarcadores.cs</DependentUpon>
