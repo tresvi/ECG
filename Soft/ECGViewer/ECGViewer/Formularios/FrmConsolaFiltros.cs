@@ -386,14 +386,29 @@ namespace ECGViewer
 
         private void button9_Click(object sender, EventArgs e)
         {
+            //Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
+            //Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
+            //Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
+            //Escribir una función para "Acomodar la señal cuando sea necesario"
             double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            List<int> complejosR = SignalUtils.DetectarPicosEntreMenores(muestras, 0.002, true);
-            complejosR.ForEach(x => Debug.WriteLine($"Complejo R en {x * 0.002}"));
+            List<ComplejoQRS> complejosQRS = SignalUtils.DetectarPicosEntreMenores(muestras, 0.002, true);
+            //complejosQRS.ForEach(x => Debug.WriteLine($"Complejo R en {x * 0.002}"));
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                Debug.WriteLine($"Complejo R en {complejo.R * 0.002}");
+            }
 
             //SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, Color.Blue);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, Color.Gray);
+            }
+            
             chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
             chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;

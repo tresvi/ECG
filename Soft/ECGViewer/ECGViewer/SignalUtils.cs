@@ -37,6 +37,15 @@ namespace ECGViewer
         }
 
 
+        public static void ElevarAlCuadrado(double[] senal, int nroCanal)
+        {
+            for (int i = 0; i < senal.Length - 1; i++)
+            {
+                senal[i] *= senal[i];
+            }
+        }
+
+
         public static List<int> DetectarPicos(in double[] senal)
         {
             List<int> peakIndexes = new List<int>();
@@ -173,17 +182,18 @@ namespace ECGViewer
 
 
         private const double TIEMPO_GUARDA_QR_RS_SEC = 0.150;
-        public static List<int> DetectarPicosEntreMenores(double[] senal, double tMuestreo, bool validarTiempos)
+        public static List<ComplejoQRS> DetectarPicosEntreMenores(in double[] senal, double tMuestreo, bool validarTiempos)
         {
             List<int> picos = DetectarPicos(senal);
-            List<int> picosFiltrados = new List<int>();
+            List<ComplejoQRS> complejosDetectados = new List<ComplejoQRS>();
 
-            for (int i = 1; i < picos.Count - 1; i++) // Nos aseguramos de que haya picos antes y después
+            for (int i = 1; i < picos.Count - 1; i++) // Para asegurar que haya picos antes y despues
             {
                 int indexPicoActual = picos[i];
                 int indexPicoAnterior = picos[i - 1];
                 int indexPicoSiguiente = picos[i + 1];
 
+                //El complejo R siempre estara encerrado entre untre un Q y un S de menor amplitud
                 if (senal[indexPicoActual] > senal[indexPicoAnterior] && senal[indexPicoActual] > senal[indexPicoSiguiente])
                 {
                     if (validarTiempos)
@@ -192,14 +202,14 @@ namespace ECGViewer
                         double tiempoRS = (indexPicoSiguiente - indexPicoActual) * tMuestreo;
 
                         if (tiempoQR < TIEMPO_GUARDA_QR_RS_SEC && tiempoRS < TIEMPO_GUARDA_QR_RS_SEC)
-                            picosFiltrados.Add(indexPicoActual);
+                            complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
                     }
                     else
-                        picosFiltrados.Add(indexPicoActual);
+                        complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
                 }
             }
 
-            return picosFiltrados;
+            return complejosDetectados;
         }
 
 
