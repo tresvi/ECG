@@ -223,6 +223,51 @@ namespace ECGViewer
                 senal[i].Canal[nroCanal] += ruido;
             }
         }
+
+
+        public static int[] ObtenerExtremos(double[] senal)
+        {
+            List<int> extremos = new List<int>();
+            for (int i = 1; i < senal.Length - 1; i++)
+            {
+                if ((senal[i] > senal[i - 1] && senal[i] > senal[i + 1]) || // Máximo local
+                    (senal[i] < senal[i - 1] && senal[i] < senal[i + 1]))   // Mínimo local
+                {
+                    extremos.Add(i);
+                }
+            }
+            return extremos.ToArray();
+        }
+
+
+        public static void DesbalancearMesetas(ref double[] senal)
+        {
+            const double COEF_DESBALANCEO = 0.01;
+
+            for (int i = 1; i < senal.Length - 1; i++)
+            {
+                if (i < senal.Length - 2)
+                {
+                    if (senal[i] == senal[i+1])
+                    { 
+                        double promedio = (senal[i + 1] + senal[i + 2]) / 2;
+                        if (promedio != senal[i+1]) 
+                            senal[i + 1] = promedio;
+                        else
+                            senal[i + 1] += senal[i + 1] * COEF_DESBALANCEO;
+                    }
+                }
+            }
+        }
+
+
+        public static int IndiceMasCercano(int punto, int[] indicesExtremos)
+        {
+            if (indicesExtremos.Length == 0)
+                throw new ArgumentException("El array de extremos no puede estar vacío.");
+
+            return indicesExtremos.OrderBy(indice => Math.Abs(indice - punto)).First();
+        }
     }
 }
 

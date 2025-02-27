@@ -214,7 +214,7 @@ namespace ECGViewer
 
         private void tsbPasaAlto_Click(object sender, EventArgs e)
         {
-            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 0.8m);
+            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 1m);
             if (frmPAltos.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
@@ -233,7 +233,7 @@ namespace ECGViewer
 
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 0.8m, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
@@ -321,9 +321,13 @@ namespace ECGViewer
         //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
         //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
         //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
+        
+        //Para detectar T, filtrar entre 1-8 y luego buscar siguiente pico luego del complejo S
+        //Esto puede fallar. Evaluar los siguientes 2 picos, y quedarse con el mayor. Siempre y cuando ese, no sea/esté
+        //demasiado cerca del valor del proximo complejo P.
         private void button4_Click(object sender, EventArgs e)
         {
-            SignalUtils.MultiplicarPorEscalar(ref _senalFiltrada, 0, 100);
+            SignalUtils.MultiplicarPorEscalar(ref _senalFiltrada, 0, 10);
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
@@ -402,11 +406,31 @@ namespace ECGViewer
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
+            double[] muestrasOriginal = SignalUtils.GetCanal(_senalOriginal, 0);
+            SignalUtils.DesbalancearMesetas(ref muestrasOriginal);
+            int[] indicesDeExtremos = SignalUtils.ObtenerExtremos(muestrasOriginal);
+
+
             foreach (ComplejoQRS complejo in complejosQRS)
             {
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, Color.Gray);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, Color.Blue);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Red);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Red);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Red);
+            }
+
+
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
+                complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
+                complejo.S = SignalUtils.IndiceMasCercano(complejo.S, indicesDeExtremos);
+            }
+
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
             }
             
             chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
@@ -414,8 +438,16 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
+        public List<int> CorreccionDePicosPorDerivada(List<ComplejoQRS> complejos)
+        {
+            return null;
+            //for (int i = 0;)
+        }
+
+
         private void button10_Click(object sender, EventArgs e)
         {
+            //TODO: Sacar promedio de valores positivos y promedio de valores negativos. Con esos datos inventar un rango de ruido
             SignalUtils.SumarRuidoAleatorio(ref _senalFiltrada, 0, -0.05, 0.03);
 
             Graficar(chartSenalFiltrada, _senalFiltrada);

@@ -1,13 +1,13 @@
 ﻿
 namespace ECGViewer.Modelos
 {
-    internal class ComplejoQRS
+    public class ComplejoQRS
     {
-        public double Q { get; set; }
-        public double R { get; set; }
-        public double S { get; set; }
+        public int Q { get; set; }
+        public int R { get; set; }
+        public int S { get; set; }
 
-        public ComplejoQRS(double q, double r, double s)
+        public ComplejoQRS(int q, int r, int s)
         {
             Q = q;
             R = r;

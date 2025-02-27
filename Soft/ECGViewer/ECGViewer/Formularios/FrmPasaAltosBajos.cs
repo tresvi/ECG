@@ -8,11 +8,11 @@ namespace ECGViewer
     {
         public decimal FrecuenciaCorte { get; private set; }
 
-        public FrmPasaAltosBajos(string title, decimal frecuencaCorteDefault)
+        public FrmPasaAltosBajos(string title, decimal frecuenciaCorteDefault)
         {
             InitializeComponent();
             this.Text = title;
-            nudFrecuenciaCorte.Value = frecuencaCorteDefault;
+            nudFrecuenciaCorte.Value = frecuenciaCorteDefault;
         }
 
 
