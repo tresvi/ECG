@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ECGViewer
+namespace ECGViewer.Utiles
 {
     internal class SignalUtils
     {
@@ -93,61 +93,21 @@ namespace ECGViewer
         }
 
 
-        //Lineal, Invariante. Puede retrasar la señal. Reduce mas los picos altos que los bajos.
-        public static double[] FiltroMediaMovil(double[] senal, int tamanoVentana)
+        public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
         {
-            if (tamanoVentana < 1 || tamanoVentana > senal.Length)
-                throw new ArgumentException("El tamaño de la ventana debe ser mayor que 0 y menor o igual a la cantidad de muestras.");
+            List<Muestra> derivada = new List<Muestra>();
 
-            double[] senalFiltrada = new double[senal.Length];
-            int mitadVentana = tamanoVentana / 2;
-
-            for (int i = 0; i < senal.Length; i++)
+            for (int i = 0; i < muestras.Count - 1; i++)
             {
-                // Definir los límites de la ventana
-                int inicio = Math.Max(0, i - mitadVentana);
-                int fin = Math.Min(senal.Length - 1, i + mitadVentana);
-
-                // Calcular la media de los valores dentro de la ventana
-                double promedio = 0;
-                int elementos = 0;
-                for (int j = inicio; j <= fin; j++)
-                {
-                    promedio += senal[j];
-                    elementos++;
-                }
-                senalFiltrada[i] = promedio / elementos;
+                Muestra derivadaAprox = new Muestra();
+                derivadaAprox.Canal[nroCanal] = (muestras[i + 1].Canal[nroCanal] - muestras[i].Canal[nroCanal]) / h;
+                derivadaAprox.Tiempo = muestras[i].Tiempo;
+                derivada.Add(derivadaAprox);
             }
 
-            return senalFiltrada;
+            return derivada;
         }
 
-
-        public static double[] FiltroMediana(double[] senal, int tamanoVentana)
-        {
-            if (tamanoVentana < 1 || tamanoVentana > senal.Length || tamanoVentana % 2 == 0)
-                throw new ArgumentException("El tamaño de la ventana debe ser impar y menor o igual a la cantidad de muestras.");
-
-            double[] senalFiltrada = new double[senal.Length];
-            int mitadVentana = tamanoVentana / 2;
-
-            for (int i = 0; i < senal.Length; i++)
-            {
-                // Definir los límites de la ventana
-                int inicio = Math.Max(0, i - mitadVentana);
-                int fin = Math.Min(senal.Length - 1, i + mitadVentana);
-
-                // Extraer los valores dentro de la ventana
-                double[] ventana = new double[fin - inicio + 1];
-                Array.Copy(senal, inicio, ventana, 0, ventana.Length);
-
-                // Ordenar la ventana y tomar la mediana (elemento central)
-                Array.Sort(ventana);
-                senalFiltrada[i] = ventana[ventana.Length / 2];
-            }
-
-            return senalFiltrada;
-        }
 
 
         public static double GetValorMedio(in double[] senal)

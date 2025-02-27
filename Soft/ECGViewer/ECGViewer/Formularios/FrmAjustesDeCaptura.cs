@@ -1,4 +1,5 @@
-﻿using ECGViewer.Modelos;
+﻿using ECGViewer.Utiles;
+using ECGViewer.Modelos;
 using ECGViewer.Properties;
 using System;
 using System.Windows.Forms;
@@ -31,8 +32,8 @@ namespace ECGViewer.Formularios
             Settings.Default.MuestrasPorGrafico = (int) nudMuestrasPorGrafico.Value;
             Settings.Default.UsarValoresCrudosADC = chkMuestrasADC.Checked;
             
-            double zero = Utiles.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
-            double span = Utiles.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
+            double zero = Utils.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
+            double span = Utils.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double) nudCalibValorYMin.Value, (double) nudCalibValorYMax.Value);
             lblZero.Text = $"Zero: {zero.ToString("0.00000")}";
             lblSpan.Text = $"Span: {span.ToString("0.00000")}";
 
@@ -58,8 +59,8 @@ namespace ECGViewer.Formularios
 
         private void nudValorYMin_ValueChanged(object sender, EventArgs e)
         {
-            double zero = Utiles.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
-            double span = Utiles.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
+            double zero = Utils.GetZero((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
+            double span = Utils.GetSpan((int)nudCalibBitsMin.Value, (int)nudCalibBitsMax.Value, (double)nudCalibValorYMin.Value, (double)nudCalibValorYMax.Value);
             lblZero.Text = $"Zero: {zero.ToString("0.00000")}";
             lblSpan.Text = $"Span: {span.ToString("0.00000")}";
         }

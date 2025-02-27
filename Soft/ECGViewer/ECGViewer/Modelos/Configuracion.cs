@@ -1,4 +1,6 @@
 ﻿using ECGViewer.Properties;
+using ECGViewer.Utiles;
+
 
 namespace ECGViewer.Modelos
 {
@@ -35,15 +37,15 @@ namespace ECGViewer.Modelos
         {
             get
             {
-                return Utiles.GetZero(CalibracionBitsMin, CalibracionBitsMax, (double) CalibracionValorYMin, (double) CalibracionValorYMax);
+                return Utils.GetZero(CalibracionBitsMin, CalibracionBitsMax, (double) CalibracionValorYMin, (double) CalibracionValorYMax);
             }
         }
 
-        public double Span 
+        public double Span
         {
             get 
             {
-                return Utiles.GetSpan(CalibracionBitsMin, CalibracionBitsMax, (double)CalibracionValorYMin, (double)CalibracionValorYMax);
+                return Utils.GetSpan(CalibracionBitsMin, CalibracionBitsMax, (double)CalibracionValorYMin, (double)CalibracionValorYMax);
             } 
         }
         

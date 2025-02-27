@@ -1,4 +1,5 @@
 ﻿using ECGViewer.Modelos;
+using ECGViewer.Utiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -133,9 +134,9 @@ namespace ECGViewer.Formularios
 
             double y0 = 0;
             double y = Math.Pow(2, 8) - 1;
-            (double x0, double x) = Utiles.GetMinimoMaximo(in _senalECG);
-            double zero = Utiles.GetZero(x0, x, y0, y);
-            double span = Utiles.GetSpan(x0, x, y0, y);
+            (double x0, double x) = Utils.GetMinimoMaximo(in _senalECG);
+            double zero = Utils.GetZero(x0, x, y0, y);
+            double span = Utils.GetSpan(x0, x, y0, y);
 
             if (longTabla % 2 == 1) 
                 MessageBox.Show(this, "Atención: La cantidad de valores a exportar en la tabla es impar!"
@@ -169,9 +170,9 @@ namespace ECGViewer.Formularios
             int bitsEscalado = GetBitsEscalado();
             double y0 = 0;
             double y = Math.Pow(2, bitsEscalado) - 1;
-            (double x0, double x) = Utiles.GetMinimoMaximo(in _senalECG);
-            double zero = Utiles.GetZero(x0, x, y0, y);
-            double span = Utiles.GetSpan(x0, x, y0, y);
+            (double x0, double x) = Utils.GetMinimoMaximo(in _senalECG);
+            double zero = Utils.GetZero(x0, x, y0, y);
+            double span = Utils.GetSpan(x0, x, y0, y);
 
             sw.Write($"const {GetDataType()} tabla[" + longTabla + "] = {");
 
