@@ -23,9 +23,9 @@ namespace ECGViewer.Modelos
         {
             get 
             {
-                return (_descripcion ?? "").PadRight(_longTextoResumen, ' ')
-                    .Substring(0, _longTextoResumen)
-                    .Trim() + "...";
+                if (_descripcion == null) return "";
+                if (_descripcion.Length < _longTextoResumen) return Descripcion;
+                return _descripcion.Substring(0, _longTextoResumen).Trim() + "...";
             }
         }
 

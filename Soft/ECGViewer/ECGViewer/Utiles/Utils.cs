@@ -2,14 +2,12 @@
 using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Windows.Forms.DataVisualization.Charting;
 
-namespace ECGViewer
+namespace ECGViewer.Utiles
 {
-    static internal class Utiles
+    static internal class Utils
     {
         public const string CABECERA_ANOTACIONES = "## ";
         public const string SEPARADOR_ANOTACIONES = "#|#";
@@ -203,22 +201,6 @@ namespace ECGViewer
         {
             double m = (y - y0) / (x - x0);
             return  m;
-        }
-
-
-        public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
-        {
-            List<Muestra> derivada = new List<Muestra>();
-
-            for (int i = 0; i < muestras.Count - 1; i++)
-            {
-                Muestra derivadaAprox = new Muestra();
-                derivadaAprox.Canal[nroCanal] = (muestras[i + 1].Canal[nroCanal] - muestras[i].Canal[nroCanal]) / h;
-                derivadaAprox.Tiempo = muestras[i].Tiempo;
-                derivada.Add(derivadaAprox);
-            }
-
-            return derivada;
         }
 
 

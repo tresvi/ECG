@@ -1,4 +1,5 @@
-﻿using ECGViewer.Modelos;
+﻿using ECGViewer.Utiles;
+using ECGViewer.Modelos;
 using FftSharp;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace ECGViewer
 {
@@ -25,7 +27,7 @@ namespace ECGViewer
         {
             InitializeComponent();
             _senalOriginal = senal;
-            _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
+            _senalFiltrada = Utils.ClonarSenal(in _senalOriginal);
             _frecuenciaMuestreo = frecuenciaMuestreo;
             chartSenalOriginal.PostPaint += chartSenalOriginal_PostPaint;
         }
@@ -117,7 +119,7 @@ namespace ECGViewer
 
         private void FrmAplicarFiltro_Resize(object sender, EventArgs e)
         {
-            const int MARGEN = 1;
+            //const int MARGEN = 1;
             int mitadFormulario = this.Height / 2;
             //chartSenalOriginal.Top = gbButtons.Top  + gbButtons.Height + MARGEN;
             chartSenalOriginal.Height =  this.Height/2 - (toolStrip1.Top + toolStrip1.Height) + 10;
@@ -197,7 +199,7 @@ namespace ECGViewer
             FrmPasaAltosBajos frmPasaBajos = new FrmPasaAltosBajos("Configuracion filtro Pasa Bajos", 49);
             if (frmPasaBajos.ShowDialog() != DialogResult.OK) return;
 
-            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
             double[] filtered = Filter.LowPass(senal, _frecuenciaMuestreo, maxFrequency: (double)frmPasaBajos.FrecuenciaCorte);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
@@ -213,10 +215,10 @@ namespace ECGViewer
 
         private void tsbPasaAlto_Click(object sender, EventArgs e)
         {
-            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 0.8m);
+            FrmPasaAltosBajos frmPAltos = new FrmPasaAltosBajos("Configuracion filtro Pasa Alto", 1m);
             if (frmPAltos.ShowDialog() != DialogResult.OK) return;
 
-            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
             double[] filtered = Filter.HighPass(senal, _frecuenciaMuestreo, minFrequency: (double)frmPAltos.FrecuenciaCorte);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
@@ -232,10 +234,10 @@ namespace ECGViewer
 
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 0.8m, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
-            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
             double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double)frmPBanda.FrecuenciaCorteMax);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
@@ -254,7 +256,7 @@ namespace ECGViewer
             FrmPasaEliminaBanda frmEBanda = new FrmPasaEliminaBanda("Configuracion filtro Elimina Banda", 49.5M, 50.5M);
             if (frmEBanda.ShowDialog() != DialogResult.OK) return;
 
-            double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
             double[] filtered = Filter.BandStop(senal, _frecuenciaMuestreo, (double)frmEBanda.FrecuenciaCorteMin, (double)frmEBanda.FrecuenciaCorteMax);
 
             for (int i = 0; i < _senalFiltrada.Count; i++)
@@ -274,10 +276,71 @@ namespace ECGViewer
 
             if (respuesta == DialogResult.No) return;
 
-            _senalFiltrada = Utiles.ClonarSenal(in _senalOriginal);
+            _senalFiltrada = Utils.ClonarSenal(in _senalOriginal);
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
         }
+
+
+        //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
+        //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
+        //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
+        
+        //Para detectar T, filtrar entre 1-8 y luego buscar siguiente pico luego del complejo S
+        //Esto puede fallar. Evaluar los siguientes 2 picos, y quedarse con el mayor. Siempre y cuando ese, no sea/esté
+        //demasiado cerca del valor del proximo complejo P.
+
+        /// <summary>
+        /// Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
+        /// Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
+        /// Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
+        /// Escribir una función para "Acomodar la señal cuando sea necesario"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button11_Click(object sender, EventArgs e)
+        {
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 12, 30);
+
+            SignalUtils.ElevarAlCuadrado(ref senalProcesada);
+
+            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
+            Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
+
+            List<ComplejoQRS> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
+
+            //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
+            //por el momento se deja asi, aunque esto implique haer otra FFT mas.
+            double[] originlFiltradaPorFPB = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 49);
+            SignalUtils.DesbalancearMesetas(ref originlFiltradaPorFPB);
+            int[] indicesDeExtremos = SignalUtils.GetExtremosLocales(originlFiltradaPorFPB);
+
+            /*
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Red);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Red);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Red);
+            }
+            */
+
+            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
+                complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
+                complejo.S = SignalUtils.IndiceMasCercano(complejo.S, indicesDeExtremos);
+            }
+
+            foreach (ComplejoQRS complejo in complejosQRS)
+            {
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
+            }
+        }
+
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {
@@ -309,7 +372,7 @@ namespace ECGViewer
             if (tgbTipoVista.Checked)
             {
                 /************* senalOriginal****************/
-                double[] signal = Utiles.ClonarVectorParaFFT(_senalOriginal);
+                double[] signal = Utils.ClonarVectorParaFFT(_senalOriginal);
 
                 System.Numerics.Complex[] spectrum = FftSharp.FFT.Forward(signal);
                 double[] psd = FftSharp.FFT.Magnitude(spectrum);
@@ -323,7 +386,7 @@ namespace ECGViewer
 
 
                 /************* senalFiltrada****************/
-                signal = Utiles.ClonarVectorParaFFT(_senalFiltrada);
+                signal = Utils.ClonarVectorParaFFT(_senalFiltrada);
 
                 System.Numerics.Complex[] spectrumFiltrado = FftSharp.FFT.Forward(signal);
                 psd = FftSharp.FFT.Magnitude(spectrumFiltrado);

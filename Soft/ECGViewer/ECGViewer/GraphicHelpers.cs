@@ -3,9 +3,9 @@ using ECGViewer.Modelos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using ECGViewer.Properties;
 
 namespace ECGViewer
 {
@@ -104,6 +104,19 @@ namespace ECGViewer
             }
 
             stripLine.Descripcion = frmEditorTextoMarcadores.MarcadorDescripcion;
+            stripLine.Annotation.AnchorDataPoint = chart.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");
+            chart.Annotations.Add(stripLine.Annotation);
+        }
+
+
+        internal static void InsertarMarcadorDeComplejo(Chart chart, double xValue, double yValue, string descripcion, Color color)
+        {
+            ChartArea chartArea = chart.ChartAreas[0];
+
+            StripLineWithComment stripLine = new StripLineWithComment(xValue, yValue, "", 12, 10);
+            stripLine.BorderColor = color;
+            chart.ChartAreas[0].AxisX.StripLines.Add(stripLine);
+            stripLine.Descripcion = descripcion;
             stripLine.Annotation.AnchorDataPoint = chart.Series[0].Points.FindMaxByValue();//.FindByValue(30, "Y");
             chart.Annotations.Add(stripLine.Annotation);
         }
