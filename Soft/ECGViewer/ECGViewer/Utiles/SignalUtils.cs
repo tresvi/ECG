@@ -37,7 +37,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static void ElevarAlCuadrado(double[] senal, int nroCanal)
+        public static void ElevarAlCuadrado(ref double[] senal)
         {
             for (int i = 0; i < senal.Length - 1; i++)
             {
@@ -109,7 +109,6 @@ namespace ECGViewer.Utiles
         }
 
 
-
         public static double GetValorMedio(in double[] senal)
         {
             double acumulador = 0;
@@ -131,48 +130,6 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static void RecortePorValorBajo(ref List<Muestra> senal, int nroCanal, double umbral)
-        {
-            for (int i = 0; i < senal.Count; i++)
-            {
-                if (senal[i].Canal[nroCanal] < umbral)
-                    senal[i].Canal[nroCanal] = 0;
-            }
-        }
-
-
-        private const double TIEMPO_GUARDA_QR_RS_SEC = 0.150;
-        public static List<ComplejoQRS> DetectarPicosEntreMenores(in double[] senal, double tMuestreo, bool validarTiempos)
-        {
-            List<int> picos = DetectarPicos(senal);
-            List<ComplejoQRS> complejosDetectados = new List<ComplejoQRS>();
-
-            for (int i = 1; i < picos.Count - 1; i++) // Para asegurar que haya picos antes y despues
-            {
-                int indexPicoActual = picos[i];
-                int indexPicoAnterior = picos[i - 1];
-                int indexPicoSiguiente = picos[i + 1];
-
-                //El complejo R siempre estara encerrado entre untre un Q y un S de menor amplitud
-                if (senal[indexPicoActual] > senal[indexPicoAnterior] && senal[indexPicoActual] > senal[indexPicoSiguiente])
-                {
-                    if (validarTiempos)
-                    {
-                        double tiempoQR = (indexPicoActual - indexPicoAnterior) * tMuestreo;
-                        double tiempoRS = (indexPicoSiguiente - indexPicoActual) * tMuestreo;
-
-                        if (tiempoQR < TIEMPO_GUARDA_QR_RS_SEC && tiempoRS < TIEMPO_GUARDA_QR_RS_SEC)
-                            complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
-                    }
-                    else
-                        complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
-                }
-            }
-
-            return complejosDetectados;
-        }
-
-
         public static void SumarRuidoAleatorio(ref List<Muestra> senal, int nroCanal, double minimo, double maximo)
         {
             Random random = new Random(DateTime.Now.Millisecond);
@@ -185,7 +142,12 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int[] ObtenerExtremos(double[] senal)
+        /// <summary>
+        /// Obtiene Macimos y Minimos de la señal
+        /// </summary>
+        /// <param name="senal"></param>
+        /// <returns></returns>
+        public static int[] GetExtremosLocales(double[] senal)
         {
             List<int> extremos = new List<int>();
             for (int i = 1; i < senal.Length - 1; i++)

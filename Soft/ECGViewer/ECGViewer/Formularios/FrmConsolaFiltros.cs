@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace ECGViewer
 {
@@ -280,44 +281,7 @@ namespace ECGViewer
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SignalUtils.ElevarAlCuadrado(ref _senalFiltrada, 0);
 
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            _senalFiltrada = SignalUtils.CalcularDerivada(_senalOriginal, 0, 0.05);
-          //  double[] senal = Utiles.ClonarVectorParaFFT(in _senalFiltrada);
-          //  double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, (double)frmPBanda.FrecuenciaCorteMin, (double)frmPBanda.FrecuenciaCorteMax);
-
-          //  for (int i = 0; i < _senalFiltrada.Count; i++)
-          //      _senalFiltrada[i].Canal[0] = filtered[i];
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            SignalUtils.RectificarMediaOnda(ref _senalFiltrada, 0);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
         //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
         //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
         //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
@@ -325,90 +289,32 @@ namespace ECGViewer
         //Para detectar T, filtrar entre 1-8 y luego buscar siguiente pico luego del complejo S
         //Esto puede fallar. Evaluar los siguientes 2 picos, y quedarse con el mayor. Siempre y cuando ese, no sea/esté
         //demasiado cerca del valor del proximo complejo P.
-        private void button4_Click(object sender, EventArgs e)
+
+        /// <summary>
+        /// Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
+        /// Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
+        /// Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
+        /// Escribir una función para "Acomodar la señal cuando sea necesario"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button11_Click(object sender, EventArgs e)
         {
-            SignalUtils.MultiplicarPorEscalar(ref _senalFiltrada, 0, 10);
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 12, 30);
 
-            Graficar(chartSenalFiltrada, _senalFiltrada);
+            SignalUtils.ElevarAlCuadrado(ref senalProcesada);
 
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
+            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
+            Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            double[] muestrasFiltradas = Filtros.MediaMovil(muestras, 5);
-            SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
+            List<ComplejoQRS> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
 
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            double[] muestrasFiltradas = Filtros.Mediana(muestras, 11);
-            SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            double valorMedioPicos = SignalUtils.GetValorMedio(muestras);
-            SignalUtils.RecortePorValorBajo(ref _senalFiltrada, 0, valorMedioPicos);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(muestras);
-            SignalUtils.RecortePorValorBajo(ref _senalFiltrada, 0, valorMedioPicos);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            //Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
-            //Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
-            //Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
-            //Escribir una función para "Acomodar la señal cuando sea necesario"
-            double[] muestras = SignalUtils.GetCanal(_senalFiltrada, 0);
-            List<ComplejoQRS> complejosQRS = SignalUtils.DetectarPicosEntreMenores(muestras, 0.002, true);
-            //complejosQRS.ForEach(x => Debug.WriteLine($"Complejo R en {x * 0.002}"));
-            foreach (ComplejoQRS complejo in complejosQRS)
-            {
-                Debug.WriteLine($"Complejo R en {complejo.R * 0.002}");
-            }
-
-            //SignalUtils.SetCanal(ref _senalFiltrada, 0, muestrasFiltradas);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            double[] muestrasOriginal = SignalUtils.GetCanal(_senalOriginal, 0);
-            SignalUtils.DesbalancearMesetas(ref muestrasOriginal);
-            int[] indicesDeExtremos = SignalUtils.ObtenerExtremos(muestrasOriginal);
+            //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
+            //por el momento se deja asi, aunque esto implique haer otra FFT mas.
+            double[] originlFiltradaPorFPB = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 49);
+            SignalUtils.DesbalancearMesetas(ref originlFiltradaPorFPB);
+            int[] indicesDeExtremos = SignalUtils.GetExtremosLocales(originlFiltradaPorFPB);
 
             /*
             foreach (ComplejoQRS complejo in complejosQRS)
@@ -419,6 +325,7 @@ namespace ECGViewer
             }
             */
 
+            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
             foreach (ComplejoQRS complejo in complejosQRS)
             {
                 complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
@@ -432,30 +339,8 @@ namespace ECGViewer
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
             }
-            
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
-        public List<int> CorreccionDePicosPorDerivada(List<ComplejoQRS> complejos)
-        {
-            return null;
-            //for (int i = 0;)
-        }
-
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            //TODO: Sacar promedio de valores positivos y promedio de valores negativos. Con esos datos inventar un rango de ruido
-            SignalUtils.SumarRuidoAleatorio(ref _senalFiltrada, 0, -0.05, 0.03);
-
-            Graficar(chartSenalFiltrada, _senalFiltrada);
-
-            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
-            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
-        }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {

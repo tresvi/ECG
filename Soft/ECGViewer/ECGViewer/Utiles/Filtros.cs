@@ -1,8 +1,6 @@
-﻿using System;
+﻿using ECGViewer.Modelos;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECGViewer.Utiles
 {
@@ -63,6 +61,25 @@ namespace ECGViewer.Utiles
             }
 
             return senalFiltrada;
+        }
+
+
+        public static void RecortePorValorBajo(ref List<Muestra> senal, int nroCanal, double umbral)
+        {
+            for (int i = 0; i < senal.Count; i++)
+            {
+                if (senal[i].Canal[nroCanal] < umbral)
+                    senal[i].Canal[nroCanal] = 0;
+            }
+        }
+
+
+        public static void RecortePorValorBajo(ref double[] senal, double umbral)
+        {
+            for (int i = 0; i < senal.Length; i++)
+            {
+                if (senal[i] < umbral) senal[i] = 0;
+            }
         }
 
     }
