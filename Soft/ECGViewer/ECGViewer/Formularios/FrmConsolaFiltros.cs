@@ -237,7 +237,7 @@ namespace ECGViewer
         
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1.5m, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1.1m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
