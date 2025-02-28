@@ -20,6 +20,8 @@ namespace ECGViewer
         public List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
 
+        private FrmControlesFiltroInteractivo _frmControlesFiltro;
+
         public double _yMinSenal, _yMaxSenal, _yIntervalSenal;
         public double _yMinEspectro, _yMaxEspectro, _yIntervalEspectro;
         
@@ -336,12 +338,12 @@ namespace ECGViewer
 
             /**********Detectar El complejo T*********************************************/
             double[] senal2 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1.5, 9.5);
+            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 9.5);
             SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
 
             foreach (ComplejoPQRST complejo in complejosQRS)
             {
-                complejo.T = SignalUtils.BuscarSiguienteMaximo(senalProcesada, complejo.S);
+               // complejo.T = SignalUtils.BuscarMaximoAbsoluto(senalProcesada, complejo.S);
             }
 
             //Ojo con el complejo T que esta en 11.8 Seg
@@ -374,10 +376,12 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void tsbFiltradoInteractivo_Click(object sender, EventArgs e)
         {
-            FrmControlesFiltro frmControlesFiltro = new FrmControlesFiltro(this);
-            frmControlesFiltro.Show();
+            if (_frmControlesFiltro != null) return;
+            
+            _frmControlesFiltro = new FrmControlesFiltroInteractivo(this);
+            _frmControlesFiltro.Show(this);
         }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
@@ -450,6 +454,7 @@ namespace ECGViewer
 
         private void FrmConsolaFiltros_FormClosed(object sender, FormClosedEventArgs e)
         {
+
             if (DialogResult == DialogResult.None) DialogResult = DialogResult.Cancel;
         }
 

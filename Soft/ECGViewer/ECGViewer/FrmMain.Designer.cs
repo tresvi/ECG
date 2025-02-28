@@ -111,7 +111,7 @@
             series1.MarkerStep = 10;
             series1.Name = "Muestras";
             this.chartSenal.Series.Add(series1);
-            this.chartSenal.Size = new System.Drawing.Size(1320, 473);
+            this.chartSenal.Size = new System.Drawing.Size(1264, 473);
             this.chartSenal.TabIndex = 1;
             this.chartSenal.Text = "chart1";
             this.chartSenal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartSenal_MouseClick);
@@ -224,7 +224,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(1320, 71);
+            this.toolStrip1.Size = new System.Drawing.Size(1264, 71);
             this.toolStrip1.TabIndex = 43;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -643,7 +643,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1320, 682);
+            this.ClientSize = new System.Drawing.Size(1264, 682);
             this.Controls.Add(this.lblPuntoCursor);
             this.Controls.Add(this.lblRegla);
             this.Controls.Add(this.BtnCargarSenal);

@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace ECGViewer.Formularios
 {
-    public partial class FrmControlesFiltro : Form
+    public partial class FrmControlesFiltroInteractivo : Form
     {
         public FrmConsolaFiltros FormConsola { get; set; }
 
-        public FrmControlesFiltro(FrmConsolaFiltros frmConsolaFiltros)
+        public FrmControlesFiltroInteractivo(FrmConsolaFiltros frmConsolaFiltros)
         {
             FormConsola = frmConsolaFiltros;
             InitializeComponent();

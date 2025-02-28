@@ -241,11 +241,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formularios\FrmControlesFiltro.cs">
+    <Compile Include="Formularios\FrmControlesFiltroInteractivo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\FrmControlesFiltro.Designer.cs">
-      <DependentUpon>FrmControlesFiltro.cs</DependentUpon>
+    <Compile Include="Formularios\FrmControlesFiltroInteractivo.Designer.cs">
+      <DependentUpon>FrmControlesFiltroInteractivo.cs</DependentUpon>
     </Compile>
     <Compile Include="Utiles\ComplejosUtils.cs" />
     <Compile Include="Controles\ToggleButton.cs">
@@ -336,8 +336,8 @@
     <EmbeddedResource Include="Formularios\FrmConfiguracionEjes.resx">
       <DependentUpon>FrmConfiguracionEjes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\FrmControlesFiltro.resx">
-      <DependentUpon>FrmControlesFiltro.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FrmControlesFiltroInteractivo.resx">
+      <DependentUpon>FrmControlesFiltroInteractivo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmEditorTextoMarcadores.resx">
       <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>
@@ -402,6 +402,7 @@
     <None Include="Recursos\BandPass.png" />
     <None Include="Recursos\BandPass64X64.png" />
     <None Include="Recursos\axis.png" />
+    <None Include="Recursos\ajustes.png" />
     <Content Include="Recursos\boton-de-play.png" />
     <None Include="Recursos\cancel.png" />
     <None Include="Recursos\cancel_48x48.png" />

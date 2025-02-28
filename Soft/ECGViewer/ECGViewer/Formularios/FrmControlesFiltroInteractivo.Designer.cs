@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer.Formularios
 {
-    partial class FrmControlesFiltro
+    partial class FrmControlesFiltroInteractivo
     {
         /// <summary>
         /// Required designer variable.

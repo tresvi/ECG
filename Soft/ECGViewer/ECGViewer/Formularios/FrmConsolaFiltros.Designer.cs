@@ -42,24 +42,24 @@
             this.chartSenalFiltrada = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label2 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbPasaBajo = new System.Windows.Forms.ToolStripButton();
+            this.tsbPasaAlto = new System.Windows.Forms.ToolStripButton();
+            this.tsbPasaBanda = new System.Windows.Forms.ToolStripButton();
+            this.tsbNotch = new System.Windows.Forms.ToolStripButton();
+            this.tsbFiltradoInteractivo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbCancelar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbAceptar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbResetSenal = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.label3 = new System.Windows.Forms.Label();
             this.tgbTipoVista = new ECGViewer.Controles.ToggleButton();
             this.toggleButton1 = new ECGViewer.Controles.ToggleButton();
             this.btnDetectarComplejosQRS = new System.Windows.Forms.Button();
-            this.tsbResetZoom = new System.Windows.Forms.ToolStripButton();
-            this.tsbPasaBajo = new System.Windows.Forms.ToolStripButton();
-            this.tsbPasaAlto = new System.Windows.Forms.ToolStripButton();
-            this.tsbPasaBanda = new System.Windows.Forms.ToolStripButton();
-            this.tsbNotch = new System.Windows.Forms.ToolStripButton();
-            this.tsbCancelar = new System.Windows.Forms.ToolStripButton();
-            this.tsbAceptar = new System.Windows.Forms.ToolStripButton();
-            this.tsbResetSenal = new System.Windows.Forms.ToolStripButton();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartSenalFiltrada)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -178,6 +178,7 @@
             this.tsbPasaAlto,
             this.tsbPasaBanda,
             this.tsbNotch,
+            this.tsbFiltradoInteractivo,
             this.toolStripSeparator2,
             this.tsbCancelar,
             this.toolStripSeparator4,
@@ -188,43 +189,144 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1262, 72);
+            this.toolStrip1.Size = new System.Drawing.Size(1262, 75);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsbResetZoom
+            // 
+            this.tsbResetZoom.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01_48x48;
+            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbResetZoom.Name = "tsbResetZoom";
+            this.tsbResetZoom.Size = new System.Drawing.Size(93, 72);
+            this.tsbResetZoom.Text = "Reset Zoom";
+            this.tsbResetZoom.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 72);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 75);
+            // 
+            // tsbPasaBajo
+            // 
+            this.tsbPasaBajo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbPasaBajo.Image = global::ECGViewer.Properties.Resources.LowPass;
+            this.tsbPasaBajo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPasaBajo.Name = "tsbPasaBajo";
+            this.tsbPasaBajo.Size = new System.Drawing.Size(54, 72);
+            this.tsbPasaBajo.Text = "P.Bajo";
+            this.tsbPasaBajo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPasaBajo.Click += new System.EventHandler(this.tsbPasaBajo_Click);
+            // 
+            // tsbPasaAlto
+            // 
+            this.tsbPasaAlto.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbPasaAlto.Image = global::ECGViewer.Properties.Resources.HighPass;
+            this.tsbPasaAlto.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPasaAlto.Name = "tsbPasaAlto";
+            this.tsbPasaAlto.Size = new System.Drawing.Size(56, 72);
+            this.tsbPasaAlto.Text = "P. Alto";
+            this.tsbPasaAlto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPasaAlto.Click += new System.EventHandler(this.tsbPasaAlto_Click);
+            // 
+            // tsbPasaBanda
+            // 
+            this.tsbPasaBanda.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbPasaBanda.Image = global::ECGViewer.Properties.Resources.BandPass2;
+            this.tsbPasaBanda.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPasaBanda.Name = "tsbPasaBanda";
+            this.tsbPasaBanda.Size = new System.Drawing.Size(70, 72);
+            this.tsbPasaBanda.Text = "P. Banda";
+            this.tsbPasaBanda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPasaBanda.Click += new System.EventHandler(this.tsbPasaBanda_Click);
+            // 
+            // tsbNotch
+            // 
+            this.tsbNotch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbNotch.Image = global::ECGViewer.Properties.Resources.notch;
+            this.tsbNotch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbNotch.Name = "tsbNotch";
+            this.tsbNotch.Size = new System.Drawing.Size(53, 72);
+            this.tsbNotch.Text = "Notch";
+            this.tsbNotch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbNotch.Click += new System.EventHandler(this.tsbNotch_Click);
+            // 
+            // tsbFiltradoInteractivo
+            // 
+            this.tsbFiltradoInteractivo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbFiltradoInteractivo.Image = global::ECGViewer.Properties.Resources.ajustes;
+            this.tsbFiltradoInteractivo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFiltradoInteractivo.Name = "tsbFiltradoInteractivo";
+            this.tsbFiltradoInteractivo.Size = new System.Drawing.Size(83, 72);
+            this.tsbFiltradoInteractivo.Text = "Interactivo";
+            this.tsbFiltradoInteractivo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.tsbFiltradoInteractivo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbFiltradoInteractivo.ToolTipText = "Ajuste interactivo";
+            this.tsbFiltradoInteractivo.Click += new System.EventHandler(this.tsbFiltradoInteractivo_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 72);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 75);
+            // 
+            // tsbCancelar
+            // 
+            this.tsbCancelar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbCancelar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbCancelar.Image = global::ECGViewer.Properties.Resources.cancel_48x48;
+            this.tsbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCancelar.Name = "tsbCancelar";
+            this.tsbCancelar.Size = new System.Drawing.Size(120, 72);
+            this.tsbCancelar.Text = "Cancelar";
+            this.tsbCancelar.Click += new System.EventHandler(this.tsbCancelar_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 72);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 75);
+            // 
+            // tsbAceptar
+            // 
+            this.tsbAceptar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbAceptar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbAceptar.Image = global::ECGViewer.Properties.Resources.accept_48x48;
+            this.tsbAceptar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAceptar.Name = "tsbAceptar";
+            this.tsbAceptar.Size = new System.Drawing.Size(110, 72);
+            this.tsbAceptar.Text = "Aplicar";
+            this.tsbAceptar.Click += new System.EventHandler(this.tsbAceptar_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 72);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 75);
+            // 
+            // tsbResetSenal
+            // 
+            this.tsbResetSenal.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tsbResetSenal.Image = global::ECGViewer.Properties.Resources.reset;
+            this.tsbResetSenal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbResetSenal.Name = "tsbResetSenal";
+            this.tsbResetSenal.Size = new System.Drawing.Size(93, 72);
+            this.tsbResetSenal.Text = "Reset Filtros";
+            this.tsbResetSenal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbResetSenal.Click += new System.EventHandler(this.tsbResetSenal_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 72);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 75);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.ControlLight;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(429, 6);
+            this.label3.Location = new System.Drawing.Point(540, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(209, 18);
             this.label3.TabIndex = 15;
@@ -234,7 +336,7 @@
             // 
             this.tgbTipoVista.BackColor = System.Drawing.SystemColors.ControlLight;
             this.tgbTipoVista.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.tgbTipoVista.Location = new System.Drawing.Point(491, 28);
+            this.tgbTipoVista.Location = new System.Drawing.Point(602, 28);
             this.tgbTipoVista.MinimumSize = new System.Drawing.Size(45, 22);
             this.tgbTipoVista.Name = "tgbTipoVista";
             this.tgbTipoVista.OffBackColor = System.Drawing.Color.Gray;
@@ -264,7 +366,7 @@
             // btnDetectarComplejosQRS
             // 
             this.btnDetectarComplejosQRS.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDetectarComplejosQRS.Location = new System.Drawing.Point(778, 12);
+            this.btnDetectarComplejosQRS.Location = new System.Drawing.Point(23, 85);
             this.btnDetectarComplejosQRS.Name = "btnDetectarComplejosQRS";
             this.btnDetectarComplejosQRS.Size = new System.Drawing.Size(151, 47);
             this.btnDetectarComplejosQRS.TabIndex = 26;
@@ -272,110 +374,11 @@
             this.btnDetectarComplejosQRS.UseVisualStyleBackColor = true;
             this.btnDetectarComplejosQRS.Click += new System.EventHandler(this.button11_Click);
             // 
-            // tsbResetZoom
-            // 
-            this.tsbResetZoom.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbResetZoom.Image = global::ECGViewer.Properties.Resources.Zoom_reset_01_48x48;
-            this.tsbResetZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbResetZoom.Name = "tsbResetZoom";
-            this.tsbResetZoom.Size = new System.Drawing.Size(85, 69);
-            this.tsbResetZoom.Text = "Reset Zoom";
-            this.tsbResetZoom.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbResetZoom.Click += new System.EventHandler(this.tsbResetZoom_Click);
-            // 
-            // tsbPasaBajo
-            // 
-            this.tsbPasaBajo.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbPasaBajo.Image = global::ECGViewer.Properties.Resources.LowPass;
-            this.tsbPasaBajo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPasaBajo.Name = "tsbPasaBajo";
-            this.tsbPasaBajo.Size = new System.Drawing.Size(52, 69);
-            this.tsbPasaBajo.Text = "P.Bajo";
-            this.tsbPasaBajo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbPasaBajo.Click += new System.EventHandler(this.tsbPasaBajo_Click);
-            // 
-            // tsbPasaAlto
-            // 
-            this.tsbPasaAlto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbPasaAlto.Image = global::ECGViewer.Properties.Resources.HighPass;
-            this.tsbPasaAlto.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPasaAlto.Name = "tsbPasaAlto";
-            this.tsbPasaAlto.Size = new System.Drawing.Size(52, 69);
-            this.tsbPasaAlto.Text = "P. Alto";
-            this.tsbPasaAlto.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbPasaAlto.Click += new System.EventHandler(this.tsbPasaAlto_Click);
-            // 
-            // tsbPasaBanda
-            // 
-            this.tsbPasaBanda.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbPasaBanda.Image = global::ECGViewer.Properties.Resources.BandPass2;
-            this.tsbPasaBanda.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPasaBanda.Name = "tsbPasaBanda";
-            this.tsbPasaBanda.Size = new System.Drawing.Size(64, 69);
-            this.tsbPasaBanda.Text = "P. Banda";
-            this.tsbPasaBanda.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbPasaBanda.Click += new System.EventHandler(this.tsbPasaBanda_Click);
-            // 
-            // tsbNotch
-            // 
-            this.tsbNotch.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbNotch.Image = global::ECGViewer.Properties.Resources.notch;
-            this.tsbNotch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbNotch.Name = "tsbNotch";
-            this.tsbNotch.Size = new System.Drawing.Size(52, 69);
-            this.tsbNotch.Text = "Notch";
-            this.tsbNotch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbNotch.Click += new System.EventHandler(this.tsbNotch_Click);
-            // 
-            // tsbCancelar
-            // 
-            this.tsbCancelar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbCancelar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbCancelar.Image = global::ECGViewer.Properties.Resources.cancel_48x48;
-            this.tsbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbCancelar.Name = "tsbCancelar";
-            this.tsbCancelar.Size = new System.Drawing.Size(120, 69);
-            this.tsbCancelar.Text = "Cancelar";
-            this.tsbCancelar.Click += new System.EventHandler(this.tsbCancelar_Click);
-            // 
-            // tsbAceptar
-            // 
-            this.tsbAceptar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsbAceptar.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbAceptar.Image = global::ECGViewer.Properties.Resources.accept_48x48;
-            this.tsbAceptar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAceptar.Name = "tsbAceptar";
-            this.tsbAceptar.Size = new System.Drawing.Size(110, 69);
-            this.tsbAceptar.Text = "Aplicar";
-            this.tsbAceptar.Click += new System.EventHandler(this.tsbAceptar_Click);
-            // 
-            // tsbResetSenal
-            // 
-            this.tsbResetSenal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tsbResetSenal.Image = global::ECGViewer.Properties.Resources.reset;
-            this.tsbResetSenal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbResetSenal.Name = "tsbResetSenal";
-            this.tsbResetSenal.Size = new System.Drawing.Size(88, 69);
-            this.tsbResetSenal.Text = "Reset Filtros";
-            this.tsbResetSenal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbResetSenal.Click += new System.EventHandler(this.tsbResetSenal_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(665, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(81, 33);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // FrmConsolaFiltros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 656);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnDetectarComplejosQRS);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tgbTipoVista);
@@ -422,6 +425,6 @@
         private System.Windows.Forms.ToolStripButton tsbResetSenal;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.Button btnDetectarComplejosQRS;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripButton tsbFiltradoInteractivo;
     }
 }

@@ -248,6 +248,46 @@ namespace ECGViewer.Utiles
             return -1;
         }
 
+
+        public static (int indice, double valor) BuscarMaximoAbsoluto(in double[] senal, int inicio, int fin)
+        {
+            if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
+                throw new ArgumentException("Rango inválido o señal vacía.");
+
+            int indiceMax = inicio;
+            double valorMax = senal[inicio];
+
+            for (int i = inicio + 1; i <= fin; i++)
+            {
+                if (senal[i] > valorMax)
+                {
+                    valorMax = senal[i];
+                    indiceMax = i;
+                }
+            }
+
+            return (indiceMax, valorMax);
+        }
+
+        public static (int indice, double valor) BuscarMinimoAbsoluto(in double[] senal, int inicio, int fin)
+        {
+            if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
+                throw new ArgumentException("Rango inválido o señal vacía.");
+
+            int indiceMin = inicio;
+            double valorMin = senal[inicio];
+
+            for (int i = inicio + 1; i <= fin; i++)
+            {
+                if (senal[i] < valorMin)
+                {
+                    valorMin = senal[i];
+                    indiceMin = i;
+                }
+            }
+
+            return (indiceMin, valorMin);
+        }
     }
 }
 
