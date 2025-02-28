@@ -328,7 +328,7 @@ namespace ECGViewer
             }
             */
 
-            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
+            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo remplazo por el.
             foreach (ComplejoPQRST complejo in complejosPQRST)
             {
                 complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
@@ -342,35 +342,87 @@ namespace ECGViewer
             //por los ultimos complejos encontrados, como para ajustarlos mejor.
             //Para esto busco maximo local entre un complejo S y su siguiente complejo Q.
             double[] senal2 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 9.5);
+            //senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 9.5);
+            
+            /*********Cambio en el algoritmo***********/
+            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 35);
+            for (int i = 0; i < 10; i++)
+            {
+                senalProcesada = Filtros.MediaMovil(senalProcesada, 3);
+            }
+            /*******************************************/
+
+
+            SignalUtils.DesbalancearMesetas(ref senalProcesada);
             //SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
 
             for (int i=0; i < complejosPQRST.Count; i++)
             {
                 if (i < complejosPQRST.Count - 1)
                 {
-                    complejosPQRST[i].T = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, complejosPQRST[i + 1].Q);
+                    complejosPQRST[i].T = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada, complejosPQRST[i].S, complejosPQRST[i + 1].Q);
                 }
                 else
                 {
                     //La detección del ultimo complejo tiene tratamiento especial
-                    int siguienteMaximo = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count-1);
+                    int siguienteMaximo = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count-1);
                     if (siguienteMaximo > -1) complejosPQRST[i].T = siguienteMaximo;
                 }
             }
 
-            //Ojo con el complejo T que esta en 11.8 Seg
-            //Ojo con el complejo T de 15.49 Seg
-            //Ver rango de entre 2.5 y 9
-            /*******************Grafico todo *********************/
-            foreach (ComplejoPQRST complejo in complejosPQRST)
+
+            ///
+            ///
+            ///Tanto el complejo P como el T, necesitaran ajuste de picos, como se hizo con el QRS
+            /// 
+            ///
+
+
+            /**********Detectar El complejo P********************************************/
+            //Filtrar entre 0.5 y 15Hz
+            //A priori Buscar un pico maximo entre el complejo T de t-1 y el Q actual.
+            double[] senal3 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            senalProcesada = Filter.BandPass(senal3, _frecuenciaMuestreo, 0.5, 49);
+
+            //
+            //
+            //
+            //
+            //Algoritmo hasta bajar el "IndiceDeRugosidad" de la señal a un valor <= 0.004
+            //Parece ser un valor apropiado para señales de la naturaleza de las de ECG
+            for (int i = 0; i < 10; i++)
             {
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.T * 0.002, 0, "T", Color.Green);
+                senalProcesada = Filtros.MediaMovil(senalProcesada, 3);
             }
 
+            SignalUtils.DesbalancearMesetas(ref senalProcesada);
+
+            for (int i = 1; i < complejosPQRST.Count; i++)
+            {
+                complejosPQRST[i].P = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada
+                    , complejosPQRST[i - 1].T + 5 + (complejosPQRST[i].Q - complejosPQRST[i-1].T+5)/2
+                    , complejosPQRST[i].Q);
+                
+                //La detección del ultimo complejo tiene tratamiento especial
+                //    int siguienteMaximo = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count - 1);
+                //    if (siguienteMaximo > -1) complejosPQRST[i].T = siguienteMaximo;
+            }
+
+            //Ojo con el complejo T que esta en 11.8 Seg
+            //Ojo con el complejo T de 15.49 Seg
+            //Ojo con el P del 8.57
+            //Ojo con el P del 5.97
+            /*******************Grafico todo *********************/
+            int nroComplejo = 0;
+            foreach (ComplejoPQRST complejo in complejosPQRST)
+            {
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.P * 0.002, 0, $"P {nroComplejo}", Color.Peru);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, $"Q {nroComplejo}", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, $"R {nroComplejo}", Color.Blue);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, $"S {nroComplejo}", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.T * 0.002, 0, $"T {nroComplejo}", Color.Peru);
+                nroComplejo++;
+            }
         }
 
 
@@ -397,6 +449,28 @@ namespace ECGViewer
             if (!_frmControlesFiltro.Visible) 
                 _frmControlesFiltro.Show(this);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double[] senal = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
+            SignalUtils.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
+
+            
+
+            double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
+            txtRugosidad.Text = indiceRugosidad.ToString();
+
+            indiceRugosidad = SignalUtils.RMSDerivada(senalFiltrada);
+            txtRugosidad2.Text = indiceRugosidad.ToString();
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {

@@ -192,7 +192,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarSiguientePicoMaximo(double[] array, int indice)
+        public static int BuscarProximoPico(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
                 return -1;
@@ -206,7 +206,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarSiguientePicoMinimo(double[] array, int indice)
+        public static int BuscarProximoValle(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
                 return -1;
@@ -220,7 +220,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarPicoMaximoPrevio(double[] array, int indice)
+        public static int BuscarPicoPrevio(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
                 return -1;
@@ -234,7 +234,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarPicoMinimoPrevio(double[] array, int indice)
+        public static int BuscarVallePrevio(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
                 return -1;
@@ -249,48 +249,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarMaximoAbsoluto(in double[] senal, int inicio, int fin)
-        {
-            if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
-                throw new ArgumentException("Rango inválido o señal vacía.");
-
-            int indiceMax = inicio;
-            double valorMax = senal[inicio];
-
-            for (int i = inicio + 1; i <= fin; i++)
-            {
-                if (senal[i] > valorMax)
-                {
-                    valorMax = senal[i];
-                    indiceMax = i;
-                }
-            }
-
-            return indiceMax;
-        }
-
-        public static int BuscarMinimoAbsoluto(in double[] senal, int inicio, int fin)
-        {
-            if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
-                throw new ArgumentException("Rango inválido o señal vacía.");
-
-            int indiceMin = inicio;
-            double valorMin = senal[inicio];
-
-            for (int i = inicio + 1; i <= fin; i++)
-            {
-                if (senal[i] < valorMin)
-                {
-                    valorMin = senal[i];
-                    indiceMin = i;
-                }
-            }
-
-            return indiceMin;
-        }
-
-
-        public static int BuscarPicoMaximo(double[] datos, int inicio, int fin)
+        public static int BuscarValorMaximo(double[] datos, int inicio, int fin)
         {
             if (datos == null || datos.Length == 0)
                 throw new ArgumentException("El array no puede estar vacío.");
@@ -314,7 +273,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarPicoMinimo(double[] datos, int inicio, int fin)
+        public static int BuscarValorMinimo(double[] datos, int inicio, int fin)
         {
             if (datos == null || datos.Length == 0)
                 throw new ArgumentException("El array no puede estar vacío.");
@@ -336,6 +295,104 @@ namespace ECGViewer.Utiles
 
             return indiceMinimo;
         }
+
+
+        public static int EncontrarPicoMaximoLocal(double[] datos, int inicio, int fin)
+        {
+            if (datos == null || datos.Length == 0)
+                throw new ArgumentException("El array no puede estar vacío.");
+
+            if (inicio < 0 || fin >= datos.Length || inicio > fin)
+                throw new ArgumentOutOfRangeException("Los índices están fuera de rango o son inválidos.");
+
+            int indiceMaximo = -1;
+            double maximo = double.MinValue;
+
+            for (int i = inicio; i <= fin; i++)
+            {
+                bool esPico =
+                    (i == 0 || datos[i] > datos[i - 1]) &&  // Mayor que el anterior (o primer elemento)
+                    (i == datos.Length - 1 || datos[i] > datos[i + 1]); // Mayor que el siguiente (o último elemento)
+
+                if (esPico && datos[i] > maximo)
+                {
+                    maximo = datos[i];
+                    indiceMaximo = i;
+                }
+            }
+
+            return indiceMaximo; // -1 si no hay picos
+        }
+
+
+        public static int EncontrarValleMinimoLocal(double[] datos, int inicio, int fin)
+        {
+            if (datos == null || datos.Length == 0)
+                throw new ArgumentException("El array no puede estar vacío.");
+
+            if (inicio < 0 || fin >= datos.Length || inicio > fin)
+                throw new ArgumentOutOfRangeException("Los índices están fuera de rango o son inválidos.");
+
+            int indiceMinimo = -1;
+            double minimo = double.MaxValue;
+
+            for (int i = inicio; i <= fin; i++)
+            {
+                bool esPico =
+                    (i == 0 || datos[i] < datos[i - 1]) &&  // Menor que el anterior (o primer elemento)
+                    (i == datos.Length - 1 || datos[i] < datos[i + 1]); // Menor que el siguiente (o último elemento)
+
+                if (esPico && datos[i] < minimo)
+                {
+                    minimo = datos[i];
+                    indiceMinimo = i;
+                }
+            }
+
+            return indiceMinimo; // -1 si no hay picos
+        }
+
+        /// <summary>
+        /// Variabilidad de la derivada. Cuanto mas rugosa, mayor es la metrica
+        /// Mide qué tan rápido cambia la señal, útil para ver qué tan "rugosa" es.
+        /// Se basa en la diferencia absoluta entre valores consecutivos:
+        /// </summary>
+        /// <param name="datos"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static double VariabilidadDiferencias(double[] datos)
+        {
+            if (datos == null || datos.Length < 2) throw new ArgumentException("El array debe tener al menos 2 elementos.");
+
+            double suma = 0;
+            for (int i = 0; i < datos.Length - 1; i++)
+                suma += Math.Abs(datos[i + 1] - datos[i]);
+
+            return suma / (datos.Length - 1);
+        }
+
+        ///Otra medida de Rugosidad:
+        ///Es mas sensible a los cambios bruscos por el hecho de estar elevada al cuadrado. <summary>
+        /// Otra medida de Rugosidad://A efectos practicos de los ECG, el valor que da es aprox. el doble de 
+        /// la VariabilidadDeDiferencias en todas las iteraciones.
+        /// </summary>
+        /// <param name="datos"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static double RMSDerivada(double[] datos)
+        {
+            if (datos == null || datos.Length < 2) throw new ArgumentException("El array debe tener al menos 2 elementos.");
+
+            double sumaCuadrados = 0;
+            for (int i = 0; i < datos.Length - 1; i++)
+            {
+                double derivada = datos[i + 1] - datos[i];
+                sumaCuadrados += derivada * derivada;
+            }
+
+            return Math.Sqrt(sumaCuadrados / (datos.Length - 1));
+        }
+
 
 
     }
