@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using DocumentFormat.OpenXml.Presentation;
+using ECGViewer.Formularios;
 
 namespace ECGViewer
 {
@@ -308,7 +309,7 @@ namespace ECGViewer
             double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
             Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
 
-            List<ComplejoQRS> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
+            List<ComplejoPQRST> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
 
             //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
             //por el momento se deja asi, aunque esto implique haer otra FFT mas.
@@ -326,21 +327,58 @@ namespace ECGViewer
             */
 
             //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
-            foreach (ComplejoQRS complejo in complejosQRS)
+            foreach (ComplejoPQRST complejo in complejosQRS)
             {
                 complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
                 complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
                 complejo.S = SignalUtils.IndiceMasCercano(complejo.S, indicesDeExtremos);
             }
 
-            foreach (ComplejoQRS complejo in complejosQRS)
+            /**********Detectar El complejo T*********************************************/
+            double[] senal2 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1.5, 9.5);
+            SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
+
+            foreach (ComplejoPQRST complejo in complejosQRS)
+            {
+                complejo.T = SignalUtils.BuscarSiguienteMaximo(senalProcesada, complejo.S);
+            }
+
+            //Ojo con el complejo T que esta en 11.8 Seg
+            //Ojo con el complejo T de 15.49 Seg
+            //Ver rango de entre 2.5 y 9
+            /*******************Grafico todo *********************/
+            foreach (ComplejoPQRST complejo in complejosQRS)
             {
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.T * 0.002, 0, "T", Color.Green);
             }
+
         }
 
+
+        public void AplicarFiltrosPasaBanda(double FCorteInferior, double FCorteSuperior)
+        {
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalOriginal);
+            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, FCorteInferior, FCorteSuperior);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmControlesFiltro frmControlesFiltro = new FrmControlesFiltro(this);
+            frmControlesFiltro.Show();
+        }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
         {
@@ -383,7 +421,6 @@ namespace ECGViewer
                 {
                     serieEspectro.Points.AddXY(freq[i], psd[i]);
                 }
-
 
                 /************* senalFiltrada****************/
                 signal = Utils.ClonarVectorParaFFT(_senalFiltrada);

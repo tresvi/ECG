@@ -15,10 +15,10 @@ namespace ECGViewer.Utiles
         /// <param name="tMuestreo"></param>
         /// <param name="validarTiempos"></param>
         /// <returns></returns>
-        public static List<ComplejoQRS> GetComplejosQRS(in double[] senal, double tMuestreo, bool validarTiempos)
+        public static List<ComplejoPQRST> GetComplejosQRS(in double[] senal, double tMuestreo, bool validarTiempos)
         {
             List<int> picos = SignalUtils.DetectarPicos(senal);
-            List<ComplejoQRS> complejosDetectados = new List<ComplejoQRS>();
+            List<ComplejoPQRST> complejosDetectados = new List<ComplejoPQRST>();
 
             for (int i = 1; i < picos.Count - 1; i++) // Para asegurar que haya picos antes y despues
             {
@@ -35,10 +35,10 @@ namespace ECGViewer.Utiles
                         double tiempoRS = (indexPicoSiguiente - indexPicoActual) * tMuestreo;
 
                         if (tiempoQR < TIEMPO_GUARDA_QR_RS_SEC && tiempoRS < TIEMPO_GUARDA_QR_RS_SEC)
-                            complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
+                            complejosDetectados.Add(new ComplejoPQRST(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
                     }
                     else
-                        complejosDetectados.Add(new ComplejoQRS(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
+                        complejosDetectados.Add(new ComplejoPQRST(indexPicoAnterior, indexPicoActual, indexPicoSiguiente));
                 }
             }
 

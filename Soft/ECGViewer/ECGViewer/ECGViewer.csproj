@@ -241,6 +241,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formularios\FrmControlesFiltro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmControlesFiltro.Designer.cs">
+      <DependentUpon>FrmControlesFiltro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utiles\ComplejosUtils.cs" />
     <Compile Include="Controles\ToggleButton.cs">
       <SubType>Component</SubType>
@@ -312,7 +318,7 @@
       <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicHelpers.cs" />
-    <Compile Include="Modelos\ComplejoQRS.cs" />
+    <Compile Include="Modelos\ComplejoPQRST.cs" />
     <Compile Include="Modelos\Configuracion.cs" />
     <Compile Include="Modelos\StripLineWithComment.cs" />
     <Compile Include="Modelos\Muestra.cs" />
@@ -329,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmConfiguracionEjes.resx">
       <DependentUpon>FrmConfiguracionEjes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmControlesFiltro.resx">
+      <DependentUpon>FrmControlesFiltro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmEditorTextoMarcadores.resx">
       <DependentUpon>FrmEditorTextoMarcadores.cs</DependentUpon>

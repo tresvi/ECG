@@ -190,6 +190,64 @@ namespace ECGViewer.Utiles
 
             return indicesExtremos.OrderBy(indice => Math.Abs(indice - punto)).First();
         }
+
+
+        public static int BuscarSiguienteMaximo(double[] array, int indice)
+        {
+            if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
+                return -1;
+
+            for (int i = indice + 1; i < array.Length - 1; i++)
+            {
+                if (array[i] > array[i - 1] && array[i] > array[i + 1]) return i;
+            }
+
+            return -1;
+        }
+
+
+        public static int BuscarSiguienteMinimo(double[] array, int indice)
+        {
+            if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
+                return -1;
+
+            for (int i = indice + 1; i < array.Length - 1; i++)
+            {
+                if (array[i] < array[i - 1] && array[i] < array[i + 1]) return i;
+            }
+
+            return -1;
+        }
+
+
+        public static int BuscarMaximoPrevio(double[] array, int indice)
+        {
+            if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
+                return -1;
+
+            for (int i = indice - 1; i > 0; i--)
+            {
+                if (array[i] > array[i - 1] && array[i] > array[i + 1]) return i;
+            }
+
+            return -1;
+        }
+
+
+        public static int BuscarMinimoPrevio(double[] array, int indice)
+        {
+            if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
+                return -1;
+
+            for (int i = indice - 1; i > 0; i--)
+            {
+                if (array[i] < array[i - 1] && array[i] < array[i + 1])
+                    return i;
+            }
+
+            return -1;
+        }
+
     }
 }
 
