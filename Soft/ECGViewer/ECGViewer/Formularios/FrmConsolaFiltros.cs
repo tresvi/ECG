@@ -234,10 +234,10 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
-
+        
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1m, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1.5m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
@@ -311,7 +311,7 @@ namespace ECGViewer
             double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
             Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
 
-            List<ComplejoPQRST> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
+            List<ComplejoPQRST> complejosPQRST = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
 
             //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
             //por el momento se deja asi, aunque esto implique haer otra FFT mas.
@@ -329,7 +329,7 @@ namespace ECGViewer
             */
 
             //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
-            foreach (ComplejoPQRST complejo in complejosQRS)
+            foreach (ComplejoPQRST complejo in complejosPQRST)
             {
                 complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
                 complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
@@ -337,20 +337,33 @@ namespace ECGViewer
             }
 
             /**********Detectar El complejo T*********************************************/
+            //TODO: Deberia intentar localizarse el ultimo completo T, quizas si, pero aplicar una
+            //restriccion de tiempo basada en un rango de tiempo. Dicho rango deberia estar  realimentado 
+            //por los ultimos complejos encontrados, como para ajustarlos mejor.
+            //Para esto busco maximo local entre un complejo S y su siguiente complejo Q.
             double[] senal2 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
             senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 9.5);
-            SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
+            //SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
 
-            foreach (ComplejoPQRST complejo in complejosQRS)
+            for (int i=0; i < complejosPQRST.Count; i++)
             {
-               // complejo.T = SignalUtils.BuscarMaximoAbsoluto(senalProcesada, complejo.S);
+                if (i < complejosPQRST.Count - 1)
+                {
+                    complejosPQRST[i].T = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, complejosPQRST[i + 1].Q);
+                }
+                else
+                {
+                    //La detección del ultimo complejo tiene tratamiento especial
+                    int siguienteMaximo = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count-1);
+                    if (siguienteMaximo > -1) complejosPQRST[i].T = siguienteMaximo;
+                }
             }
 
             //Ojo con el complejo T que esta en 11.8 Seg
             //Ojo con el complejo T de 15.49 Seg
             //Ver rango de entre 2.5 y 9
             /*******************Grafico todo *********************/
-            foreach (ComplejoPQRST complejo in complejosQRS)
+            foreach (ComplejoPQRST complejo in complejosPQRST)
             {
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
                 GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
@@ -378,10 +391,11 @@ namespace ECGViewer
 
         private void tsbFiltradoInteractivo_Click(object sender, EventArgs e)
         {
-            if (_frmControlesFiltro != null) return;
-            
-            _frmControlesFiltro = new FrmControlesFiltroInteractivo(this);
-            _frmControlesFiltro.Show(this);
+            if (_frmControlesFiltro == null) 
+                _frmControlesFiltro = new FrmControlesFiltroInteractivo(this);
+
+            if (!_frmControlesFiltro.Visible) 
+                _frmControlesFiltro.Show(this);
         }
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)

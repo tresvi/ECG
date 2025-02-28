@@ -192,7 +192,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarSiguienteMaximo(double[] array, int indice)
+        public static int BuscarSiguientePicoMaximo(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
                 return -1;
@@ -206,7 +206,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarSiguienteMinimo(double[] array, int indice)
+        public static int BuscarSiguientePicoMinimo(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice < 0 || indice >= array.Length - 1)
                 return -1;
@@ -220,7 +220,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarMaximoPrevio(double[] array, int indice)
+        public static int BuscarPicoMaximoPrevio(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
                 return -1;
@@ -234,7 +234,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static int BuscarMinimoPrevio(double[] array, int indice)
+        public static int BuscarPicoMinimoPrevio(double[] array, int indice)
         {
             if (array == null || array.Length == 0 || indice <= 0 || indice >= array.Length)
                 return -1;
@@ -249,7 +249,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static (int indice, double valor) BuscarMaximoAbsoluto(in double[] senal, int inicio, int fin)
+        public static int BuscarMaximoAbsoluto(in double[] senal, int inicio, int fin)
         {
             if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
                 throw new ArgumentException("Rango inválido o señal vacía.");
@@ -266,10 +266,10 @@ namespace ECGViewer.Utiles
                 }
             }
 
-            return (indiceMax, valorMax);
+            return indiceMax;
         }
 
-        public static (int indice, double valor) BuscarMinimoAbsoluto(in double[] senal, int inicio, int fin)
+        public static int BuscarMinimoAbsoluto(in double[] senal, int inicio, int fin)
         {
             if (senal == null || senal.Length == 0 || inicio < 0 || fin >= senal.Length || inicio > fin)
                 throw new ArgumentException("Rango inválido o señal vacía.");
@@ -286,8 +286,58 @@ namespace ECGViewer.Utiles
                 }
             }
 
-            return (indiceMin, valorMin);
+            return indiceMin;
         }
+
+
+        public static int BuscarPicoMaximo(double[] datos, int inicio, int fin)
+        {
+            if (datos == null || datos.Length == 0)
+                throw new ArgumentException("El array no puede estar vacío.");
+
+            if (inicio < 0 || fin >= datos.Length || inicio > fin)
+                throw new ArgumentOutOfRangeException("Los índices están fuera de rango o son inválidos.");
+
+            int indiceMaximo = inicio;
+            double maximo = datos[inicio];
+
+            for (int i = inicio + 1; i <= fin; i++)
+            {
+                if (datos[i] > maximo)
+                {
+                    maximo = datos[i];
+                    indiceMaximo = i;
+                }
+            }
+
+            return indiceMaximo;
+        }
+
+
+        public static int BuscarPicoMinimo(double[] datos, int inicio, int fin)
+        {
+            if (datos == null || datos.Length == 0)
+                throw new ArgumentException("El array no puede estar vacío.");
+
+            if (inicio < 0 || fin >= datos.Length || inicio > fin)
+                throw new ArgumentOutOfRangeException("Los índices están fuera de rango o son inválidos.");
+
+            int indiceMinimo = inicio;
+            double minimo = datos[inicio];
+
+            for (int i = inicio + 1; i <= fin; i++)
+            {
+                if (datos[i] < minimo)
+                {
+                    minimo = datos[i];
+                    indiceMinimo = i;
+                }
+            }
+
+            return indiceMinimo;
+        }
+
+
     }
 }
 

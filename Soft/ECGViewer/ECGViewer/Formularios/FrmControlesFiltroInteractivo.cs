@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ECGViewer.Formularios
@@ -24,40 +17,23 @@ namespace ECGViewer.Formularios
 
             lblFCorteInferior.Text = fCorteInferior.ToString("0.0") + " Hz";
             lblFCorteSuperior.Text = fCorteSuperior.ToString("0.0") + " Hz";
+            chkTransparencia.Checked = true;
         }
-
-
-        private void tbFCorteInferior_Scroll(object sender, EventArgs e)
-        {
-            double fCorteInferior = (tbFCorteInferior.Maximum - tbFCorteInferior.Value) * 0.5;
-            double fCorteSuperior = (tbFCorteSuperior.Maximum - tbFCorteSuperior.Value) * 0.5;
-
-            lblFCorteInferior.Text = fCorteInferior.ToString("0.0") + " Hz";
-            FormConsola.AplicarFiltrosPasaBanda(fCorteInferior, fCorteSuperior);
-        }
-
-
-        private void tbFCorteSuperior_Scroll(object sender, EventArgs e)
-        {
-            double fCorteInferior = (tbFCorteInferior.Maximum - tbFCorteInferior.Value) * 0.5;
-            double fCorteSuperior = (tbFCorteSuperior.Maximum - tbFCorteSuperior.Value) * 0.5;
-
-            
-
-            lblFCorteSuperior.Text = fCorteSuperior.ToString("0.0") + " Hz";
-            FormConsola.AplicarFiltrosPasaBanda(fCorteInferior, fCorteSuperior);
-        }
-
-
 
         private void tbFCorteInferior_ValueChanged(object sender, EventArgs e)
         {
             double fCorteInferior = (tbFCorteInferior.Maximum - tbFCorteInferior.Value) * 0.5;
             double fCorteSuperior = (tbFCorteSuperior.Maximum - tbFCorteSuperior.Value) * 0.5;
 
+            lblFCorteInferior.Text = fCorteInferior.ToString("0.0") + " Hz";
+            FormConsola.AplicarFiltrosPasaBanda(fCorteInferior, fCorteSuperior);
+
             if (fCorteInferior >= fCorteSuperior)
             {
-                tbFCorteSuperior.Value = tbFCorteInferior.Value - 1;
+                int nuevoValor = tbFCorteInferior.Value - 1;
+                if (nuevoValor < tbFCorteInferior.Minimum) nuevoValor = tbFCorteInferior.Minimum;
+
+                tbFCorteSuperior.Value = nuevoValor;
             }
         }
 
@@ -66,11 +42,30 @@ namespace ECGViewer.Formularios
             double fCorteInferior = (tbFCorteInferior.Maximum - tbFCorteInferior.Value) * 0.5;
             double fCorteSuperior = (tbFCorteSuperior.Maximum - tbFCorteSuperior.Value) * 0.5;
 
+            lblFCorteSuperior.Text = fCorteSuperior.ToString("0.0") + " Hz";
+            FormConsola.AplicarFiltrosPasaBanda(fCorteInferior, fCorteSuperior);
+
             if (fCorteSuperior <= fCorteInferior)
             {
-                tbFCorteInferior.Value = tbFCorteSuperior.Value + 1;
+                int nuevoValor = tbFCorteSuperior.Value + 1;
+                if (nuevoValor > tbFCorteInferior.Maximum) nuevoValor = tbFCorteInferior.Maximum;
+
+                tbFCorteInferior.Value = nuevoValor;
             }
         }
 
+        private void chkTransparencia_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTransparencia.Checked)
+                this.Opacity = 0.9;
+            else
+                this.Opacity = 1;
+        }
+
+        private void FrmControlesFiltroInteractivo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Visible = false;
+            e.Cancel = true;
+        }
     }
 }
