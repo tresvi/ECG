@@ -1,33 +1,14 @@
-﻿using ECGViewer.Modelos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ECGViewer.Utiles
 {
-    internal class SignalUtils
+    public class SignalUtils
     {
 
-        public static double[] GetCanal(in List<Muestra> senal, int nroCanal)
-        { 
-            double[] muestrasCanal = new double[senal.Count];
-            for (int i = 0; i < senal.Count; i++)
-                muestrasCanal[i] = senal[i].Canal[nroCanal];
 
-            return muestrasCanal;
-        }
-
-
-        public static void SetCanal(ref List<Muestra> senal, int nroCanal, in double[] muestrasCanal)
-        {
-            if (senal.Count != muestrasCanal.Length)
-                throw new ArgumentException("El tamaño de la la lista de muestras y del array de valores deben coincidir.");
-
-            for (int i = 0; i < senal.Count; i++)
-                senal[i].Canal[nroCanal] = muestrasCanal[i];
-        }
-
-
+/*
         public static void ElevarAlCuadrado(ref List<Muestra> senal, int nroCanal)
         {
             for (int i = 0; i < senal.Count - 1; i++)
@@ -35,7 +16,7 @@ namespace ECGViewer.Utiles
                 senal[i].Canal[nroCanal] *= senal[i].Canal[nroCanal];
             }
         }
-
+*/
 
         public static void ElevarAlCuadrado(ref double[] senal)
         {
@@ -61,6 +42,7 @@ namespace ECGViewer.Utiles
             return peakIndexes;
         }
 
+        /*
         public static void RectificarMediaOnda(ref List<Muestra> senal, int nroCanal)
         {
             for (int i = 0; i < senal.Count - 1; i++)
@@ -68,7 +50,7 @@ namespace ECGViewer.Utiles
                 if (senal[i].Canal[nroCanal] < 0) senal[i].Canal[nroCanal] = 0;
             }
         }
-
+        */
 
         public static void RectificarMediaOnda(ref double[] senal)
         {
@@ -76,7 +58,7 @@ namespace ECGViewer.Utiles
                 if (senal[i] < 0) senal[i] = 0;
         }
 
-
+/*
         public static void MultiplicarPorEscalar(ref List<Muestra> senal, int nroCanal, double escalar)
         {
             for (int i = 0; i < senal.Count - 1; i++)
@@ -84,7 +66,7 @@ namespace ECGViewer.Utiles
                 senal[i].Canal[nroCanal] *= escalar;
             }
         }
-
+*/
 
         public static void MultiplicarPorEscalar(ref double[] senal, double escalar)
         {
@@ -92,7 +74,7 @@ namespace ECGViewer.Utiles
                 senal[i] *= escalar;
         }
 
-
+        /*
         public static List<Muestra> CalcularDerivada(List<Muestra> muestras, int nroCanal, double h)
         {
             List<Muestra> derivada = new List<Muestra>();
@@ -107,7 +89,7 @@ namespace ECGViewer.Utiles
 
             return derivada;
         }
-
+        */
 
         public static double GetValorMedio(in double[] senal)
         {
@@ -129,7 +111,7 @@ namespace ECGViewer.Utiles
             return suma / picos.Count; // Promedio de los picos
         }
 
-
+        /*
         public static void SumarRuidoAleatorio(ref List<Muestra> senal, int nroCanal, double minimo, double maximo)
         {
             Random random = new Random(DateTime.Now.Millisecond);
@@ -140,14 +122,14 @@ namespace ECGViewer.Utiles
                 senal[i].Canal[nroCanal] += ruido;
             }
         }
-
+        */
 
         /// <summary>
         /// Obtiene Macimos y Minimos de la señal
         /// </summary>
         /// <param name="senal"></param>
         /// <returns></returns>
-        public static int[] GetExtremosLocales(double[] senal)
+        public static int[] GetExtremosLocales(in double[] senal)
         {
             List<int> extremos = new List<int>();
             for (int i = 1; i < senal.Length - 1; i++)
@@ -182,7 +164,13 @@ namespace ECGViewer.Utiles
             }
         }
 
-
+        /// <summary>
+        /// Devuelve el indice del array mas cercano al punto pasado por parametro
+        /// </summary>
+        /// <param name="punto"></param>
+        /// <param name="indicesExtremos"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static int IndiceMasCercano(int punto, int[] indicesExtremos)
         {
             if (indicesExtremos.Length == 0)

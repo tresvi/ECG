@@ -247,7 +247,6 @@
     <Compile Include="Formularios\FrmControlesFiltroInteractivo.Designer.cs">
       <DependentUpon>FrmControlesFiltroInteractivo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utiles\ComplejosUtils.cs" />
     <Compile Include="Controles\ToggleButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -317,15 +316,13 @@
     <Compile Include="Formularios\FrmPasaEliminaBanda.Designer.cs">
       <DependentUpon>FrmPasaEliminaBanda.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphicHelpers.cs" />
-    <Compile Include="Modelos\ComplejoPQRST.cs" />
+    <Compile Include="Utiles\GraphicHelpers.cs" />
     <Compile Include="Modelos\Configuracion.cs" />
     <Compile Include="Modelos\StripLineWithComment.cs" />
     <Compile Include="Modelos\Muestra.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utiles\Filtros.cs" />
-    <Compile Include="Utiles\SignalUtils.cs" />
     <Compile Include="Utiles\Utils.cs" />
     <EmbeddedResource Include="Formularios\FrmAdministrarMarcadores.resx">
       <DependentUpon>FrmAdministrarMarcadores.cs</DependentUpon>
@@ -466,6 +463,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ECGCommon\ECGCommon.csproj">
+      <Project>{DDA09EE6-7C6D-46D6-BC21-55A233716236}</Project>
+      <Name>ECGCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

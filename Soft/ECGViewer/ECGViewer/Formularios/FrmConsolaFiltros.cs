@@ -1,15 +1,14 @@
-﻿using ECGViewer.Utiles;
+﻿using ECGCommon.Modelos;
+using ECGViewer.Formularios;
 using ECGViewer.Modelos;
+using ECGViewer.Utiles;
 using FftSharp;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using DocumentFormat.OpenXml.Presentation;
-using ECGViewer.Formularios;
 
 namespace ECGViewer
 {
@@ -285,134 +284,13 @@ namespace ECGViewer
         }
 
 
-        //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
-        //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
-        //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
-        
-        //Para detectar T, filtrar entre 1-8 y luego buscar siguiente pico luego del complejo S
-        //Esto puede fallar. Evaluar los siguientes 2 picos, y quedarse con el mayor. Siempre y cuando ese, no sea/esté
-        //demasiado cerca del valor del proximo complejo P.
-
-        /// <summary>
-        /// Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
-        /// Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
-        /// Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
-        /// Escribir una función para "Acomodar la señal cuando sea necesario"
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
-            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            double[] senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 12, 30);
+            double[] senalCruda = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            List<ComplejoPQRST> complejosPQRST = ComplejosUtils.GetComplejosQRS(senalCruda, _frecuenciaMuestreo);
+            ComplejosUtils.CargarComplejoT(senalCruda, _frecuenciaMuestreo, ref complejosPQRST);
+            ComplejosUtils.CargarComplejoP(senalCruda, _frecuenciaMuestreo, ref complejosPQRST);
 
-            SignalUtils.ElevarAlCuadrado(ref senalProcesada);
-
-            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
-            Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
-
-            List<ComplejoPQRST> complejosPQRST = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
-
-            //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
-            //por el momento se deja asi, aunque esto implique haer otra FFT mas.
-            double[] originlFiltradaPorFPB = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 49);
-            SignalUtils.DesbalancearMesetas(ref originlFiltradaPorFPB);
-            int[] indicesDeExtremos = SignalUtils.GetExtremosLocales(originlFiltradaPorFPB);
-
-            /*
-            foreach (ComplejoQRS complejo in complejosQRS)
-            {
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Red);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Red);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Red);
-            }
-            */
-
-            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo remplazo por el.
-            foreach (ComplejoPQRST complejo in complejosPQRST)
-            {
-                complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
-                complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
-                complejo.S = SignalUtils.IndiceMasCercano(complejo.S, indicesDeExtremos);
-            }
-
-            /**********Detectar El complejo T*********************************************/
-            //TODO: Deberia intentar localizarse el ultimo completo T, quizas si, pero aplicar una
-            //restriccion de tiempo basada en un rango de tiempo. Dicho rango deberia estar  realimentado 
-            //por los ultimos complejos encontrados, como para ajustarlos mejor.
-            //Para esto busco maximo local entre un complejo S y su siguiente complejo Q.
-            double[] senal2 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            //senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 9.5);
-            
-            /*********Cambio en el algoritmo***********/
-            senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 35);
-            for (int i = 0; i < 10; i++)
-            {
-                senalProcesada = Filtros.MediaMovil(senalProcesada, 3);
-            }
-            /*******************************************/
-
-
-            SignalUtils.DesbalancearMesetas(ref senalProcesada);
-            //SignalUtils.BuscarMaximoPrevio(senalProcesada, 3);
-
-            for (int i=0; i < complejosPQRST.Count; i++)
-            {
-                if (i < complejosPQRST.Count - 1)
-                {
-                    complejosPQRST[i].T = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada, complejosPQRST[i].S, complejosPQRST[i + 1].Q);
-                }
-                else
-                {
-                    //La detección del ultimo complejo tiene tratamiento especial
-                    int siguienteMaximo = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count-1);
-                    if (siguienteMaximo > -1) complejosPQRST[i].T = siguienteMaximo;
-                }
-            }
-
-
-            ///
-            ///
-            ///Tanto el complejo P como el T, necesitaran ajuste de picos, como se hizo con el QRS
-            /// 
-            ///
-
-
-            /**********Detectar El complejo P********************************************/
-            //Filtrar entre 0.5 y 15Hz
-            //A priori Buscar un pico maximo entre el complejo T de t-1 y el Q actual.
-            double[] senal3 = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            senalProcesada = Filter.BandPass(senal3, _frecuenciaMuestreo, 0.5, 49);
-
-            //
-            //
-            //
-            //
-            //Algoritmo hasta bajar el "IndiceDeRugosidad" de la señal a un valor <= 0.004
-            //Parece ser un valor apropiado para señales de la naturaleza de las de ECG
-            for (int i = 0; i < 10; i++)
-            {
-                senalProcesada = Filtros.MediaMovil(senalProcesada, 3);
-            }
-
-            SignalUtils.DesbalancearMesetas(ref senalProcesada);
-
-            for (int i = 1; i < complejosPQRST.Count; i++)
-            {
-                complejosPQRST[i].P = SignalUtils.EncontrarPicoMaximoLocal(senalProcesada
-                    , complejosPQRST[i - 1].T + 5 + (complejosPQRST[i].Q - complejosPQRST[i-1].T+5)/2
-                    , complejosPQRST[i].Q);
-                
-                //La detección del ultimo complejo tiene tratamiento especial
-                //    int siguienteMaximo = SignalUtils.BuscarPicoMaximo(senalProcesada, complejosPQRST[i].S, _senalFiltrada.Count - 1);
-                //    if (siguienteMaximo > -1) complejosPQRST[i].T = siguienteMaximo;
-            }
-
-            //Ojo con el complejo T que esta en 11.8 Seg
-            //Ojo con el complejo T de 15.49 Seg
-            //Ojo con el P del 8.57
-            //Ojo con el P del 5.97
-            /*******************Grafico todo *********************/
             int nroComplejo = 0;
             foreach (ComplejoPQRST complejo in complejosPQRST)
             {
@@ -452,11 +330,9 @@ namespace ECGViewer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            double[] senal = SignalUtils.GetCanal(_senalFiltrada, 0);
+            double[] senal = Muestra.GetCanal(_senalFiltrada, 0);
             double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
-            SignalUtils.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
-
-            
+            Muestra.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
 
             double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
             txtRugosidad.Text = indiceRugosidad.ToString();
@@ -470,6 +346,7 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
+
 
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)

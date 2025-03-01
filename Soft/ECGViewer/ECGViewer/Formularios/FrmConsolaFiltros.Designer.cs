@@ -344,6 +344,7 @@
             this.btnDetectarComplejosQRST.TabIndex = 26;
             this.btnDetectarComplejosQRST.Text = "Detectar Complejos QRST";
             this.btnDetectarComplejosQRST.UseVisualStyleBackColor = true;
+            this.btnDetectarComplejosQRST.Visible = false;
             this.btnDetectarComplejosQRST.Click += new System.EventHandler(this.button11_Click);
             // 
             // button1
@@ -355,6 +356,7 @@
             this.button1.TabIndex = 27;
             this.button1.Text = "Filtrar Media Movil";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tgbTipoVista
@@ -395,6 +397,7 @@
             this.txtRugosidad.Name = "txtRugosidad";
             this.txtRugosidad.Size = new System.Drawing.Size(186, 26);
             this.txtRugosidad.TabIndex = 29;
+            this.txtRugosidad.Visible = false;
             // 
             // txtRugosidad2
             // 
@@ -403,6 +406,7 @@
             this.txtRugosidad2.Name = "txtRugosidad2";
             this.txtRugosidad2.Size = new System.Drawing.Size(186, 26);
             this.txtRugosidad2.TabIndex = 30;
+            this.txtRugosidad2.Visible = false;
             // 
             // FrmConsolaFiltros
             // 

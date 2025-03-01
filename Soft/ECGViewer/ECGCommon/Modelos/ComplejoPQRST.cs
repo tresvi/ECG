@@ -1,5 +1,5 @@
 ﻿
-namespace ECGViewer.Modelos
+namespace ECGCommon.Modelos
 {
     public class ComplejoPQRST
     {
