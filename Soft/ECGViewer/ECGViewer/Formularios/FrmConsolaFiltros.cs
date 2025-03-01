@@ -1,14 +1,14 @@
-﻿using ECGViewer.Utiles;
+﻿using ECGCommon.Modelos;
+using ECGViewer.Formularios;
 using ECGViewer.Modelos;
+using ECGViewer.Utiles;
 using FftSharp;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using DocumentFormat.OpenXml.Presentation;
 
 namespace ECGViewer
 {
@@ -18,6 +18,8 @@ namespace ECGViewer
         public readonly List<Muestra> _senalOriginal;
         public List<Muestra> _senalFiltrada;
         public readonly int _frecuenciaMuestreo;
+
+        private FrmControlesFiltroInteractivo _frmControlesFiltro;
 
         public double _yMinSenal, _yMaxSenal, _yIntervalSenal;
         public double _yMinEspectro, _yMaxEspectro, _yIntervalEspectro;
@@ -231,10 +233,10 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
-
+        
         private void tsbPasaBanda_Click(object sender, EventArgs e)
         {
-            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1m, 49);
+            FrmPasaEliminaBanda frmPBanda = new FrmPasaEliminaBanda("Configuracion filtro Pasa Banda", 1.1m, 49);
             if (frmPBanda.ShowDialog() != DialogResult.OK) return;
 
             double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
@@ -282,64 +284,69 @@ namespace ECGViewer
         }
 
 
-        //Filtro entre 13 y 30, Recificacion media onda, elevar al cuadrado
-        //No, no puedo usar media onda porque la señal puede haber sido tomada al reves
-        //Filtro entre 13 y 30, elevar al cuadrado. Filtrado por umbral de valor medio.
-        
-        //Para detectar T, filtrar entre 1-8 y luego buscar siguiente pico luego del complejo S
-        //Esto puede fallar. Evaluar los siguientes 2 picos, y quedarse con el mayor. Siempre y cuando ese, no sea/esté
-        //demasiado cerca del valor del proximo complejo P.
-
-        /// <summary>
-        /// Filtrado entre 13 y 30 Ok, pero quitar componentes de baja corre complejo, pero agregarlos, hace que el pico Q resalte cada vez menos
-        /// Filtrado entre 10 y 30 Ok, pero corre a la izquierda un poco el complejo Q
-        /// Filtrado Optimo 12-30 Hz, Sugiero usar Algoritmo genético para determinar la mejor combinacion de parametros.
-        /// Escribir una función para "Acomodar la señal cuando sea necesario"
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
-            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
-            double[] senalProcesada = Filter.BandPass(senal, _frecuenciaMuestreo, 12, 30);
+            double[] senalCruda = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            List<ComplejoPQRST> complejosPQRST = ComplejosUtils.GetComplejosQRS(senalCruda, _frecuenciaMuestreo);
+            ComplejosUtils.CargarComplejoT(senalCruda, _frecuenciaMuestreo, ref complejosPQRST);
+            ComplejosUtils.CargarComplejoP(senalCruda, _frecuenciaMuestreo, ref complejosPQRST);
 
-            SignalUtils.ElevarAlCuadrado(ref senalProcesada);
-
-            double valorMedioPicos = SignalUtils.CalcularPromedioPicos(senalProcesada);
-            Filtros.RecortePorValorBajo(ref senalProcesada,valorMedioPicos);
-
-            List<ComplejoQRS> complejosQRS = ComplejosUtils.GetComplejosQRS(senalProcesada, 0.002, true);
-
-            //TODO: Se podria tomar sin fitrar con el FPB, pero para señales muy malas, podria quedar muy mal.
-            //por el momento se deja asi, aunque esto implique haer otra FFT mas.
-            double[] originlFiltradaPorFPB = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 49);
-            SignalUtils.DesbalancearMesetas(ref originlFiltradaPorFPB);
-            int[] indicesDeExtremos = SignalUtils.GetExtremosLocales(originlFiltradaPorFPB);
-
-            /*
-            foreach (ComplejoQRS complejo in complejosQRS)
+            int nroComplejo = 0;
+            foreach (ComplejoPQRST complejo in complejosPQRST)
             {
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Red);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Red);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Red);
-            }
-            */
-
-            //Para cada complejo me fijo cual es el Máximo/Mínimo mas cercano, y lo reemplazo por el.
-            foreach (ComplejoQRS complejo in complejosQRS)
-            {
-                complejo.Q = SignalUtils.IndiceMasCercano(complejo.Q, indicesDeExtremos);
-                complejo.R = SignalUtils.IndiceMasCercano(complejo.R, indicesDeExtremos);
-                complejo.S = SignalUtils.IndiceMasCercano(complejo.S, indicesDeExtremos);
-            }
-
-            foreach (ComplejoQRS complejo in complejosQRS)
-            {
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, "Q", Color.Gray);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, "R", Color.Blue);
-                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, "S", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.P * 0.002, 0, $"P {nroComplejo}", Color.Peru);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.Q * 0.002, 0, $"Q {nroComplejo}", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.R * 0.002, 0, $"R {nroComplejo}", Color.Blue);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.S * 0.002, 0, $"S {nroComplejo}", Color.Gray);
+                GraphicHelpers.InsertarMarcadorDeComplejo(chartSenalOriginal, complejo.T * 0.002, 0, $"T {nroComplejo}", Color.Peru);
+                nroComplejo++;
             }
         }
+
+
+        public void AplicarFiltrosPasaBanda(double FCorteInferior, double FCorteSuperior)
+        {
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalOriginal);
+            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, FCorteInferior, FCorteSuperior);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = filtered[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+        private void tsbFiltradoInteractivo_Click(object sender, EventArgs e)
+        {
+            if (_frmControlesFiltro == null) 
+                _frmControlesFiltro = new FrmControlesFiltroInteractivo(this);
+
+            if (!_frmControlesFiltro.Visible) 
+                _frmControlesFiltro.Show(this);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double[] senal = Muestra.GetCanal(_senalFiltrada, 0);
+            double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
+            Muestra.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
+
+            double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
+            txtRugosidad.Text = indiceRugosidad.ToString();
+
+            indiceRugosidad = SignalUtils.RMSDerivada(senalFiltrada);
+            txtRugosidad2.Text = indiceRugosidad.ToString();
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
 
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)
@@ -384,7 +391,6 @@ namespace ECGViewer
                     serieEspectro.Points.AddXY(freq[i], psd[i]);
                 }
 
-
                 /************* senalFiltrada****************/
                 signal = Utils.ClonarVectorParaFFT(_senalFiltrada);
 
@@ -413,6 +419,7 @@ namespace ECGViewer
 
         private void FrmConsolaFiltros_FormClosed(object sender, FormClosedEventArgs e)
         {
+
             if (DialogResult == DialogResult.None) DialogResult = DialogResult.Cancel;
         }
 

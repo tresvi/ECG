@@ -37,6 +37,7 @@ namespace ECGViewer.Utiles
         }
 
 
+
         public static double[] Mediana(double[] senal, int tamanoVentana)
         {
             if (tamanoVentana < 1 || tamanoVentana > senal.Length || tamanoVentana % 2 == 0)

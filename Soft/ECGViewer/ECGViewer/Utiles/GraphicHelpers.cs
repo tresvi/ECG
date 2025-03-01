@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace ECGViewer
+namespace ECGViewer.Utiles
 {
     internal static class GraphicHelpers
     {
