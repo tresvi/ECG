@@ -331,14 +331,16 @@ namespace ECGViewer
         private void button1_Click(object sender, EventArgs e)
         {
             double[] senal = Muestra.GetCanal(_senalFiltrada, 0);
-            double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
+            //double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
+            double[] senalFiltrada = ComplejosUtils.ReducirRugosidad(ref senal, 0.006);
             Muestra.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
 
-            double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
-            txtRugosidad.Text = indiceRugosidad.ToString();
+            //double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
+            //txtRugosidad.Text = indiceRugosidad.ToString();
 
-            indiceRugosidad = SignalUtils.RMSDerivada(senalFiltrada);
-            txtRugosidad2.Text = indiceRugosidad.ToString();
+            //indiceRugosidad = SignalUtils.RMSDerivada(senalFiltrada);
+            //txtRugosidad2.Text = indiceRugosidad.ToString();
+
 
             Graficar(chartSenalFiltrada, _senalFiltrada);
 
