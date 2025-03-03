@@ -1,6 +1,6 @@
 ﻿namespace ECGViewer
 {
-    partial class FrmMain
+    partial class MainView
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             this.chartSenal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BtnCargarSenal = new System.Windows.Forms.Button();
             this.gbSenal = new System.Windows.Forms.GroupBox();
@@ -248,7 +248,6 @@
             this.tsbAbrir.Size = new System.Drawing.Size(68, 68);
             this.tsbAbrir.Tag = "Abrir Curva";
             this.tsbAbrir.Text = "Abrir Curva";
-            this.tsbAbrir.Click += new System.EventHandler(this.tsbAbrir_Click);
             // 
             // tsbGuardar
             // 
@@ -639,7 +638,7 @@
             this.lblPuntoCursor.TabIndex = 47;
             this.lblPuntoCursor.Text = "X:0.000\r\nY:-0.000";
             // 
-            // FrmMain
+            // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -653,7 +652,7 @@
             this.Controls.Add(this.gbSenal);
             this.Controls.Add(this.chartSenal);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FrmMain";
+            this.Name = "MainView";
             this.Text = "Visor ECG 1 Canal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -671,16 +670,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartSenal;
         private System.Windows.Forms.Button BtnCargarSenal;
         private System.Windows.Forms.Button btnEspectro;
         private System.Windows.Forms.Button btnFiltrosAvanzados;
-        private System.Windows.Forms.GroupBox gbSenal;
         private System.Windows.Forms.Button btnFiltrarSenal;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tsbAbrir;
-        private System.Windows.Forms.ToolStripButton tsbGuardar;
         private System.Windows.Forms.ToolStripButton tsbExportarATablaC;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -695,7 +689,6 @@
         private System.Windows.Forms.Button btnFinalizarLectura;
         private System.Windows.Forms.Button btnIniciarLectura;
         private System.Windows.Forms.Timer timerPuerto;
-        private System.Windows.Forms.ToolStripButton tsbNuevoArchivo;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudTMuestreo;
@@ -718,6 +711,11 @@
         private System.Windows.Forms.Label lblPuntoCursor;
         private System.Windows.Forms.ToolStripButton tsbConfiguracionEjes;
         private System.Windows.Forms.ToolStripButton tsbAcercaDe;
+        public System.Windows.Forms.ToolStripButton tsbAbrir;
+        public System.Windows.Forms.ToolStripButton tsbGuardar;
+        public System.Windows.Forms.ToolStripButton tsbNuevoArchivo;
+        public System.Windows.Forms.DataVisualization.Charting.Chart chartSenal;
+        public System.Windows.Forms.GroupBox gbSenal;
     }
 }
 

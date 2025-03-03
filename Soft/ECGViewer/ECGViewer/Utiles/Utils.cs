@@ -163,7 +163,7 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static void ResetearTiempo(ref List<Muestra> senal)
+        public static void ResetearTiempo(List<Muestra> senal)
         {
             if (senal.Count == 1)
             {
