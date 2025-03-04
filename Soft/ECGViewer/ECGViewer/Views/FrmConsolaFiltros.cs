@@ -1,7 +1,9 @@
-﻿using ECGCommon.Modelos;
+﻿using DocumentFormat.OpenXml.Presentation;
+using ECGCommon.Modelos;
 using ECGViewer.Formularios;
-using ECGViewer.Modelos;
+using ECGViewer.Models;
 using ECGViewer.Utiles;
+using ECGViewer.Views;
 using FftSharp;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ namespace ECGViewer
         public readonly int _frecuenciaMuestreo;
 
         private FrmControlesFiltroInteractivo _frmControlesFiltro;
+        private FrmControlSuavizadoInteractivo _frmControlSuavizado;
 
         public double _yMinSenal, _yMaxSenal, _yIntervalSenal;
         public double _yMinEspectro, _yMaxEspectro, _yIntervalEspectro;
@@ -32,6 +35,7 @@ namespace ECGViewer
             _senalFiltrada = Utils.ClonarSenal(in _senalOriginal);
             _frecuenciaMuestreo = frecuenciaMuestreo;
             chartSenalOriginal.PostPaint += chartSenalOriginal_PostPaint;
+            tsbSuavizar.Visible = false;
         }
 
         /// <summary>
@@ -319,6 +323,25 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
+
+        public void AplicarSuavizado(int intensidad)
+        {
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalOriginal);
+
+            for (int i = 0; i < intensidad; i++)
+                senal = Filtros.MediaMovil(senal, 5);
+
+            for (int i = 0; i < _senalFiltrada.Count; i++)
+                _senalFiltrada[i].Canal[0] = senal[i];
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+        }
+
+
         private void tsbFiltradoInteractivo_Click(object sender, EventArgs e)
         {
             if (_frmControlesFiltro == null) 
@@ -328,12 +351,22 @@ namespace ECGViewer
                 _frmControlesFiltro.Show(this);
         }
 
+
+        private void tsbSuavizar_Click(object sender, EventArgs e)
+        {
+            if (_frmControlSuavizado == null)
+                _frmControlSuavizado = new FrmControlSuavizadoInteractivo(this);
+
+            if (!_frmControlSuavizado.Visible)
+                _frmControlSuavizado.Show(this);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             double[] senal = Muestra.GetCanal(_senalFiltrada, 0);
             //double[] senalFiltrada = Filtros.MediaMovil(senal, 5);
-            double[] senalFiltrada = ComplejosUtils.ReducirRugosidad(ref senal, 0.006);
-            Muestra.SetCanal(ref _senalFiltrada, 0, senalFiltrada);
+            ComplejosUtils.ReducirRugosidad(ref senal, 0.004);
+            Muestra.SetCanal(ref _senalFiltrada, 0, senal);
 
             //double indiceRugosidad = SignalUtils.VariabilidadDiferencias(senalFiltrada);
             //txtRugosidad.Text = indiceRugosidad.ToString();
@@ -349,6 +382,61 @@ namespace ECGViewer
             chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
         }
 
+
+        private void btnFiltroAutomatico_Click(object sender, EventArgs e)
+        {
+
+            double[] senal = Utils.ClonarVectorParaFFT(in _senalFiltrada);
+            double[] filtered = Filter.BandPass(senal, _frecuenciaMuestreo, 1, 49);
+            double[] arrayParaMediaMovil = new double[_senalFiltrada.Count];
+
+            //!!! IMPORTANTE. Usar el copy para recortar y volver a dejar el vector
+            //   sin el relleno de 0s de la FFT, eso reduce el indice de rugosidad
+            Array.Copy(filtered, 0, arrayParaMediaMovil, 0, arrayParaMediaMovil.Length - 1);
+
+            int iteraciones = ComplejosUtils.ReducirRugosidad(ref arrayParaMediaMovil, 0.006);
+
+            //Tomar el array filtrado e insertarle el array original SOLO en los tramos entre los complejos Q y S
+            List<ComplejoPQRST> complejosQRS = ComplejosUtils.GetComplejosQRS(in senal, _frecuenciaMuestreo);
+
+            foreach (ComplejoPQRST complejo in complejosQRS)
+            {
+                for (int i = complejo.Q; i <= complejo.S; i++)
+                { 
+                    arrayParaMediaMovil[i] = filtered[i];
+                }
+            }
+
+            //La superposición de la señal injertada con la filtrada por media movil es espantosa
+            //Va a haber que usar tecnicas de interpolacion. Como minimo que coincida hasta la 1er derivada
+            //El area de inserción deberia ser anterior al Q y posterios al S, cuando se estabilizan y se vuelven mas meseta
+
+            Muestra.SetCanal(ref _senalFiltrada, 0, arrayParaMediaMovil);
+
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+
+
+
+
+            /*
+            double[] senalCruda = Utils.ClonarVectorParaFFT(in _senalOriginal);
+            senalCruda = Filter.BandPass(senalCruda, _frecuenciaMuestreo, 1.3, 49);
+
+            List<ComplejoPQRST> complejosPQRST = ComplejosUtils.GetComplejosQRS(senalCruda, _frecuenciaMuestreo);
+            ComplejosUtils.ReducirRugosidad(ref senalCruda, 0.04);
+
+            Muestra.SetCanal(ref _senalFiltrada, 0, senalCruda);
+            Graficar(chartSenalFiltrada, _senalFiltrada);
+
+            chartSenalFiltrada.ChartAreas[0].AxisY.Minimum = _yMinSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Maximum = _yMaxSenal;
+            chartSenalFiltrada.ChartAreas[0].AxisY.Interval = _yIntervalSenal;
+            */
+        }
 
 
         private void tgbTipoVista_CheckedChanged(object sender, EventArgs e)

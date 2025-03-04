@@ -164,14 +164,16 @@ namespace ECGViewer.Utiles
         }
 
 
-        public static double[] ReducirRugosidad(ref double[] senal, double valorLimiteDeseado)
+        public static int ReducirRugosidad(ref double[] senal, double valorLimiteDeseado)
         {
+            int iteraciones  = 0;
+
             while (SignalUtils.VariabilidadDiferencias(senal) > valorLimiteDeseado)
             {
+                iteraciones++;
                 senal = Filtros.MediaMovil(senal, 3);
             }
-
-            return senal;
+            return iteraciones;
         }
 
 

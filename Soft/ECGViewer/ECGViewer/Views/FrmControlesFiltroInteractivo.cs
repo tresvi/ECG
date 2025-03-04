@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECGViewer.Utiles;
+using System;
 using System.Windows.Forms;
 
 namespace ECGViewer.Formularios
@@ -54,6 +55,7 @@ namespace ECGViewer.Formularios
             }
         }
 
+
         private void chkTransparencia_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTransparencia.Checked)
@@ -62,10 +64,12 @@ namespace ECGViewer.Formularios
                 this.Opacity = 1;
         }
 
+
         private void FrmControlesFiltroInteractivo_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Visible = false;
             e.Cancel = true;
         }
+
     }
 }

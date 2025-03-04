@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace ECGViewer.Modelos
+namespace ECGViewer.Models
 {
     internal class StripLineWithComment: StripLine
     {

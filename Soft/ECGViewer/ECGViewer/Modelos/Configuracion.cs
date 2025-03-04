@@ -2,7 +2,7 @@
 using ECGViewer.Utiles;
 
 
-namespace ECGViewer.Modelos
+namespace ECGViewer.Models
 {
     internal class Configuracion
     {

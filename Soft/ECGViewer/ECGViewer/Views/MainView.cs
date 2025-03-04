@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ECGViewer.Formularios;
-using ECGViewer.Modelos;
+using ECGViewer.Models;
 using ECGViewer.Utiles;
 using ECGViewer.Properties;
 using System;
@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Filter = FftSharp.Filter;
 using ECGViewer.Controllers;
+using ECGViewer.Models.Dao;
 
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
@@ -126,7 +127,8 @@ namespace ECGViewer
             string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
             string unidad;
             List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
-            SenalECG = Utils.LoadCsvData(filePath, out unidad, out anotaciones);
+            MuestraDao muestraDao = new MuestraDao();
+            SenalECG = muestraDao.ListFromFile(filePath, out unidad, out anotaciones);
 
             for (int i = 0; i < SenalECG.Count; i++)
             {
