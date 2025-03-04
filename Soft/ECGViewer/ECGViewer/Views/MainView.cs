@@ -17,6 +17,7 @@ using ECGViewer.Controllers;
 using ECGViewer.Models.Dao;
 
 
+
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
 
 namespace ECGViewer
@@ -27,6 +28,8 @@ namespace ECGViewer
         public String ArchivoActual { get; set; }
         public int FMuestreo { get; set; }
         public bool AutoEscalaY { get; set; } = false;
+
+        private readonly MainController _controller;
 
         //private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
@@ -40,7 +43,7 @@ namespace ECGViewer
         public MainView()
         {
             InitializeComponent();
-            MainController controller = new MainController(this);
+            _controller = new MainController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -684,5 +687,39 @@ namespace ECGViewer
                 "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void tsbAbrir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            openFileDialog.Title = "Seleccionar archivo CSV";
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
+
+            try
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                string unidad;
+                List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
+
+                (this.SenalECG, anotaciones, unidad) =  _controller.OpenFileCSV(openFileDialog.FileName);
+                this.ArchivoActual = openFileDialog.FileName;
+                this.AutoEscalaY = true;
+                this.FMuestreo = (int)Math.Round(1 / (SenalECG[1].Tiempo - SenalECG[0].Tiempo));
+                this.Text = $"{MainView.DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
+
+                GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
+                GraphicHelpers.CargarAnotaciones(chartSenal, anotaciones);
+                chartSenal.ChartAreas[0].AxisY.Title = unidad;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir el archivo seleccionado. Detalles: {ex.Message}"
+                    , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            gbSenal.Enabled = true;
+            tsbResetZoom_Click(sender, e);
+        }
     }
 }

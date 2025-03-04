@@ -16,6 +16,11 @@ namespace ECGViewer.Models
             }
         }
 
+        public double Unidad { get; set; }
+
+        //TODO: Crear la clase Anotaciones y usarla aca
+        public List<double> Anotaciones { get; set; }
+
         public double[] Channel0 { get; set; }
         public double[] Channel1 { get; set; }
         public double[] Channel2 { get; set; }

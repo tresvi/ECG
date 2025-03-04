@@ -248,6 +248,7 @@
             this.tsbAbrir.Size = new System.Drawing.Size(68, 68);
             this.tsbAbrir.Tag = "Abrir Curva";
             this.tsbAbrir.Text = "Abrir Curva";
+            this.tsbAbrir.Click += new System.EventHandler(this.tsbAbrir_Click);
             // 
             // tsbGuardar
             // 
