@@ -603,6 +603,26 @@ namespace ECGViewer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap smooth {
+            get {
+                object obj = ResourceManager.GetObject("smooth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smooth1 {
+            get {
+                object obj = ResourceManager.GetObject("smooth1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap spectrum {
             get {
                 object obj = ResourceManager.GetObject("spectrum", resourceCulture);

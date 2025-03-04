@@ -1,5 +1,5 @@
 ﻿using ECGViewer.Utiles;
-using ECGViewer.Modelos;
+using ECGViewer.Models;
 using ECGViewer.Properties;
 using System;
 using System.Windows.Forms;

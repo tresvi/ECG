@@ -1,4 +1,4 @@
-﻿using ECGViewer.Modelos;
+﻿using ECGViewer.Models;
 using System;
 using System.Collections.Generic;
 

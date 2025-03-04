@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ECGViewer.Formularios;
-using ECGViewer.Modelos;
+using ECGViewer.Models;
 using ECGViewer.Utiles;
 using ECGViewer.Properties;
 using System;
@@ -13,30 +13,37 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Filter = FftSharp.Filter;
+using ECGViewer.Controllers;
+using ECGViewer.Models.Dao;
+
 
 
 //https://stackoverflow.com/questions/25801257/c-sharp-line-chart-how-to-create-vertical-line
 
 namespace ECGViewer
 {
-    public partial class FrmMain : Form
+    public partial class MainView : Form
     {
+        public List<Muestra> SenalECG { get; set; } = new List<Muestra>();
+        public String ArchivoActual { get; set; }
+        public int FMuestreo { get; set; }
+        public bool AutoEscalaY { get; set; } = false;
+
+        private readonly MainController _controller;
+
         //private const int FRECUENCIA_MUESTREO = 500;
         private const int FRECUENCIA_CORTE_DFLT = 49;
         const string BAUDRATE_DEFAULT = "9600"; //"19200";
-        private const string DESCRIPCION_APLICACION = "ECG Viewer 1 Canal";
+        public const string DESCRIPCION_APLICACION = "ECG Viewer 1 Canal";
 
         private SerialPort _serialPort = new SerialPort();
-        private List<Muestra> _senalECG = new List<Muestra>();
         private decimal _tMuestreo;
-        private int _fMuestreo;
-        private string _archivoActual;
-        private bool _autoEscalaY = false;
         
 
-        public FrmMain()
+        public MainView()
         {
             InitializeComponent();
+            _controller = new MainController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,7 +59,7 @@ namespace ECGViewer
                 cmbBaudRate.SelectedIndex = config.BaudRate;
                 cmbPuertos.Text = config.PuertoCOM;
                 nudTMuestreo.Value = config.TiempoMuestreo;
-                _autoEscalaY = true;
+                AutoEscalaY = true;
             }
             catch (Exception ex)
             {
@@ -123,20 +130,21 @@ namespace ECGViewer
             string filePath = @"..\..\Archivos_CSV\ECG_20_Seg_NO_FILTRADO.csv"; // Ruta al archivo CSV
             string unidad;
             List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
-            _senalECG = Utils.LoadCsvData(filePath, out unidad, out anotaciones);
+            MuestraDao muestraDao = new MuestraDao();
+            SenalECG = muestraDao.ListFromFile(filePath, out unidad, out anotaciones);
 
-            for (int i = 0; i < _senalECG.Count; i++)
+            for (int i = 0; i < SenalECG.Count; i++)
             {
                 double valor2 = 0;//0.04 * Math.Sin(2 * Math.PI * 2 * _senalECG[i].Tiempo);
-                double valor1 = 0.04 * Math.Sin(2 * Math.PI * 10 * _senalECG[i].Tiempo);
-                double valor3 = 0.02 * Math.Sin(2 * Math.PI * 25 * _senalECG[i].Tiempo);
-                double valor4 = 0.02 * Math.Sin(2 * Math.PI * 60 * _senalECG[i].Tiempo);
-                _senalECG[i].Canal[0] += valor1 + valor2 + valor3 + valor4;
+                double valor1 = 0.04 * Math.Sin(2 * Math.PI * 10 * SenalECG[i].Tiempo);
+                double valor3 = 0.02 * Math.Sin(2 * Math.PI * 25 * SenalECG[i].Tiempo);
+                double valor4 = 0.02 * Math.Sin(2 * Math.PI * 60 * SenalECG[i].Tiempo);
+                SenalECG[i].Canal[0] += valor1 + valor2 + valor3 + valor4;
             }
 
-            _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
+            FMuestreo = (int)Math.Round(1 / (SenalECG[1].Tiempo - SenalECG[0].Tiempo));
 
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+            GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
 
             gbSenal.Enabled = true;
             tsbResetZoom_Click(sender, e);
@@ -145,14 +153,14 @@ namespace ECGViewer
 
         private void btnEspectro_Click(object sender, EventArgs e)
         {
-            if (_senalECG == null)
+            if (SenalECG == null)
             {
                 MessageBox.Show("No hay señal cargada", "Ver Espectro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            double[] signal = Utils.ClonarVectorParaFFT(_senalECG);
-            Form frmEspectro = new FrmEspectro(signal, _fMuestreo);
+            double[] signal = Utils.ClonarVectorParaFFT(SenalECG);
+            Form frmEspectro = new FrmEspectro(signal, FMuestreo);
             frmEspectro.ShowDialog();
         }
 
@@ -163,12 +171,12 @@ namespace ECGViewer
             double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
             double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
 
-            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(_senalECG, _fMuestreo);
+            FrmConsolaFiltros frmAplicarFiltro = new FrmConsolaFiltros(SenalECG, FMuestreo);
             DialogResult resultado = frmAplicarFiltro.ShowDialog();
             if (resultado != DialogResult.OK) return;
 
-            _senalECG = frmAplicarFiltro.SenalFiltrada;
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+            SenalECG = frmAplicarFiltro.SenalFiltrada;
+            GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
 
             chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
             chartSenal.ChartAreas[0].AxisY.Maximum = axisYMaximum;
@@ -187,16 +195,16 @@ namespace ECGViewer
             double axisYMaximum = chartSenal.ChartAreas[0].AxisY.Maximum;
             double AxisYInterval = chartSenal.ChartAreas[0].AxisY.Interval;
 
-            double[] senal = Utils.ClonarVectorParaFFT(in _senalECG);
-            double[] filtered = Filter.LowPass(senal, _fMuestreo, FRECUENCIA_CORTE_DFLT);
+            double[] senal = Utils.ClonarVectorParaFFT(SenalECG);
+            double[] filtered = Filter.LowPass(senal, FMuestreo, FRECUENCIA_CORTE_DFLT);
 
             Series series = chartSenal.Series["Muestras"];
             series.Points.Clear();
             
-            for (int i = 0; i < _senalECG.Count; i++)
+            for (int i = 0; i < SenalECG.Count; i++)
             {
-                _senalECG[i].Canal[0] = filtered[i];
-                series.Points.AddXY(_senalECG[i].Tiempo, _senalECG[i].Canal[0]);
+                SenalECG[i].Canal[0] = filtered[i];
+                series.Points.AddXY(SenalECG[i].Tiempo, SenalECG[i].Canal[0]);
             }
 
             chartSenal.ChartAreas[0].AxisY.Minimum = axisYMinimum;
@@ -205,59 +213,18 @@ namespace ECGViewer
         }
 
 
-        private void tsbAbrir_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
-            openFileDialog.Title = "Seleccionar archivo CSV";
-            openFileDialog.Multiselect = false;
-            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
-
-            try
-            {
-                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
-
-                string unidad;
-                List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
-                _senalECG = Utils.LoadCsvData(openFileDialog.FileName, out unidad, out anotaciones);
-                _archivoActual = openFileDialog.FileName;
-
-                if (_senalECG.Count <= 1)
-                {
-                    MessageBox.Show($"Archivo invalido. El mismo contiene menos de 1 muestra"
-                      , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                _fMuestreo = (int)Math.Round(1/(_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-                _autoEscalaY = true;
-                GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
-                GraphicHelpers.CargarAnotaciones(chartSenal, anotaciones);
-                chartSenal.ChartAreas[0].AxisY.Title = unidad;
-
-                this.Text = $"{DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al abrir el archivo seleccionado. Detalles: {ex.Message}"
-                    , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            gbSenal.Enabled = true;
-            tsbResetZoom_Click(sender, e);
-        }
 
 
         private void tsbGuardar_Click(object sender, EventArgs e)
         {
-            if (_senalECG.Count == 0)
+            if (SenalECG.Count == 0)
             {
                 MessageBox.Show("No hay datos para guardar");
                 return;
             }
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_archivoActual);
+            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(ArchivoActual);
             saveFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
             saveFileDialog.Title = "Guardar archivo CSV";
             saveFileDialog.DefaultExt = "csv";
@@ -272,7 +239,7 @@ namespace ECGViewer
                 using (StreamWriter writer = new StreamWriter(rutaArchivo))
                 {
                     writer.WriteLine($"tiempo, {chartSenal.ChartAreas[0].AxisY.Title}");
-                    foreach (Muestra muestra in _senalECG)
+                    foreach (Muestra muestra in SenalECG)
                     {
                         string linea = string.Format(CultureInfo.InvariantCulture, "{0},{1}", muestra.Tiempo, muestra.Canal[0]);
                         writer.WriteLine(linea);
@@ -298,9 +265,9 @@ namespace ECGViewer
         }
 
 
-        private void tsbResetZoom_Click(object sender, EventArgs e)
+        public void tsbResetZoom_Click(object sender, EventArgs e)
         {
-            GraphicHelpers.ResetZoom(chartSenal, _senalECG);
+            GraphicHelpers.ResetZoom(chartSenal, SenalECG);
         }
 
 
@@ -332,9 +299,9 @@ namespace ECGViewer
                 timerPuerto.Start();
                 timerGraficar.Enabled = true;
                 timerGraficar.Start();
-                _senalECG = new List<Muestra>();
+                SenalECG = new List<Muestra>();
                 _tMuestreo = nudTMuestreo.Value;
-                _fMuestreo = (int)Math.Round(1000 / _tMuestreo);
+                FMuestreo = (int)Math.Round(1000 / _tMuestreo);
                 _contadorMuestras = 0;
                 _primerMuestra = true;
             }
@@ -357,7 +324,7 @@ namespace ECGViewer
                 Muestra muestra = new Muestra();
                 muestra.Tiempo = _contadorMuestras * (double) (_tMuestreo/1000);
                 _contadorMuestras++;
-                _senalECG.Add(muestra);
+                SenalECG.Add(muestra);
                 //Invoke(new MethodInvoker(() =>
                 //{
                 //    txtLog.Text += '\n' + data;
@@ -384,7 +351,7 @@ namespace ECGViewer
             timerPuerto.Stop();
             timerGraficar.Enabled = false;
             timerGraficar.Stop();
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY, false);
+            GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY, false);
         }
 
 
@@ -445,7 +412,7 @@ namespace ECGViewer
                     else
                         muestra.Canal[0] = cuenta * config.Span + config.Zero; //Utiles.MapValues(cuenta, config.CalibracionBitsMin, config.CalibracionBitsMax, (double) config.CalibracionValorYMin, (double) config.CalibracionValorYMax);
 
-                    _senalECG.Add(muestra);
+                    SenalECG.Add(muestra);
 
                 } while (_serialPort.BytesToRead > 5);
             }
@@ -468,7 +435,7 @@ namespace ECGViewer
             if (muestrasPorGrafico <= 0) muestrasPorGrafico = 4000;
             try
             {
-                GraphicHelpers.ActualizarGrafico(chartSenal, _senalECG, muestrasPorGrafico);
+                GraphicHelpers.ActualizarGrafico(chartSenal, SenalECG, muestrasPorGrafico);
             }
             catch (Exception) { }
 
@@ -479,7 +446,7 @@ namespace ECGViewer
 
         private void tsbExportarATablaC_Click(object sender, EventArgs e)
         {
-            if (_senalECG.Count == 0)
+            if (SenalECG.Count == 0)
             {
                 MessageBox.Show("No hay datos para exportar");
                 return;
@@ -497,30 +464,30 @@ namespace ECGViewer
 
                 if (resultado == DialogResult.Yes) tsbResetZoom_Click(sender, e);
 
-                (indiceMin, indiceMax) = Utils.ObtenerIndicesInicialyFinal(_senalECG
+                (indiceMin, indiceMax) = Utils.ObtenerIndicesInicialyFinal(SenalECG
                     , chartArea.AxisX.ScaleView.ViewMinimum
                     , chartArea.AxisX.ScaleView.ViewMaximum);
             }
             else
             {
                 indiceMin = 0;
-                indiceMax = _senalECG.Count - 1;
+                indiceMax = SenalECG.Count - 1;
             }
 
-            FrmExportarATablaC frmExportarATablaC = new FrmExportarATablaC(_senalECG, indiceMin, indiceMax);
+            FrmExportarATablaC frmExportarATablaC = new FrmExportarATablaC(SenalECG, indiceMin, indiceMax);
             frmExportarATablaC.ShowDialog();
         }
 
         private void tsbExportarProteus_Click(object sender, EventArgs e)
         {
-            if (_senalECG.Count == 0)
+            if (SenalECG.Count == 0)
             {
                 MessageBox.Show("No hay datos para exportar");
                 return;
             }
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_archivoActual);
+            saveFileDialog.FileName = Path.GetFileNameWithoutExtension(ArchivoActual);
             saveFileDialog.Filter = "Archivos TXT (*.txt)|*.txt";
             saveFileDialog.Title = "Exportar ECG para File Generator Proteus";
             saveFileDialog.DefaultExt = "txt";
@@ -534,7 +501,7 @@ namespace ECGViewer
             {
                 using (StreamWriter writer = new StreamWriter(rutaArchivo))
                 {
-                    foreach (Muestra muestra in _senalECG)
+                    foreach (Muestra muestra in SenalECG)
                     {
                         string linea = string.Format(CultureInfo.InvariantCulture, "{0}\t{1}", muestra.Tiempo, muestra.Canal[0]);
                         writer.WriteLine(linea);
@@ -568,16 +535,16 @@ namespace ECGViewer
             double xMin = chartSenal.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
             double xMax = chartSenal.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
 
-            (int indiceMin, int indiceMax) = Utils.ObtenerIndicesInicialyFinal(_senalECG, xMin, xMax);
+            (int indiceMin, int indiceMax) = Utils.ObtenerIndicesInicialyFinal(SenalECG, xMin, xMax);
 
-            _senalECG = _senalECG.GetRange(indiceMin, indiceMax - indiceMin + 1);
-            if (_senalECG.Count == 0) return;
+            SenalECG = SenalECG.GetRange(indiceMin, indiceMax - indiceMin + 1);
+            if (SenalECG.Count == 0) return;
 
             respuesta = MessageBox.Show("El gráfico se ha cortado exitosamente. Desea establecer a 0 segundos el comienzo del gráfico?"
             , "Recortar gráfico", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            Utils.ResetearTiempo(ref _senalECG);
-            GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+            Utils.ResetearTiempo(SenalECG);
+            GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
             tsbResetZoom_Click(sender, e);
         }
 
@@ -595,13 +562,13 @@ namespace ECGViewer
 
         private void tsbImprimir_Click(object sender, EventArgs e)
         {
-            if (_senalECG == null || _senalECG.Count < 1)
+            if (SenalECG == null || SenalECG.Count < 1)
             {
                 MessageBox.Show("No hay gráfico para imprimir", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, _senalECG, chartSenal.ChartAreas[0].AxisY.Title, _autoEscalaY);
+            FrmImpresion frmImpresion = new FrmImpresion(chartSenal, SenalECG, chartSenal.ChartAreas[0].AxisY.Title, AutoEscalaY);
             frmImpresion.ShowDialog();
         }
 
@@ -610,14 +577,14 @@ namespace ECGViewer
         {
             try
             {
-                if (_senalECG.Count == 0)
+                if (SenalECG.Count == 0)
                 {
                     MessageBox.Show("No hay datos para exportar");
                     return;
                 }
 
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.FileName = Path.GetFileNameWithoutExtension(_archivoActual);
+                saveFileDialog.FileName = Path.GetFileNameWithoutExtension(ArchivoActual);
                 saveFileDialog.Filter = "Archivos XLSX (*.xlsx)|*.xlsx";
                 saveFileDialog.Title = "Guardar archivo XLSX";
                 saveFileDialog.DefaultExt = "xlsx";
@@ -631,10 +598,10 @@ namespace ECGViewer
                     worksheet.Cell(1, 1).Value = "Tiempo";
                     worksheet.Cell(1, 2).Value = "Valores";
 
-                    for (int i = 0; i < _senalECG.Count; i++)
+                    for (int i = 0; i < SenalECG.Count; i++)
                     {
-                        worksheet.Cell(i + 2, 1).Value = _senalECG[i].Tiempo;
-                        worksheet.Cell(i + 2, 2).Value = _senalECG[i].Canal[0];
+                        worksheet.Cell(i + 2, 1).Value = SenalECG[i].Tiempo;
+                        worksheet.Cell(i + 2, 2).Value = SenalECG[i].Canal[0];
                     }
 
                     worksheet.Columns().AdjustToContents();
@@ -669,21 +636,21 @@ namespace ECGViewer
 
             try
             {
-                _archivoActual = openFileDialog.FileName;
-                _senalECG = Utils.LoadXlsxData(openFileDialog.FileName);
-                if (_senalECG.Count <= 1)
+                ArchivoActual = openFileDialog.FileName;
+                SenalECG = Utils.LoadXlsxData(openFileDialog.FileName);
+                if (SenalECG.Count <= 1)
                 {
                     MessageBox.Show($"Archivo invalido. El mismo no contiene muestras interpretables"
                       , "Abrir Archivo xlsx", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                _fMuestreo = (int)Math.Round(1 / (_senalECG[1].Tiempo - _senalECG[0].Tiempo));
-                _autoEscalaY = true;
-                GraphicHelpers.CargarGrafico(chartSenal, _senalECG, _autoEscalaY);
+                FMuestreo = (int)Math.Round(1 / (SenalECG[1].Tiempo - SenalECG[0].Tiempo));
+                AutoEscalaY = true;
+                GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
                 chartSenal.ChartAreas[0].AxisX.LabelStyle.Format = "";  //Solo para excel permito decimales automaticos
 
-                MessageBox.Show($"Archivo importado correctamente. Se importaron {_senalECG.Count} muestras"
+                MessageBox.Show($"Archivo importado correctamente. Se importaron {SenalECG.Count} muestras"
                     , "Error al importar" , MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -706,9 +673,9 @@ namespace ECGViewer
 
         private void tsbConfiguracionEjes_Click(object sender, EventArgs e)
         {
-            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal, _autoEscalaY);
+            FrmConfiguracionEjes frmConfiguracionEjes = new FrmConfiguracionEjes(ref chartSenal, AutoEscalaY);
             frmConfiguracionEjes.ShowDialog();
-            _autoEscalaY = frmConfiguracionEjes.AutoEscalaY;
+            AutoEscalaY = frmConfiguracionEjes.AutoEscalaY;
         }
 
 
@@ -720,5 +687,39 @@ namespace ECGViewer
                 "Acerca de", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void tsbAbrir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            openFileDialog.Title = "Seleccionar archivo CSV";
+            openFileDialog.Multiselect = false;
+            openFileDialog.InitialDirectory = @"..\..\Archivos_CSV\";
+
+            try
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                string unidad;
+                List<StripLineWithComment> anotaciones = new List<StripLineWithComment>();
+
+                (this.SenalECG, anotaciones, unidad) =  _controller.OpenFileCSV(openFileDialog.FileName);
+                this.ArchivoActual = openFileDialog.FileName;
+                this.AutoEscalaY = true;
+                this.FMuestreo = (int)Math.Round(1 / (SenalECG[1].Tiempo - SenalECG[0].Tiempo));
+                this.Text = $"{MainView.DESCRIPCION_APLICACION} | {openFileDialog.FileName}";
+
+                GraphicHelpers.CargarGrafico(chartSenal, SenalECG, AutoEscalaY);
+                GraphicHelpers.CargarAnotaciones(chartSenal, anotaciones);
+                chartSenal.ChartAreas[0].AxisY.Title = unidad;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir el archivo seleccionado. Detalles: {ex.Message}"
+                    , "Abrir Archivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            gbSenal.Enabled = true;
+            tsbResetZoom_Click(sender, e);
+        }
     }
 }

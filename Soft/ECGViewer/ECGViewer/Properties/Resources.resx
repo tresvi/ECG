@@ -121,6 +121,9 @@
   <data name="new-document" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\new-document.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="smooth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\smooth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="evaluacion-comparativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\evaluacion-comparativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -133,8 +136,8 @@
   <data name="salvar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\salvar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ajustes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\ajustes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\marker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,14 +157,14 @@
   <data name="new_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\new_file.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="escala-corporal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\escala-corporal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="measurement_BN_64x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\measurement_BN_64x64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PWM_Picture1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="boton-de-play" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\boton-de-play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,8 +211,8 @@
   <data name="filePreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\filePreview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="measureY" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\measureY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PWM_Picture1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\PWM_Picture.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BandPass1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\BandPass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -265,6 +268,9 @@
   <data name="accept" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\accept.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="measureY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\measureY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="spectrum" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\spectrum.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -298,7 +304,7 @@
   <data name="Zoom-reset-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Recursos\Zoom-reset-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ajustes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Recursos\ajustes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="smooth1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Recursos\smooth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
