@@ -2,3 +2,5 @@ https://www.mathworks.com/help/signal/ug/label-ecg-signals-and-track-progress.ht
 https://www.researchgate.net/publication/274453270_ECG_Signal_Analysis_Different_Approaches
 https://www.youtube.com/watch?v=k91Hm2D7VXo    -->  https://archive.physionet.org/cgi-bin/atm/ATM
 
+
+https://www.siacardio.com/wp-content/uploads/2015/01/ECG-Capitulo-10-Errores-y-artefactos-comunes-en-ECG.pdf
